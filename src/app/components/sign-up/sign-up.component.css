@@ -1,0 +1,27 @@
+input[type="text"], input[type="password"] {
+    margin-left: 40%;
+    width: 20%;
+}
+
+.center {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.error{
+    color: red;
+    font-size: small;
+    text-align: right;
+    margin-right: 40%;
+}
+
+small {
+    text-align: center;
+}
+
+label {
+    margin-left: 40%;
+}
