@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/User';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-password',
@@ -7,9 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfirmPasswordComponent implements OnInit {
 
-  constructor() { }
+  user: User = new User();
 
-  ngOnInit(): void {
+  constructor(
+    private _userService: UserService,
+    private _router: Router
+    ) { 
+
   }
 
+  ngOnInit(): void {
+    this.emailConfirmedCheck();
+  }
+
+  continueBtn(){
+    this._router.navigate(['']);
+  }
+
+  async emailConfirmedCheck(){
+    while (!this.user.emailConfirmed){
+      this.getCurrentUser();
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+
+  getCurrentUser() {
+    this._userService.getCurrentUser().subscribe((data: User) => {
+      this.user = data;
+    })
+  }
 }

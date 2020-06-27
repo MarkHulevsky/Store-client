@@ -4,6 +4,7 @@ export class User {
     email: string;
     firstName: string;
     lastName: string;
+    emailConfirmed: boolean;
     status: UserStatus;
     errors: string[];
 }

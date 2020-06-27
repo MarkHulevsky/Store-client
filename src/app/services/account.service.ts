@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable} from 'rxjs'
 import { LoginModel } from '../models/LoginModel';
 import { RegisterModel } from '../models/RegisterModel';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

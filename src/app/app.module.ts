@@ -7,13 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AccountModule } from './modules/account/account.module';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthGuard } from './services/auth-guard.service';
-import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
-import { ConfirmPasswordComponent } from './components/confirm-password/confirm-password.component';
-
-export function tokenGetter() {
-  return localStorage.getItem("jwt");
-}
+import { AuthGuard, tokenGetter } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [

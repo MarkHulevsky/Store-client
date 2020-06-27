@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms'
 import { User } from '../../models/User';
 import { LoginModel } from '../../models/LoginModel';
 import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sign-in',
@@ -17,11 +18,11 @@ export class SignInComponent implements OnInit {
   public errors: string[] = [];
 
   constructor(
-    private accountService: AccountService,
-    private formBuilder: FormBuilder,
-    private router: Router
+    private _accountService: AccountService,
+    private _formBuilder: FormBuilder,
+    private _router: Router
   ) {
-    this.loginForm = formBuilder.group({
+    this.loginForm = _formBuilder.group({
       email: '',
       password: '',
       isRememberMe: false,
@@ -32,20 +33,20 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(loginModel): void {
-    this.accountService.signIn(loginModel as LoginModel).subscribe(data => {
+    this._accountService.signIn(loginModel as LoginModel).subscribe(data => {
       this.errors = data.errors;
-      if (this.errors.length > 0)
+      if (this.errors?.length > 0)
       {
         this.loginForm.reset();
         return;
       }
       const token = (<any>data).access_token;
       localStorage.setItem("jwt", token);
-      this.router.navigate([""]);
+      this._router.navigate([""]);
     })
   }
 
   signUpRedirect() {
-    this.router.navigate(["account/sign-up"]);
+    this._router.navigate(["account/sign-up"]);
   }
 }
