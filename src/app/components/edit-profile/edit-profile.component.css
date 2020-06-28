@@ -1,0 +1,13 @@
+#profile {
+    margin-left: 30%;
+}
+
+input {
+    width: 30%;
+}
+
+.error {
+    text-align: end;
+    margin-right: 70%;  
+    color: red;
+}

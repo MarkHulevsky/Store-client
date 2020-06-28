@@ -21,4 +21,8 @@ export class AccountService {
   signUp(model: RegisterModel): Observable<any> {
     return this.http.post(this.hostUrl + 'SignUp', model);
   }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(this.hostUrl + "ForgotPassword", {email: email});
+  }
 }

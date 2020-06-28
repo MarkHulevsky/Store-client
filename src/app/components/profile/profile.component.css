@@ -1,0 +1,16 @@
+#profile {
+    margin-left: 30%;
+}
+
+input {
+    width: 40%;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-sided {
+    margin-right: 60%;
+}

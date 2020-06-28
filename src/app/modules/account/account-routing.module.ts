@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'account/sign-in', component: SignInComponent },
   { path: 'account/sign-up', component: SignUpComponent },
   { path: 'account/password-recovery', component: PasswordRecoveryComponent },
-  { path: 'account/confirm-password', component: ConfirmPasswordComponent }
+  { path: 'account/confirm-password', component: ConfirmPasswordComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

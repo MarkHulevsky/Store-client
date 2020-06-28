@@ -1,0 +1,80 @@
+<div id="profile">
+    <div>
+        <h3>My Profile</h3>
+    </div>
+
+    <form [formGroup]="editProfileForm" (ngSubmit)="save(editProfileForm.value)">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input class="form-control" type="text" id="firstName" formControlName="firstName" 
+                placeholder="First Name">
+
+            <div *ngIf="firstName.invalid && (firstName.dirty ||
+                firstName.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="firstName.errors.required">
+                    First Name is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName"> Last Name </label>
+            <input id="lastName" class="form-control" type="text" formControlName="lastName" 
+                placeholder="Last Name" />
+
+            <div *ngIf="lastName.invalid && (lastName.dirty ||
+                lastName.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="lastName.errors.required">
+                    Last Name is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email"> Email </label>
+            <input id="email" class="form-control" type="text" formControlName="email" placeholder="Email" />
+
+            <div *ngIf="email.invalid && (email.dirty ||
+                email.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="email.errors.required">
+                    Email is required.
+                </div>
+                <div *ngIf="email.errors.email">
+                    Must be an email format.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password"> Password </label>
+            <input id="password" class="form-control" type="password" formControlName="password" placeholder="Password">
+
+            <div *ngIf="password.invalid && (password.dirty ||
+                password.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="password.errors.required">
+                    Password is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                    Password must be at least 6 characters.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword"> Confirm Password </label>
+            <input id="confirmPassword" class="form-control" type="password" formControlName="confirmPassword"
+                placeholder="Confirm Password">
+
+            <div *ngIf="editProfileForm.errors?.confirmPasswordValid && (confirmPassword.dirty ||
+                confirmPassword.touched)" class="alert alert-dabger" class="error">
+                Password should be the same.
+            </div>
+        </div>
+
+        <div>
+            <button class="btn btn-primary btn-sm" type="submit"> Save </button>
+            <button style="margin-left: 30px;" class="btn btn-danger btn-sm" 
+            type="button" (click)="cancel()"> Cancel </button>
+        </div>
+    </form>
+</div>
