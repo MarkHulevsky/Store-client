@@ -21,7 +21,10 @@ export class ProfileComponent implements OnInit {
 
   getProfile() {
     this._userService.getCurrentUser().subscribe((data: User) => {
-      this.user = data
+      this.user = data;
+      localStorage.setItem("firstName", this.user.firstName);
+      localStorage.setItem("lastName", this.user.lastName);
+      localStorage.setItem("email", this.user.email);
     });
   }
 }

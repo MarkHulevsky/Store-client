@@ -1,10 +1,12 @@
-import { UserStatus } from '../enums/UserStatus'
+import { UserStatus } from '../enums/enums';
+
 export class User {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    emailConfirmed: boolean;
-    status: UserStatus;
-    errors: string[];
+    public id: string;
+    public email: string;
+    public firstName: string;
+    public lastName: string;
+    public emailConfirmed: boolean;
+    public role: string;
+    public status: UserStatus;
+    public errors: string[];
 }

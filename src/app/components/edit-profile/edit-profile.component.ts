@@ -4,7 +4,6 @@ import { UserService } from 'src/app/services/user.service';
 import { FormBuilder, ValidatorFn, FormGroup, ValidationErrors, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EditProfileModel } from 'src/app/models/EditProfileModel';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,10 +12,10 @@ import { map } from 'rxjs/operators';
 })
 export class EditProfileComponent implements OnInit {
 
-  public user: User;
+  public user: User = new User;
   public editProfileForm: FormGroup;
   public errors: string[] = [];
-  
+
   private _confirmPasswordValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
@@ -25,7 +24,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   constructor(
-    private _formBuilder: FormBuilder, 
+    private _formBuilder: FormBuilder,
     private _userService: UserService,
     private _router: Router
   ) {
@@ -43,12 +42,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   getProfile() {
-     return this._userService.getCurrentUser().subscribe((data: User) => {
-       this.user = data;
-       this.editProfileForm.controls['firstName'].setValue(this.user.firstName);
-       this.editProfileForm.controls['lastName'].setValue(this.user.lastName);
-       this.editProfileForm.controls['email'].setValue(this.user.email);
-     });
+    this.user.firstName = localStorage.getItem("firstName");
+    this.user.lastName = localStorage.getItem("lastName");
+    this.user.email = localStorage.getItem("email");
   }
 
   save(editedUser) {

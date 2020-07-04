@@ -8,18 +8,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard, tokenGetter } from './services/auth-guard.service';
 import { UserModule } from './modules/user/user.module';
-import { SharedComponent } from './components/shared/shared.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
+import { AdministratorModule } from './modules/administrator/administrator.module';
+import { RoleGuard } from './services/role-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SharedComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AccountModule,
     UserModule,
+    AdministratorModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
@@ -29,7 +34,7 @@ import { SharedComponent } from './components/shared/shared.component';
       }
     })
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, RoleGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

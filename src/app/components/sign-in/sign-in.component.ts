@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms'
 import { User } from '../../models/User';
 import { LoginModel } from '../../models/LoginModel';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,6 +19,7 @@ export class SignInComponent implements OnInit {
   public rememberMe: boolean = false;
 
   constructor(
+    private _userService: UserService,
     private _accountService: AccountService,
     private _formBuilder: FormBuilder,
     private _router: Router,
@@ -26,10 +28,8 @@ export class SignInComponent implements OnInit {
       if (localStorage.getItem("rememberMe") === "Yes") {
         let token = localStorage.getItem("jwt");
         localStorage.setItem("jwt", token);
+        this.setUser();
         _router.navigate([""]);
-      }
-      if (localStorage.getItem("rememberMe") === "No") {
-        localStorage.setItem("jwt", "");
       }
     }
 
@@ -43,6 +43,15 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setUser() {
+    this._userService.getCurrentUser().subscribe((data: User) => {
+      this.user = data;
+      localStorage.setItem("firstName", this.user.firstName);
+      localStorage.setItem("lastName", this.user.lastName);
+      localStorage.setItem("email", this.user.email);
+    });
+  }
+
   signIn(loginModel): void {
     this._accountService.signIn(loginModel as LoginModel).subscribe(data => {
       this.errors = data.errors;
@@ -51,12 +60,15 @@ export class SignInComponent implements OnInit {
         return;
       }
       const token = (<any>data).access_token;
-      localStorage.setItem("rememberMe", "No");
       if (this.rememberMe) {
         localStorage.setItem("rememberMe", "Yes");
         localStorage.setItem("jwt", token);
       }
-      localStorage.setItem("jwt", token);
+      if (!this.rememberMe) {
+        localStorage.setItem("rememberMe", "No");
+        localStorage.setItem("jwt", token);
+      }
+      this.setUser();
       this._router.navigate([""]);
     })
   }

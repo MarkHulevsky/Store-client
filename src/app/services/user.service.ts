@@ -5,13 +5,14 @@ import { map } from 'rxjs/operators';
 import { tokenGetter } from './auth-guard.service';
 import { User } from '../models/User';
 import { EditProfileModel } from '../models/EditProfileModel';
+import { UserFilter } from '../models/UserFIlter';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  host: string = "http://localhost:5000/api/User/";
+  private host: string = "http://localhost:5000/api/User/";
 
   constructor(private http: HttpClient) { }
 
@@ -21,5 +22,17 @@ export class UserService {
 
   editProfile(editProfileModel: EditProfileModel): Observable<User> {
     return this.http.post<User>(this.host + "EditProfile", editProfileModel);
+  }
+
+  getFiltred(userFilter: UserFilter): Observable<User[]> {
+    return this.http.post<User[]>(this.host + "GetFiltred", userFilter);
+  }
+
+  changeStatus(user: User): Observable<User> {
+    return this.http.post<User>(this.host + "ChangeStatus", user);
+  }
+
+  delete(user: User) {
+    return this.http.delete(this.host + `Delete?userId=${user.id}`);
   }
 }
