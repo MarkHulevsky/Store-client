@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrderManagmentComponent } from 'src/app/components/order-managment/order-managment.component';
-import { ProductManagmentComponent } from 'src/app/components/product-managment/product-managment.component';
-import { AuthorsPageComponent } from 'src/app/components/authors-page/authors-page.component';
+import { OrderManagmentComponent } from 'src/app/components/admin/order-managment/order-managment.component';
+import { ProductManagmentComponent } from 'src/app/components/admin/product-managment/product-managment.component';
+import { AuthorsPageComponent } from 'src/app/components/admin/authors-page/authors-page.component';
 import { RoleGuard } from 'src/app/services/role-guard.service';
-import { UserManagmentComponent } from 'src/app/components/user-managment/user-managment.component';
+import { UserManagmentComponent } from 'src/app/components/admin/user-managment/user-managment.component';
 
 
 const routes: Routes = [

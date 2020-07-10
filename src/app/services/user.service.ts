@@ -5,7 +5,8 @@ import { map } from 'rxjs/operators';
 import { tokenGetter } from './auth-guard.service';
 import { User } from '../models/User';
 import { EditProfileModel } from '../models/EditProfileModel';
-import { UserFilter } from '../models/UserFIlter';
+import { UserFilter } from '../models/RequestFilters/UserFIlter';
+import { UserResponseFilter } from '../models/ResponseFilters/UserResponseFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class UserService {
     return this.http.post<User>(this.host + "EditProfile", editProfileModel);
   }
 
-  getFiltred(userFilter: UserFilter): Observable<User[]> {
-    return this.http.post<User[]>(this.host + "GetFiltred", userFilter);
+  getFiltred(userFilter: UserFilter): Observable<UserResponseFilter> {
+    return this.http.post<UserResponseFilter>(this.host + "GetFiltred", userFilter);
   }
 
   changeStatus(user: User): Observable<User> {

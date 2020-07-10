@@ -1,13 +1,22 @@
-.control-buttons {
-    text-align: end;
-    margin-right: 15%;
+.material-icons{
+    font-size: 20px;
 }
 
-.delete-button {
-    border-color: black;
-    border-style: solid;
-    border-width: 1.5px;
-    border-radius: 90%;
+mat-form-field {
+    margin-left: 10%;
+    cursor: text;
+}
+
+input {
+    width: 15%;
+}
+
+table {
+    width: 100%;
+}
+
+i {
+    cursor: pointer;
 }
 
 .toggle-button {
@@ -18,7 +27,7 @@
     margin: 0;
     vertical-align: top;
     background: gray;
-    border: 1px solid #bbc1e1;
+    border: 1px solid black;
     border-radius: 30px;
     outline: none;
     cursor: pointer;
@@ -47,5 +56,5 @@
     transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
 }
 .toggle-button:checked {
-    background-color: green;
+    background-color: rgb(38, 196, 6);
 }

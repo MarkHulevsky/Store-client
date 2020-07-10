@@ -1,4 +1,4 @@
-import { SortType } from '../enums/enums';
+import { SortType } from '../../enums/enums';
 import { Paging } from './Paging';
 
 export class BaseFilter {

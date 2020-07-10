@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { FormBuilder } from '@angular/forms'
-import { User } from '../../models/User';
-import { LoginModel } from '../../models/LoginModel';
+import { User } from 'src/app/models/User';
+import { LoginModel } from 'src/app/models/LoginModel';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
