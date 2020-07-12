@@ -1,0 +1,21 @@
+<div mat-dialog-content>
+    <p>Edit user's profile</p>
+    <form>
+        <div class="form-group">
+            <label>First name</label>
+            <input class="form-control" [(ngModel)]="editProfile.firstName" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label>Last name</label>
+            <input class="form-control" [(ngModel)]="editProfile.lastName" placeholder="Surname">
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" [(ngModel)]="editProfile.email" placeholder="Email">
+        </div>
+    </form>
+</div>
+<div >
+    <button class="btn btn-danger control-buttons btn-sm" (click)="cancel()">Cancel</button>
+    <button class="btn btn-primary control-buttons btn-sm" (click)="save(editProfile)">Save</button>
+</div>

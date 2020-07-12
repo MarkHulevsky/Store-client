@@ -39,7 +39,7 @@
                 <ng-container matColumnDef="customColumn">
                     <th mat-header-cell *matHeaderCellDef>Action</th>
                     <td mat-cell *matCellDef="let element">
-                        <i class="material-icons actionIcon">
+                        <i class="material-icons actionIcon" (click)="editProfile(element)">
                             create
                         </i>
                         <i class="material-icons actionIcon" (click)="delete(element)">

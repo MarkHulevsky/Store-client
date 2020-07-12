@@ -10,7 +10,10 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
-
+import { Constants } from 'src/app/models/constants/constants';
+import { MatDialog } from '@angular/material/dialog';
+import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
+import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 
 @Component({
   selector: 'app-user-managment',
@@ -30,6 +33,7 @@ export class UserManagmentComponent implements OnInit {
   public isLoadingResults = true;
   public isRateLimitReached = false;
   public resultsLength = 0;
+  private constants = new Constants;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -37,19 +41,11 @@ export class UserManagmentComponent implements OnInit {
   public pageEvent: PageEvent;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {
     this.sort = new MatSort;
-    this.userFilter = {
-      propName: "",
-      searchString: "",
-      sortType: SortType.ascending,
-      statuses: [true, false],
-      paging: {
-        currentPage: 0,
-        itemsCount: 10
-      }
-    };
+    this.userFilter = this.constants.userFilter;
   }
 
   ngOnInit(): void {
@@ -87,11 +83,10 @@ export class UserManagmentComponent implements OnInit {
   }
 
   delete(user: User) {
-    this.userService.delete(user).subscribe();
-    let index = this.data.indexOf(user);
-    if (index > -1){
-      this.data.slice(index, 1);
-    }
+    this.dialog.open(DeleteUserDialogComponent, {
+      width: "300px",
+      data: user
+    });
   }
 
   changeStatus(user: User) {
@@ -107,6 +102,18 @@ export class UserManagmentComponent implements OnInit {
     this.userFilter.propName = propName;
     this.changeSortType();
     this.getUsers();
+  }
+
+  editProfile(user: User) {
+    const dialogRef = this.dialog.open(EditProfileDialogComponent, {
+      width: "400px",
+      data: { 
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      }
+    });
   }
 
   private changeSortType() {

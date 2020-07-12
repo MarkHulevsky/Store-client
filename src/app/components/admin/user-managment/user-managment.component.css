@@ -7,10 +7,6 @@ mat-form-field {
     cursor: text;
 }
 
-input {
-    width: 15%;
-}
-
 table {
     width: 100%;
 }

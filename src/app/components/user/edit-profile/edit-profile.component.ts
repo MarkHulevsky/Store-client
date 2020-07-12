@@ -42,12 +42,14 @@ export class EditProfileComponent implements OnInit {
   }
 
   getProfile() {
+    this.user.id = localStorage.getItem("id");
     this.user.firstName = localStorage.getItem("firstName");
     this.user.lastName = localStorage.getItem("lastName");
     this.user.email = localStorage.getItem("email");
   }
 
-  save(editedUser) {
+  save(editedUser: EditProfileModel) {
+    editedUser.id = this.user.id;
     this._userService.editProfile(editedUser as EditProfileModel).subscribe((data: User) => {
       this.errors = data?.errors;
       if (this.errors?.length > 0) {

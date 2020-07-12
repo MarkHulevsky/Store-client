@@ -5,7 +5,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AdministratorRoutingModule } from './administrator-routing.module';
 import { OrderManagmentComponent } from 'src/app/components/admin/order-managment/order-managment.component';
@@ -24,6 +25,8 @@ import { AuthorsPageComponent } from 'src/app/components/admin/authors-page/auth
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
+    ReactiveFormsModule,
+    MatDialogModule,
     AdministratorRoutingModule,
     MatSidenavModule,
     MatFormFieldModule,

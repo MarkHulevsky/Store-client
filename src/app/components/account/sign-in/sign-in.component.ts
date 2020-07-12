@@ -46,6 +46,7 @@ export class SignInComponent implements OnInit {
   setUser() {
     this._userService.getCurrentUser().subscribe((data: User) => {
       this.user = data;
+      localStorage.setItem("id", this.user.id);
       localStorage.setItem("firstName", this.user.firstName);
       localStorage.setItem("lastName", this.user.lastName);
       localStorage.setItem("email", this.user.email);
