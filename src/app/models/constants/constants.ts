@@ -1,5 +1,6 @@
 import { UserFilter } from '../RequestFilters/UserFIlter';
 import { SortType } from 'src/app/enums/enums';
+import { AuthorFilter } from '../RequestFilters/AuthorFilter';
 
 export class Constants {
     public readonly userFilter: UserFilter = {
@@ -16,5 +17,14 @@ export class Constants {
     public readonly userRoles = {
         admin: "admin",
         user: "user"
+    }
+
+    public readonly authorFilter: AuthorFilter = {
+        propName: "",
+        sortType: SortType.ascending,
+        paging: {
+            currentPage: 0,
+            itemsCount: 5
+        }
     }
 } 

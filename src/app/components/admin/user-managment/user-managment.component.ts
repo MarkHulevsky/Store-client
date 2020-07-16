@@ -12,8 +12,8 @@ import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
-import { EditProfileDialogComponent } from '../edit-profile-dialog/edit-profile-dialog.component';
-import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
+import { EditProfileDialogComponent } from '../dialogs/edit-profile-dialog/edit-profile-dialog.component';
+import { DeleteUserDialogComponent } from '../dialogs/delete-user-dialog/delete-user-dialog.component';
 
 @Component({
   selector: 'app-user-managment',
@@ -22,9 +22,6 @@ import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dia
 })
 export class UserManagmentComponent implements OnInit {
 
-  public paging = new Paging;
-  public currentPages: number[] = [];
-  public pages: number[] = [];
   public userResponseFilter = new UserResponseFilter;
   public userFilter = new UserFilter;
   public displayedColumns = ['name', 'email', 'status', 'customColumn'];
@@ -38,11 +35,10 @@ export class UserManagmentComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  public pageEvent: PageEvent;
 
   constructor(
-    private userService: UserService,
-    private dialog: MatDialog
+    private _userService: UserService,
+    private _dialog: MatDialog
   ) {
     this.sort = new MatSort;
     this.userFilter = this.constants.userFilter;
@@ -66,7 +62,7 @@ export class UserManagmentComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           this.userFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this.userService.getFiltred(this.userFilter);
+          return this._userService.getFiltred(this.userFilter);
         }),
         map(data => {
           this.isLoadingResults = false;
@@ -83,14 +79,14 @@ export class UserManagmentComponent implements OnInit {
   }
 
   delete(user: User) {
-    this.dialog.open(DeleteUserDialogComponent, {
+    this._dialog.open(DeleteUserDialogComponent, {
       width: "300px",
       data: user
     });
   }
 
   changeStatus(user: User) {
-    this.userService.changeStatus(user).subscribe();
+    this._userService.changeStatus(user).subscribe();
   }
 
   searchFilter(event) {
@@ -105,7 +101,7 @@ export class UserManagmentComponent implements OnInit {
   }
 
   editProfile(user: User) {
-    const dialogRef = this.dialog.open(EditProfileDialogComponent, {
+    const dialogRef = this._dialog.open(EditProfileDialogComponent, {
       width: "400px",
       data: { 
         id: user.id,

@@ -8,6 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { EditProfileDialogComponent } from 'src/app/components/admin/dialogs/edit-profile-dialog/edit-profile-dialog.component';
+import { DeleteUserDialogComponent } from 'src/app/components/admin/dialogs/delete-user-dialog/delete-user-dialog.component'; 
+import { AddAuthorDialogComponent } from 'src/app/components/admin/dialogs/add-author-dialog/add-author-dialog.component';
 import { AdministratorRoutingModule } from './administrator-routing.module';
 import { OrderManagmentComponent } from 'src/app/components/admin/order-managment/order-managment.component';
 import { UserManagmentComponent } from 'src/app/components/admin/user-managment/user-managment.component';
@@ -19,7 +22,10 @@ import { AuthorsPageComponent } from 'src/app/components/admin/authors-page/auth
     OrderManagmentComponent,
     UserManagmentComponent,
     ProductManagmentComponent,
-    AuthorsPageComponent
+    AuthorsPageComponent,
+    EditProfileDialogComponent,
+    DeleteUserDialogComponent,
+    AddAuthorDialogComponent
   ],
   imports: [
     CommonModule,

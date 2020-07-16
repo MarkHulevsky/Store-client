@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserService } from './user.service';
-import { User } from '../models/User';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/User';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

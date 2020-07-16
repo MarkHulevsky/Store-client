@@ -9,22 +9,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AccountModule } from './modules/account/account.module';
-import { AuthGuard, tokenGetter } from './services/auth-guard.service';
+import { AuthGuard, tokenGetter } from './services/guards/auth-guard.service';
 import { UserModule } from './modules/user/user.module';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { AdministratorModule } from './modules/administrator/administrator.module';
-import { RoleGuard } from './services/role-guard.service';
-import { EditProfileDialogComponent } from './components/admin/edit-profile-dialog/edit-profile-dialog.component';
-import { DeleteUserDialogComponent } from './components/admin/delete-user-dialog/delete-user-dialog.component';
+import { RoleGuard } from './services/guards/role-guard.service';
+import { DeleteAuthorDialogComponent } from './components/admin/dialogs/delete-author-dialog/delete-author-dialog.component';
+import { EditAuthorDialogComponent } from './components/admin/dialogs/edit-author-dialog/edit-author-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    EditProfileDialogComponent,
-    DeleteUserDialogComponent,
+    DeleteAuthorDialogComponent,
+    EditAuthorDialogComponent,
   ],
   imports: [
     BrowserModule,

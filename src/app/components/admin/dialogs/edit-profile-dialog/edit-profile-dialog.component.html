@@ -1,0 +1,46 @@
+<div mat-dialog-content>
+    <p>Edit user's profile</p>
+    <form [formGroup]="editProfileForm" (ngSubmit)="save(editProfileForm)">
+        <div class="form-group">
+            <label for="firstName"> First Name </label>
+            <input id="firstName" class="form-control" type="text" formControlName="firstName"
+                placeholder="First Name" />
+
+            <div *ngIf="firstName.invalid && (firstName.dirty ||
+                firstName.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="firstName.errors.required">
+                    First Name is required.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName"> Last Name </label>
+            <input id="lastName" class="form-control" type="text" formControlName="lastName" placeholder="Last Name" />
+
+            <div *ngIf="lastName.invalid && (lastName.dirty ||
+            lastName.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="lastName.errors.required">
+                    Last Name is required.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email"> Email </label>
+            <input id="email" class="form-control" type="text" formControlName="email" placeholder="Email" />
+
+            <div *ngIf="email.invalid && (email.dirty ||
+                email.touched)" class="alert alert-dabger" class="error">
+                <div *ngIf="email.errors.required">
+                    Email is required.
+                </div>
+                <div *ngIf="email.errors.email">
+                    Must be an email format.
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-danger control-buttons btn-sm" (click)="cancel()">Cancel</button>
+            <button class="btn btn-primary control-buttons btn-sm">Save</button>
+        </div>
+    </form>
+</div>

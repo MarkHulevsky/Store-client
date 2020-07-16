@@ -1,4 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthorService } from 'src/app/services/author.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { AuthorResponseFilter } from 'src/app/models/ResponseFilters/AuthorResponseFilter';
+import { AuthorFilter } from 'src/app/models/RequestFilters/AuthorFilter';
+import { Author } from 'src/app/models/Author';
+import { MatTableDataSource } from '@angular/material/table';
+import { Constants } from 'src/app/models/constants/constants';
+import { merge, of } from 'rxjs';
+import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { AddAuthorDialogComponent } from '../dialogs/add-author-dialog/add-author-dialog.component';
+import { DeleteAuthorDialogComponent } from '../dialogs/delete-author-dialog/delete-author-dialog.component';
+import { EditAuthorDialogComponent } from '../dialogs/edit-author-dialog/edit-author-dialog.component';
 
 @Component({
   selector: 'app-authors-page',
@@ -7,9 +21,84 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorsPageComponent implements OnInit {
 
-  constructor() { }
+  public authorResponseFilter = new AuthorResponseFilter;
+  public authorFilter = new AuthorFilter;
+  public displayedColumns = ['name', 'products', 'customColumn'];
+  public dataSource = new MatTableDataSource<Author>();
+  public data: Author[] = [];
+  public isLoadingResults = true;
+  public isRateLimitReached = false;
+  public resultsLength = 0;
+  private constants = new Constants;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
+  constructor(
+    private _authorService: AuthorService,
+    private _dialog: MatDialog
+  ) {
+    this.sort = new MatSort;
+    this.authorFilter = this.constants.authorFilter;
+   }
 
   ngOnInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
+  ngAfterViewInit() {
+    this.getAuthors();
+  }
+
+  getAuthors() {
+    this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.dataSource.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          this.authorFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._authorService.getFiltred(this.authorFilter);
+        }),
+        map(data => {
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.totalCount;
+          return data.authors;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          this.isRateLimitReached = true;
+          return of([]);
+        })
+        ).subscribe(data => this.data = data as Author[]);
+  }
+
+  add() {
+    this._dialog.open(AddAuthorDialogComponent, {
+      width: "400px"
+    });
+  }
+
+  delete(author: Author){
+    this._dialog.open(DeleteAuthorDialogComponent, {
+      width: "400px",
+      data: {
+        id: author.id,
+        name: author.name
+      }
+    });
+  }
+
+  edit(author: Author) {
+    this._dialog.open(EditAuthorDialogComponent, {
+      width: "400px",
+      data: {
+        id: author.id,
+        name: author.name
+      }
+    })
+  }
 }
