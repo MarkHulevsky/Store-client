@@ -5,6 +5,9 @@ import { FormBuilder, FormControl, Validators, ValidatorFn, FormGroup, Validatio
 import { Router } from '@angular/router';
 import { RegisterModel } from 'src/app/models/RegisterModel';
 import { LoginModel } from 'src/app/models/LoginModel';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { CookieHelper } from 'src/app/helpers/cookie.helper';
+import { Constants } from 'src/app/models/constants/constants';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,9 +30,11 @@ export class SignUpComponent implements OnInit {
 
 
   constructor(
-    private _accountService: AccountService,
+    private _authenticationService: AuthenticationService,
     private _formBuilder: FormBuilder,
-    private _router: Router
+    private _router: Router,
+    private _cookieHelper: CookieHelper,
+    private _constants: Constants
   ) {
     this.registerForm = _formBuilder.group({
       'firstName': new FormControl('', Validators.required),
@@ -47,17 +52,17 @@ export class SignUpComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    this._accountService.signUp(registerModel as RegisterModel).subscribe(data => {
-      this._accountService.signIn(registerModel as LoginModel).subscribe(data => {
+    this._authenticationService.signUp(registerModel as RegisterModel).subscribe(data => {
+      this._authenticationService.signIn(registerModel as LoginModel).subscribe(data => {
         this.errors = data.errors;
-      if (this.errors?.length > 0)
-      {
-        return;
-      }
-      const token = (<any>data).access_token;
-      localStorage.setItem("jwt", token);
-      })
-      this._router.navigate(["account/confirm-password"]);
+        if (this.errors?.length > 0) {
+          return;
+        }
+        this._authenticationService.setUserToStorage(data);
+        let cookie = this._cookieHelper.getAllCookie();
+        localStorage.setItem(this._constants.accessToken, cookie[this._constants.accessToken]);
+        this._router.navigate(["account/confirm-password"]);
+      });
     });
   }
 

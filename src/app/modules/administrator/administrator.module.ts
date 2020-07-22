@@ -16,16 +16,27 @@ import { OrderManagmentComponent } from 'src/app/components/admin/order-managmen
 import { UserManagmentComponent } from 'src/app/components/admin/user-managment/user-managment.component';
 import { ProductManagmentComponent } from 'src/app/components/admin/product-managment/product-managment.component';
 import { AuthorsPageComponent } from 'src/app/components/admin/authors-page/authors-page.component';
+import { DeleteAuthorDialogComponent } from 'src/app/components/admin/dialogs/delete-author-dialog/delete-author-dialog.component';
+import { EditAuthorDialogComponent } from 'src/app/components/admin/dialogs/edit-author-dialog/edit-author-dialog.component';
+import { RoleGuard } from 'src/app/services/guards/role-guard.service';
+import { AddProductDialogComponent } from 'src/app/components/admin/dialogs/add-product-dialog/add-product-dialog.component';
+import { PrintingEditionTypeStringToEnumPipe } from 'src/app/helpers/pipes/printingEditionTypeStringToEnum';
+import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringToEnumPipe';
 
 @NgModule({
   declarations: [
     OrderManagmentComponent,
+    AddProductDialogComponent,
     UserManagmentComponent,
     ProductManagmentComponent,
     AuthorsPageComponent,
     EditProfileDialogComponent,
     DeleteUserDialogComponent,
-    AddAuthorDialogComponent
+    AddAuthorDialogComponent,
+    EditAuthorDialogComponent,
+    DeleteAuthorDialogComponent,
+    PrintingEditionTypeStringToEnumPipe,
+    CurrencyStringToEnumPipe
   ],
   imports: [
     CommonModule,
@@ -38,6 +49,7 @@ import { AuthorsPageComponent } from 'src/app/components/admin/authors-page/auth
     MatFormFieldModule,
     MatInputModule,
     FormsModule
-  ]
+  ],
+  providers: [RoleGuard]
 })
 export class AdministratorModule { }

@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
-export function tokenGetter() {
-  return localStorage.getItem("jwt");
-}
+import { Constants } from 'src/app/models/constants/constants';
+import { CookieHelper } from 'src/app/helpers/cookie.helper';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   
-  constructor(private jwtHelper: JwtHelperService, private router: Router) {
-  }
-  canActivate() {
-    const token = localStorage.getItem("jwt");
+  private _adminRole: string;
+  private _token: string;
+  constructor(
+    private _router: Router,
+    private _constants: Constants,
+    private _cookieHelper: CookieHelper,
+    private _jwtHelper: JwtHelperService
+    ) {
+      this._adminRole = _constants.adminRoleName;
+      this._token = this._cookieHelper.getItem(this._constants.accessToken)
 
-    if (token && !this.jwtHelper.isTokenExpired(token)){
-      return true;
-    }
-    this.router.navigate(["account/sign-in"]);
-    return false;
+  }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return !this._jwtHelper.isTokenExpired(this._token);
   }
 }

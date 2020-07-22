@@ -11,6 +11,11 @@ input {
     justify-content: space-between;
 }
 
-.right-sided {
-    margin-right: 60%;
+.edit-icon {
+    margin-left: 29%;
+}
+
+.profile-icon {
+    font-size: 100px;
+    color: black;
 }

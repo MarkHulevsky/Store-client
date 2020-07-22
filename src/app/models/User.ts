@@ -7,4 +7,5 @@ export class User extends BaseModel {
     public emailConfirmed: boolean;
     public role: string;
     public isActive: boolean;
+    public roles: string[];
 }

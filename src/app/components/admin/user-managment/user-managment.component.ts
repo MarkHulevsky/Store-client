@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
-import { Paging } from 'src/app/models/RequestFilters/Paging';
 import { UserFilter } from 'src/app/models/RequestFilters/UserFIlter';
 import { SortType } from 'src/app/enums/enums';
 import { UserResponseFilter } from 'src/app/models/ResponseFilters/UserResponseFilter';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
@@ -30,7 +29,6 @@ export class UserManagmentComponent implements OnInit {
   public isLoadingResults = true;
   public isRateLimitReached = false;
   public resultsLength = 0;
-  private constants = new Constants;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -38,10 +36,11 @@ export class UserManagmentComponent implements OnInit {
 
   constructor(
     private _userService: UserService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _constants: Constants
   ) {
     this.sort = new MatSort;
-    this.userFilter = this.constants.userFilter;
+    this.userFilter = this._constants.userFilter;
   }
 
   ngOnInit(): void {

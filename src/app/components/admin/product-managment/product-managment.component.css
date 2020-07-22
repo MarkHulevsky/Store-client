@@ -1,0 +1,9 @@
+table {
+    width: 100%;
+}
+
+.add-circle {
+    text-align: end;
+    margin-right: 10%;
+    cursor: pointer;
+}

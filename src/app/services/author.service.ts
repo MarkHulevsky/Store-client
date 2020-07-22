@@ -13,19 +13,23 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
+  getAll(): Observable<Author[]> {
+    return this.http.get<Author[]>(`${environment.apiUrl}/api/Author/GetAll`)
+  }
+
   getFiltred(filter: AuthorFilter): Observable<AuthorResponseFilter> {
     return this.http.post<AuthorResponseFilter>(`${environment.apiUrl}/api/Author/GetFiltred`, filter);
   }
 
   addAuthor(author: Author): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/Author/AddAuthor`, author);
+    return this.http.post(`${environment.apiUrl}/api/Author/Add`, author);
   }
 
   deleteAuthor(id: string): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/api/Author/DeleteAuthor?id=${id}`);
+    return this.http.delete(`${environment.apiUrl}/api/Author/Delete?id=${id}`);
   }
 
   editAuthor(author: Author): Observable<any>{
-    return this.http.put(`${environment.apiUrl}/api/Author/EditAuthor`, author);
+    return this.http.put(`${environment.apiUrl}/api/Author/Edit`, author);
   }
 }

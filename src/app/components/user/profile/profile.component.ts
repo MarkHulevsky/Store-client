@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/User';
+import { StorageHelper } from 'src/app/helpers/storage.helper';
+import { Constants } from 'src/app/models/constants/constants';
 
 @Component({
   selector: 'app-profile',
@@ -12,19 +14,15 @@ export class ProfileComponent implements OnInit {
   public user: User = new User;
 
   constructor(
-    private _userService: UserService
-  ) { }
+    private _storageHelper: StorageHelper,
+    private _constants: Constants
+  ) {
+    this.user.firstName = _storageHelper.getItem(_constants.storageFirstName);
+    this.user.lastName = _storageHelper.getItem(_constants.storageLastName);
+    this.user.email = _storageHelper.getItem(_constants.storageEmail);
+   }
 
   ngOnInit(): void {
-    this.getProfile();
   }
 
-  getProfile() {
-    this._userService.getCurrentUser().subscribe((data: User) => {
-      this.user = data;
-      localStorage.setItem("firstName", this.user.firstName);
-      localStorage.setItem("lastName", this.user.lastName);
-      localStorage.setItem("email", this.user.email);
-    });
-  }
 }

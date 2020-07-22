@@ -1,11 +1,12 @@
 <div id="profile">
     <div class="head">
-        <i class="material-icons">account_box</i>
-        <a class="right-sided material-icons" href="user/edit-profile">create</a>
+        <i class="profile-icon material-icons">account_box</i>
     </div>
     <div class="form-group">
-        <label>Your First name</label>
-        <br>
+        <div>
+            <label>Your First name</label>
+            <a class="material-icons edit-icon" href="user/edit-profile">create</a>
+        </div>
         <input class="form-control" type="text" [(ngModel)]="user.firstName" readonly="true">
     </div>
 

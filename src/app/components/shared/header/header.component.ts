@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/models/User';
+import { StorageHelper } from 'src/app/helpers/storage.helper';
+import { Constants } from 'src/app/models/constants/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,19 +11,37 @@ import { User } from 'src/app/models/User';
 })
 export class HeaderComponent implements OnInit {
 
-  public user: User;
+  public isAdmin: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private _storageHelper: StorageHelper,
+    private _constants: Constants,
+    private _router: Router
+    ) {
+    this.isAdmin = _storageHelper.getItem(_constants.storageRole) === _constants.adminRoleName;
+   }
 
   ngOnInit(): void {
-    this.getCurrentUser();
+
   }
 
-  getCurrentUser() {
-    this.userService.getCurrentUser().subscribe((data: User) => {
-      this.user = data;
-    })
+  orderManagment(): void {
+    this._router.navigate(["administrator/order-managment"]);
   }
 
-  
+  userManagment(): void {
+    this._router.navigate(["administrator/user-managment"]);
+  }
+
+  productManagment(): void {
+    this._router.navigate(["administrator/product-managment"]);
+  }
+
+  authorManagment(): void {
+    this._router.navigate(["administrator/authors-page"]);
+  }
+
+  myProfile(): void {
+    this._router.navigate(["user/profile"]);
+  }
 }

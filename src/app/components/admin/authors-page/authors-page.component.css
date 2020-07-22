@@ -6,3 +6,7 @@ table {
     text-align: end;
     margin-right: 10%;
 }
+
+i {
+    cursor: pointer;
+}

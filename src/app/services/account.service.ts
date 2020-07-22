@@ -10,17 +10,9 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class AccountService {
 
-  constructor(private http: HttpClient) {}
-
-  signIn(model: LoginModel): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/Account/SignIn`, model);
-  }
-
-  signUp(model: RegisterModel): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/Account/SignUp`, model);
-  }
+  constructor(private _http: HttpClient) {}
 
   forgotPassword(email: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/Account/ForgotPassword`, {email: email});
+    return this._http.post(`${environment.apiUrl}/api/Account/ForgotPassword`, {email: email});
   }
 }

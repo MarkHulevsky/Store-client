@@ -29,17 +29,17 @@ export class AuthorsPageComponent implements OnInit {
   public isLoadingResults = true;
   public isRateLimitReached = false;
   public resultsLength = 0;
-  private constants = new Constants;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
     private _authorService: AuthorService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _constants: Constants
   ) {
     this.sort = new MatSort;
-    this.authorFilter = this.constants.authorFilter;
+    this.authorFilter = this._constants.authorFilter;
    }
 
   ngOnInit(): void {
@@ -84,7 +84,7 @@ export class AuthorsPageComponent implements OnInit {
 
   delete(author: Author){
     this._dialog.open(DeleteAuthorDialogComponent, {
-      width: "400px",
+      width: "300px",
       data: {
         id: author.id,
         name: author.name

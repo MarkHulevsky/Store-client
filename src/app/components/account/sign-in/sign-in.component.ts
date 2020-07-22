@@ -5,6 +5,11 @@ import { User } from 'src/app/models/User';
 import { LoginModel } from 'src/app/models/LoginModel';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StorageHelper } from 'src/app/helpers/storage.helper';
+import { CookieHelper } from 'src/app/helpers/cookie.helper';
+import { Constants } from 'src/app/models/constants/constants';
+import { constants } from 'buffer';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,20 +24,13 @@ export class SignInComponent implements OnInit {
   public rememberMe: boolean = false;
 
   constructor(
-    private _userService: UserService,
-    private _accountService: AccountService,
+    private _authenticationService: AuthenticationService,
     private _formBuilder: FormBuilder,
     private _router: Router,
+    private _storageHelper: StorageHelper,
+    private _cookieHelper: CookieHelper,
+    private _constants: Constants
   ) {
-    if (localStorage.getItem("rememberMe") !== undefined) {
-      if (localStorage.getItem("rememberMe") === "Yes") {
-        let token = localStorage.getItem("jwt");
-        localStorage.setItem("jwt", token);
-        this.setUser();
-        _router.navigate([""]);
-      }
-    }
-
     this.loginForm = _formBuilder.group({
       email: '',
       password: '',
@@ -43,35 +41,31 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setUser() {
-    this._userService.getCurrentUser().subscribe((data: User) => {
-      this.user = data;
-      localStorage.setItem("id", this.user.id);
-      localStorage.setItem("firstName", this.user.firstName);
-      localStorage.setItem("lastName", this.user.lastName);
-      localStorage.setItem("email", this.user.email);
-    });
-  }
-
   signIn(loginModel): void {
-    this._accountService.signIn(loginModel as LoginModel).subscribe(data => {
-      this.errors = data.errors;
-      if (this.errors?.length > 0) {
-        this.loginForm.reset();
+    this._authenticationService.signIn(loginModel as LoginModel).subscribe((data: User) => {
+      if (data.errors?.length > 0) {
         return;
       }
-      const token = (<any>data).access_token;
-      if (this.rememberMe) {
-        localStorage.setItem("rememberMe", "Yes");
-        localStorage.setItem("jwt", token);
-      }
-      if (!this.rememberMe) {
-        localStorage.setItem("rememberMe", "No");
-        localStorage.setItem("jwt", token);
-      }
-      this.setUser();
-      this._router.navigate([""]);
-    })
+      this._authenticationService.setUserToStorage(data);
+      let cookie = this._cookieHelper.getAllCookie();
+      localStorage.setItem(this._constants.accessToken, cookie[this._constants.accessToken]);
+      this._router.navigate(["home"]);
+    });
+
+    if (!this.rememberMe) {
+      let cookies = this._cookieHelper.getAllCookie();
+      this._cookieHelper.setCookieForExpire(
+        [
+          this._constants.accessToken,
+          this._constants.refreshToken
+        ],
+        [
+          cookies[this._constants.accessToken],
+          cookies[this._constants.refreshToken]
+        ],
+        this._constants.isNotRememberMeDateExpire
+      );
+    }
   }
 
   signUpRedirect() {

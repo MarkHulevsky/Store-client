@@ -29,11 +29,11 @@ export class EditAuthorDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  edit() {
-    if (this.editAuthorForm.invalid) {
+  edit(editedAuthorForm: FormGroup) {
+    if (editedAuthorForm.invalid) {
       return;
     }
-    this._authorService.editAuthor(this.editAuthorForm.value as Author).subscribe(() => {
+    this._authorService.editAuthor(editedAuthorForm.value as Author).subscribe(() => {
       this._dialogRef.close();
     });
   }

@@ -1,0 +1,10 @@
+<div class="conteiner">
+    <div *ngFor="let pe of data">
+        <div>
+            <i class="material-icons">import_contacts</i>
+            <p>{{pe.title}}</p>
+        </div>
+    </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="peFilter.paging.itemsCount" showFirstLastButtons>
+    </mat-paginator>
+</div>

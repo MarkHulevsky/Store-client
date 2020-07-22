@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { Constants } from './models/constants/constants';
+
+export function tokenGetter(): string {
+  let constants = new Constants;
+  return localStorage.getItem(constants.accessToken);
+}
 
 @Component({
   selector: 'app-root',

@@ -1,0 +1,58 @@
+<div>
+    <p>Add new product</p>
+    <form [formGroup]="peForm" (ngSubmit)="add()">
+
+        <div class="inline">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <textarea id="title" class="form-control" rows="10" placeholder="Title" formControlName="title">
+                </textarea>
+            </div>
+            <div class="right form-group">
+                <label for="category">Category</label>
+                <br>
+                <select id="category" class="form-control" formControlName="type">
+                    <option *ngFor="let peType of _constants.printingEditionTypeStrings"
+                        [ngValue]="peType | peStringToEnum">
+                        {{peType}}
+                    </option>
+                </select>
+                <br>
+
+                <label for="currency">Currency</label>
+                <br>
+                <select id="currency" class="form-control" formControlName="currency">
+                    <option *ngFor="let currency of _constants.currencyStrings"
+                        [ngValue]="currency | currencyStringToEnum">
+                        {{currency}}
+                    </option>
+                </select>
+                <br>
+
+                <label for="author">Authors</label>
+                <br>
+                <select id="author" class="form-control" formControlName="author">
+                    <option *ngFor="let author of authors" [ngValue]="author">{{author.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="inline">
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" rows="10" placeholder="Description"
+                    formControlName="description">
+                </textarea>
+            </div>
+            <div class="right form-group">
+                <label for="price">Price</label>
+                <br>
+                <input id="price" class="form-control" type="number" formControlName="price" placeholder="price">
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-danger btn-sm" type="button" (click)="cancel()">Cancel</button>
+            <button class="btn btn-primary btn-sm" [disabled]="clicked">Save</button>
+        </div>
+    </form>
+</div>

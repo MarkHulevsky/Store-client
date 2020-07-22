@@ -1,16 +1,13 @@
 .profile {
     color: white;
+    margin-left: 90%;
 }
 
 .material-icons {
-    font-size: 40px;
+    font-size: 50px;
     cursor: pointer;
 }
 
-mat-label {
-    margin: auto;
-}
-
-mat-select {
-    
+strong {
+    font-size: 20px;
 }

@@ -24,7 +24,7 @@ export class ConfirmPasswordComponent implements OnInit {
   }
 
   continueBtn(){
-    this._router.navigate(['']);
+    this._router.navigate(['home']);
   }
 
   async emailConfirmedCheck(){
