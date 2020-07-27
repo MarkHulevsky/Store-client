@@ -1,10 +1,59 @@
-<div class="conteiner">
-    <div *ngFor="let pe of data">
+<mat-drawer-container class="container">
+    <mat-drawer mode=side opened>
         <div>
-            <i class="material-icons">import_contacts</i>
-            <p>{{pe.title}}</p>
+            <legend>Categories</legend>
+            <div *ngFor="let type of constants.printingEditionTypeStrings">
+                <input type="checkbox" (change)="checkBoxChanged($event, type)" checked>
+                <label>{{type}}</label>
+            </div>
         </div>
-    </div>
-    <mat-paginator [length]="resultsLength" [pageSize]="peFilter.paging.itemsCount" showFirstLastButtons>
-    </mat-paginator>
-</div>
+        <div class="priceInput">
+            <legend>Price</legend>
+            <div>
+                <label>Min price</label>
+                <input type="number" placeholder="Minimum price" 
+                    [(ngModel)]="peFilter.minPrice" (keyup)="minPriceFilter($event)">
+            </div>
+            <div>
+                <label>Max price</label>
+                <input type="number" placeholder="Maximum price" 
+                    [(ngModel)]="peFilter.maxPrice" (keyup)="maxPriceFilter($event)">
+            </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div>
+            <div style="text-align: end;">
+                <input type="text" class="form-control searchInput" placeholder="Search by book title" (keyup)="search($event)" />
+            </div>
+            <div class="select">
+                <label>Currency: </label>
+                <select (change)="currencyChanged($event.target.value)">
+                    <option *ngFor="let currency of constants.currencyStrings">
+                        {{currency}}
+                    </option>
+                </select>
+                <label>Sort by</label>
+                <select (change)="sortByPrice($event.target.value)">
+                    <option value="ascending">
+                        Price: Ascending
+                    </option>
+                    <option value="descending">
+                        Price: Descending
+                    </option>
+                </select>
+            </div>
+            <div *ngFor="let pe of data" class="book-list">
+                <a [routerLink]="['/details', pe.id]">
+                    <i class="material-icons" >import_contacts</i>
+                    <p class="title">{{pe.title}}</p>
+                    <p class="authors" *ngFor="let author of pe.authors">{{author.name}} </p>
+                    <p class="price">{{pe.price}} {{pe.currency | currencyToString}}</p>
+                </a>
+            </div>
+            <mat-paginator [length]="resultsLength" [pageSize]="peFilter.paging.itemsCount"
+                showFirstLastButtons>
+            </mat-paginator>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

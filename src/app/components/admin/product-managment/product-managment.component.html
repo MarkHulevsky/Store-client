@@ -17,14 +17,18 @@
                     <th mat-header-cell *matHeaderCellDef>
                         Description
                     </th>
-                    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="hide-text-overflow">
+                            {{element.description}}
+                        </div>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="category">
                     <th mat-header-cell *matHeaderCellDef>
                         Category
                     </th>
-                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.type | peTypeToString}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="author">
@@ -35,17 +39,21 @@
                 </ng-container>
 
                 <ng-container matColumnDef="price">
-                    <th mat-header-cell *matHeaderCellDef> Price </th>
-                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                    <th mat-header-cell *matHeaderCellDef> Price
+                        <i class="material-icons" (click)="sortProducts()">swap_vert</i>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.price}} {{element.currency | currencyToString}}
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="customColumn">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                        <i class="material-icons actionIcon">
+                        <i class="material-icons actionIcon" (click)="edit(element)">
                             create
                         </i>
-                        <i class="material-icons actionIcon">
+                        <i class="material-icons actionIcon" (click)="delete(element)">
                             highlight_off
                         </i>
                     </td>

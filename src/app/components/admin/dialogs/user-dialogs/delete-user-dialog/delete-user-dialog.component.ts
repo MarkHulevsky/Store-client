@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/models/User';
-import { UserManagmentComponent } from '../../user-managment/user-managment.component';
+import { UserManagmentComponent } from '../../../user-managment/user-managment.component';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({

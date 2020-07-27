@@ -2,10 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { PrintingEditionService } from 'src/app/services/printing-edition.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Constants } from 'src/app/models/constants/constants';
-import { Currency, PrintingEditionType } from 'src/app/enums/enums';
 import { PrintingEdition } from 'src/app/models/PrintingEdition';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProductManagmentComponent } from '../../product-managment/product-managment.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ProductManagmentComponent } from '../../../product-managment/product-managment.component';
 import { AuthorService } from 'src/app/services/author.service';
 import { Author } from 'src/app/models/Author';
 
@@ -19,6 +18,7 @@ export class AddProductDialogComponent implements OnInit {
   public peForm: FormGroup;
   public clicked: boolean = false;
   public authors: Author[] = [];
+  
   constructor(
     private _peService: PrintingEditionService,
     private _formBuilder: FormBuilder,

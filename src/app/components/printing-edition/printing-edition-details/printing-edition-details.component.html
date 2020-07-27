@@ -1,0 +1,23 @@
+<mat-drawer-container class="container">
+    <mat-drawer-content>
+        <div id="main">
+            <div id="narrow">
+                <i class="material-icons">import_contacts</i>
+                <legend>{{product.title}}</legend>
+                <p class="authors-list" *ngFor="let author of product.authors">{{author.name}}</p>
+            </div>
+            <div id="wide">
+                <div class="inline">
+                    <label>Quantity:</label>
+                    <input class="form-control" type="number" [(ngModel)]="orderItem.count" min="1">
+                    <p class="price">{{product.price * orderItem.count}} {{product.currency | currencyToString}}</p>
+                </div>
+                <button class="btn btn-primary btn-sm" (click)="addToCart()">Add to cart</button>
+            </div>
+        </div>
+        <div class="description">
+            <legend>Description</legend>
+            <p>{{product.description}}</p>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

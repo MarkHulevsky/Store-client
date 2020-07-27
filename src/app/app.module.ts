@@ -20,12 +20,15 @@ import { Constants } from './models/constants/constants';
 import { CookieHelper } from './helpers/cookie.helper';
 import { StorageHelper } from './helpers/storage.helper';
 import { PrintingEditionModule } from './modules/printing-edition/printing-edition.module';
-
+import { PipeModule } from './modules/pipe/pipe.module';
+import { CartIconComponent } from './components/shared/cart-icon/cart-icon.component';
+import { MatBadgeModule } from '@angular/material/badge';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    CartIconComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { PrintingEditionModule } from './modules/printing-edition/printing-editi
     PrintingEditionModule,
     HttpClientModule,
     FormsModule,
+    MatBadgeModule,
     MatSelectModule,
     JwtModule.forRoot({
       config: {
@@ -45,7 +49,8 @@ import { PrintingEditionModule } from './modules/printing-edition/printing-editi
         blacklistedRoutes: []
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PipeModule
   ],
   providers: [
     AuthGuard,

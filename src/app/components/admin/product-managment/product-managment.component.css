@@ -7,3 +7,11 @@ table {
     margin-right: 10%;
     cursor: pointer;
 }
+
+i {
+    cursor: pointer;
+}
+
+.hide-text-overflow {
+    overflow: hidden;
+}

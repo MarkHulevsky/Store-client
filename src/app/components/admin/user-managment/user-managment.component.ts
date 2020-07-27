@@ -11,8 +11,8 @@ import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
-import { EditProfileDialogComponent } from '../dialogs/edit-profile-dialog/edit-profile-dialog.component';
-import { DeleteUserDialogComponent } from '../dialogs/delete-user-dialog/delete-user-dialog.component';
+import { EditProfileDialogComponent } from '../dialogs/user-dialogs/edit-profile-dialog/edit-profile-dialog.component';
+import { DeleteUserDialogComponent } from '../dialogs/user-dialogs/delete-user-dialog/delete-user-dialog.component';
 
 @Component({
   selector: 'app-user-managment',

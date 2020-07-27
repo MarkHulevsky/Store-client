@@ -6,5 +6,5 @@ export class PrintingEditionFilter extends BaseFilter{
     maxPrice: number;
     minPrice: number;
     searchString: string;
-    currency: Currency;
+    currencies: Currency[];
 }

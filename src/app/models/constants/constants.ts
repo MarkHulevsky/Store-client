@@ -34,7 +34,7 @@ export class Constants {
     }
 
     public readonly printingEditionFilter: PrintingEditionFilter = {
-        currency: Currency.UAH,
+        currencies: [Currency.UAH, Currency.CHF, Currency.EUR, Currency.GBR, Currency.JPU, Currency.USD],
         minPrice: 0,
         maxPrice: 1000,
         paging: {

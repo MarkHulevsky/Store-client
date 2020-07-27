@@ -10,9 +10,9 @@ import { Constants } from 'src/app/models/constants/constants';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { AddAuthorDialogComponent } from '../dialogs/add-author-dialog/add-author-dialog.component';
-import { DeleteAuthorDialogComponent } from '../dialogs/delete-author-dialog/delete-author-dialog.component';
-import { EditAuthorDialogComponent } from '../dialogs/edit-author-dialog/edit-author-dialog.component';
+import { AddAuthorDialogComponent } from '../dialogs/author-dialogs/add-author-dialog/add-author-dialog.component';
+import { DeleteAuthorDialogComponent } from '../dialogs/author-dialogs/delete-author-dialog/delete-author-dialog.component';
+import { EditAuthorDialogComponent } from '../dialogs/author-dialogs/edit-author-dialog/edit-author-dialog.component';
 
 @Component({
   selector: 'app-authors-page',
@@ -73,12 +73,17 @@ export class AuthorsPageComponent implements OnInit {
           this.isRateLimitReached = true;
           return of([]);
         })
-        ).subscribe(data => this.data = data as Author[]);
+        ).subscribe((data: Author[]) => {
+          this.data = data
+        });
   }
 
   add() {
     this._dialog.open(AddAuthorDialogComponent, {
       width: "400px"
+    });
+    this._dialog.afterAllClosed.subscribe(() => {
+      this.getAuthors();
     });
   }
 
@@ -90,6 +95,9 @@ export class AuthorsPageComponent implements OnInit {
         name: author.name
       }
     });
+    this._dialog.afterAllClosed.subscribe(() => {
+      this.getAuthors();
+    });
   }
 
   edit(author: Author) {
@@ -99,6 +107,9 @@ export class AuthorsPageComponent implements OnInit {
         id: author.id,
         name: author.name
       }
-    })
+    });
+    this._dialog.afterAllClosed.subscribe(() => {
+      this.getAuthors();
+    });
   }
 }

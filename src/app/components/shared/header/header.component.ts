@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
 import { StorageHelper } from 'src/app/helpers/storage.helper';
 import { Constants } from 'src/app/models/constants/constants';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +16,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _storageHelper: StorageHelper,
     private _constants: Constants,
-    private _router: Router
+    private _router: Router,
+    private _authService: AuthenticationService
     ) {
     this.isAdmin = _storageHelper.getItem(_constants.storageRole) === _constants.adminRoleName;
    }
 
   ngOnInit(): void {
-
   }
 
   orderManagment(): void {
@@ -43,5 +43,11 @@ export class HeaderComponent implements OnInit {
 
   myProfile(): void {
     this._router.navigate(["user/profile"]);
+  }
+
+  logOut(): void {
+    this._authService.signOut().subscribe(() => {
+      this._router.navigate(["account/sign-in"]);
+    });
   }
 }

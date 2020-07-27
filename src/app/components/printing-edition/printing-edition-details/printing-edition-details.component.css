@@ -1,0 +1,59 @@
+.container {
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
+i {
+    font-size: 100px;
+}
+
+.authors-list {
+    display: inline-block;
+    font-size: larger;
+}
+
+.price {
+    color: green;
+    font-size: larger;
+    margin-top: 2%;
+    margin-left: 9%;
+}
+
+.form-control {
+    width: 15%;
+    margin-left: 2%;
+}
+
+.description {
+    font-size: larger;
+    margin-top: 5%;
+}
+
+#main {
+    display: flex;
+}
+
+#narrow {
+    width: 50%;
+}
+
+#wide {
+    flex: 1;
+    width: 50%;
+}
+
+.inline {
+    display: flex;
+    margin-top: 4%;
+}
+
+label {
+    font-size: larger;
+    margin-top: 2%;
+}
+
+button {
+    margin-top: 3%;
+    width: 40%;
+}

@@ -1,11 +1,10 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand material-icons" href="home">menu_book</a>
-
+    <app-cart-icon class="cart"></app-cart-icon>
     <div class="profile">
 
       <i mat-icon-button [matMenuTriggerFor]="menu" class="material-icons">account_circle</i>
-
       <mat-menu #menu="matMenu">
 
         <div *ngIf="isAdmin">
@@ -29,7 +28,7 @@
         <button mat-menu-item>
           <span>My orders</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="logOut()">
           <span>Log out</span>
         </button>
       </mat-menu>

@@ -8,20 +8,21 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { EditProfileDialogComponent } from 'src/app/components/admin/dialogs/edit-profile-dialog/edit-profile-dialog.component';
-import { DeleteUserDialogComponent } from 'src/app/components/admin/dialogs/delete-user-dialog/delete-user-dialog.component'; 
-import { AddAuthorDialogComponent } from 'src/app/components/admin/dialogs/add-author-dialog/add-author-dialog.component';
 import { AdministratorRoutingModule } from './administrator-routing.module';
 import { OrderManagmentComponent } from 'src/app/components/admin/order-managment/order-managment.component';
 import { UserManagmentComponent } from 'src/app/components/admin/user-managment/user-managment.component';
 import { ProductManagmentComponent } from 'src/app/components/admin/product-managment/product-managment.component';
 import { AuthorsPageComponent } from 'src/app/components/admin/authors-page/authors-page.component';
-import { DeleteAuthorDialogComponent } from 'src/app/components/admin/dialogs/delete-author-dialog/delete-author-dialog.component';
-import { EditAuthorDialogComponent } from 'src/app/components/admin/dialogs/edit-author-dialog/edit-author-dialog.component';
 import { RoleGuard } from 'src/app/services/guards/role-guard.service';
-import { AddProductDialogComponent } from 'src/app/components/admin/dialogs/add-product-dialog/add-product-dialog.component';
-import { PrintingEditionTypeStringToEnumPipe } from 'src/app/helpers/pipes/printingEditionTypeStringToEnum';
-import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringToEnumPipe';
+import { AddProductDialogComponent } from 'src/app/components/admin/dialogs/product-dialogs/add-product-dialog/add-product-dialog.component';
+import { EditProfileDialogComponent } from 'src/app/components/admin/dialogs/user-dialogs/edit-profile-dialog/edit-profile-dialog.component';
+import { DeleteUserDialogComponent } from 'src/app/components/admin/dialogs/user-dialogs/delete-user-dialog/delete-user-dialog.component';
+import { AddAuthorDialogComponent } from 'src/app/components/admin/dialogs/author-dialogs/add-author-dialog/add-author-dialog.component';
+import { EditAuthorDialogComponent } from 'src/app/components/admin/dialogs/author-dialogs/edit-author-dialog/edit-author-dialog.component';
+import { DeleteAuthorDialogComponent } from 'src/app/components/admin/dialogs/author-dialogs/delete-author-dialog/delete-author-dialog.component';
+import { DeleteProductDialogComponent } from 'src/app/components/admin/dialogs/product-dialogs/delete-product-dialog/delete-product-dialog.component';
+import { EditProductDialogComponent } from 'src/app/components/admin/dialogs/product-dialogs/edit-product-dialog/edit-product-dialog.component';
+import { PipeModule } from '../pipe/pipe.module';
 
 @NgModule({
   declarations: [
@@ -35,8 +36,8 @@ import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringTo
     AddAuthorDialogComponent,
     EditAuthorDialogComponent,
     DeleteAuthorDialogComponent,
-    PrintingEditionTypeStringToEnumPipe,
-    CurrencyStringToEnumPipe
+    DeleteProductDialogComponent,
+    EditProductDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +49,8 @@ import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringTo
     MatSidenavModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    PipeModule
   ],
   providers: [RoleGuard]
 })

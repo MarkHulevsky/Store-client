@@ -31,7 +31,6 @@ export class UserService {
   }
 
   delete(user: User) {
-    debugger
     return this.http.delete(`${environment}/api/User/Delete?userId=${user.id}`);
   }
 }

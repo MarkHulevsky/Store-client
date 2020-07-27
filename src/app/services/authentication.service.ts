@@ -7,6 +7,7 @@ import { LoginModel } from '../models/LoginModel';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RegisterModel } from '../models/RegisterModel';
+import { CookieHelper } from '../helpers/cookie.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthenticationService {
   constructor(
     private _http: HttpClient,
     private _storageHelper: StorageHelper,
-    private _constants: Constants
+    private _constants: Constants,
+    private _cookieHelper: CookieHelper
   ) { 
   }
 
@@ -38,5 +40,11 @@ export class AuthenticationService {
   refreshToken(token: string, refreshToken: string): Observable<any> {
     return this._http.post(`${environment.apiUrl}/api/Account/RefreshToken`,
      { accessToken: token, refreshToken: refreshToken }, { withCredentials: true });
+  }
+
+  signOut(): Observable<any> {
+    this._cookieHelper.deleteAllCookie();
+    this._storageHelper.clear();
+    return this._http.post(`${environment.apiUrl}/api/Account/SignOut`, {});
   }
 }

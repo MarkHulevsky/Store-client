@@ -1,0 +1,65 @@
+i {
+    font-size: 100px;
+    color: black;
+    cursor: pointer;
+}
+
+.book-list{
+    display: inline-block;
+    margin-left: 40px;
+    margin-bottom: 0;
+
+}
+
+.authors {
+    display: inline-block;
+    white-space: pre;
+    color: black;
+    margin-bottom: 0;
+}
+
+.title {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.price {
+    color: green;
+}
+
+mat-drawer {
+    background-color: white;
+    color: black;
+    width: 20%;
+}
+
+.priceInput {
+    width: 20%;
+}
+
+.container {
+    position: absolute;
+    top: 15%;
+    bottom: 3%;
+    left: 0;
+    right: 0;
+    background-color: white; 
+    color: black;
+}
+
+.select {
+    margin-top: 2%;
+    text-align: end;
+}
+
+input.form-control {
+    width: 35%;
+    color: black;
+    margin-left: 65%;
+}
+
+select.form-control {
+    width: 20%;
+    margin-left: 80%;
+}

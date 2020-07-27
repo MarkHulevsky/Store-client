@@ -24,4 +24,16 @@ export class PrintingEditionService {
   add(printingEdition: PrintingEdition): Observable<any> {
     return this._http.post(`${environment.apiUrl}/api/PrintingEdition/Add`, printingEdition);
   }
+
+  delete(peId: string): Observable<any> {
+    return this._http.delete(`${environment.apiUrl}/api/PrintingEdition/Delete?id=${peId}`);
+  }
+
+  edit(pe: PrintingEdition): Observable<any> {
+    return this._http.put(`${environment.apiUrl}/api/PrintingEdition/Edit`, pe);
+  }
+
+  getById(id: string): Observable<PrintingEdition> {
+    return this._http.get<PrintingEdition>(`${environment.apiUrl}/api/PrintingEdition/GetById?id=${id}`);
+  }
 }
