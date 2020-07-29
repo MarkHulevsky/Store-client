@@ -6,6 +6,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppComponent, tokenGetter } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,8 +24,10 @@ import { CookieHelper } from './helpers/cookie.helper';
 import { StorageHelper } from './helpers/storage.helper';
 import { PrintingEditionModule } from './modules/printing-edition/printing-edition.module';
 import { PipeModule } from './modules/pipe/pipe.module';
-import { CartIconComponent } from './components/shared/cart-icon/cart-icon.component';
-import { MatBadgeModule } from '@angular/material/badge';
+import { CartIconComponent } from 'src/app/components/shared/cart-icon/cart-icon.component';
+import { CartModule } from './modules/cart/cart.module';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +43,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     UserModule,
     AdministratorModule,
     PrintingEditionModule,
+    CartModule,
     HttpClientModule,
     FormsModule,
     MatBadgeModule,
@@ -50,7 +56,9 @@ import { MatBadgeModule } from '@angular/material/badge';
       }
     }),
     BrowserAnimationsModule,
-    PipeModule
+    PipeModule,
+    MatTableModule,
+    MatSidenavModule
   ],
   providers: [
     AuthGuard,

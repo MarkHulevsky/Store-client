@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
+import { OrderItem } from 'src/app/models/OrderItem';
+import { MatDialog } from '@angular/material/dialog';
+import { CartDialogComponent } from '../../cart/dialogs/cart-dialog/cart-dialog.component';
 
 @Component({
   selector: 'app-cart-icon',
@@ -9,8 +12,11 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartIconComponent implements OnInit {
 
   public count: number;
-
-  constructor(private _cartService: CartService) { 
+  private _orderItems: OrderItem[] = [];
+  constructor(
+    private _cartService: CartService,
+    private _dialog: MatDialog
+    ) { 
     _cartService.count.subscribe((data: number) => {
       this.count = data;
     });
@@ -20,4 +26,11 @@ export class CartIconComponent implements OnInit {
     this.count = this._cartService.orderItems.length;
   }
 
+  openCart(): void {
+    this._orderItems = this._cartService.orderItems;
+    this._dialog.open(CartDialogComponent, {
+      width: "800px",
+      data: this._orderItems
+    });
+  }
 }

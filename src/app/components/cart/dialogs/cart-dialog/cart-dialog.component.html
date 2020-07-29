@@ -1,0 +1,29 @@
+<h2>Checkout</h2>
+<table class="table table-hover">
+    <tr>
+        <th>Product</th>
+        <th>Unit price</th>
+        <th class="qty-cell">Qty</th>
+        <th>Order amount</th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let orderItem of orderItems">
+        <td>{{orderItem.printingEdition.title}}</td>
+        <td>{{orderItem.printingEdition.price}}</td>
+        <td>
+            <input class="form-control" type="number" [(ngModel)]="orderItem.count" 
+                (keyup)="qtyChanged(orderItem)" (change)="qtyChanged(orderItem)" min="1">
+        </td>
+        <td class="price">{{orderItem.amount}} {{orderItem.printingEdition.currency | currencyToString}}</td>
+        <td>
+            <button class="btn btn-primary btn-sm" (click)="removeItem(orderItem)">-</button>
+        </td>
+    </tr>
+</table>
+
+<strong>Total price: <p class="price">{{totalPrice}} {{currency | currencyToString}}</p></strong>
+
+<div>
+    <button class="btn btn-danger btn-sm" (click)="cancel()">Cancel</button>
+    <button class="btn btn-success btn-sm" (click)="buy()">Buy now</button>
+</div>

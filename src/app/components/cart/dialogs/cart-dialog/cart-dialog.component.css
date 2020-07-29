@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+    color: white;
+}
+
+input {
+    width: 60%;
+}
+
+.qty-cell {
+    width: 20%;
+}
+
+th {
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+
+.price {
+    color: rgb(55, 177, 7);
+}
+
+strong {
+    display: inline-flex;
+    margin-left: 70%;
+    white-space: pre;
+    font-size: larger;
+}
+
+.btn {
+    width: 50%;
+}
+
+h2 {
+    color: #4BBF73;
+    text-align: center;
+}

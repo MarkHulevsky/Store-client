@@ -48,11 +48,11 @@ export class UserManagmentComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getUsers();
   }
 
-  getUsers() {
+  getUsers(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -74,32 +74,32 @@ export class UserManagmentComponent implements OnInit {
           this.isRateLimitReached = true;
           return of([]);
         })
-        ).subscribe(data => this.data = data);
+        ).subscribe((data: User[]) => this.data = data);
   }
 
-  delete(user: User) {
+  delete(user: User): void {
     this._dialog.open(DeleteUserDialogComponent, {
       width: "300px",
       data: user
     });
   }
 
-  changeStatus(user: User) {
+  changeStatus(user: User): void {
     this._userService.changeStatus(user).subscribe();
   }
 
-  searchFilter(event) {
+  searchFilter(event): void {
     this.userFilter.searchString = event;
     this.getUsers();
   }
 
-  sortUsers(propName: string){
+  sortUsers(propName: string): void {
     this.userFilter.propName = propName;
     this.changeSortType();
     this.getUsers();
   }
 
-  editProfile(user: User) {
+  editProfile(user: User): void {
     const dialogRef = this._dialog.open(EditProfileDialogComponent, {
       width: "400px",
       data: { 
@@ -111,7 +111,7 @@ export class UserManagmentComponent implements OnInit {
     });
   }
 
-  private changeSortType() {
+  private changeSortType(): void {
     if (this.userFilter.sortType == SortType.ascending) {
       this.userFilter.sortType = SortType.descending;
       return;

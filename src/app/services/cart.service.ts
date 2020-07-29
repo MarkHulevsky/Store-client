@@ -23,15 +23,18 @@ export class CartService {
     this.count.next(this.orderItems.length);
   }
 
-  removeFromCart(orderItem: OrderItem): void {
+  removeFromCart(orderItem: OrderItem): boolean {
     this._orderItems = JSON.parse(this._storageHelper.getItem('cart'));
     if (this._orderItems !== null) {
-      let index = this._orderItems.indexOf(orderItem);
+      let index = this.indexOf(orderItem);
       if (index > -1) {
         this._orderItems.splice(index, 1);
         this._storageHelper.setItem('cart', JSON.stringify(this._orderItems));
+        this.count.next(this._orderItems.length);
+        return true
       }
     }
+    return false;
   }
 
   public get orderItems(): OrderItem[] {
@@ -44,5 +47,16 @@ export class CartService {
 
   public get count(): Subject<number> {
     return this._count; 
+  }
+
+  private indexOf(orderItem: OrderItem) {
+    for (var i = 0; i < this._orderItems.length; i++) {
+      if (this._orderItems[i].printingEditionId == orderItem.printingEditionId 
+          && this.orderItems[i].amount == orderItem.amount 
+          && this._orderItems[i].count == orderItem.count) {
+          return i;
+      }
+  }
+  return -1;
   }
 }
