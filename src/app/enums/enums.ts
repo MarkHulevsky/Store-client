@@ -17,3 +17,8 @@ export enum PrintingEditionType {
     Newspapers = 1,
     Magazines = 2
 }
+
+export enum Status {
+    Unpaid = 0,
+    Paid = 1
+}

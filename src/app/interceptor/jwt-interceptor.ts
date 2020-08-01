@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { StorageHelper } from '../helpers/storage.helper';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -13,7 +14,8 @@ export class JwtInterceptor implements HttpInterceptor {
         private _cookieHelper: CookieHelper,
         private _constants: Constants,
         private _router: Router,
-        private _authenticationService: AuthenticationService
+        private _authenticationService: AuthenticationService,
+        private _storageHelper: StorageHelper
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -52,9 +54,10 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     private refreshToken(currentUser: string) {
-        this._authenticationService.refreshToken(currentUser, this._cookieHelper.getItem(this._constants.refreshToken))
-            .subscribe(
-                data => {
+        this._authenticationService
+            .refreshToken(currentUser, this._cookieHelper.getItem(this._constants.refreshToken))
+            .subscribe((data: string) => {
+                    this._storageHelper.setItem(this._constants.accessToken, data);
                     this._router.navigate(['']);
                 });
     }

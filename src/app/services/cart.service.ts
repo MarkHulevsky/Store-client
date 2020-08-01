@@ -37,6 +37,12 @@ export class CartService {
     return false;
   }
 
+  clear() {
+    this._orderItems = [];
+    this._storageHelper.setItem('cart', JSON.stringify(this._orderItems));
+    this.count.next(this.orderItems.length);
+  }
+
   public get orderItems(): OrderItem[] {
     this._orderItems = JSON.parse(this._storageHelper.getItem('cart'));
     if (this._orderItems !== null) {

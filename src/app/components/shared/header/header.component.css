@@ -1,5 +1,6 @@
 .profile {
     color: white;
+    margin-left: 2%;
 }
 
 .material-icons {
@@ -13,4 +14,9 @@ strong {
 
 .cart {
     margin-left: 85%;
+}
+
+.login {
+    color: white;
+    margin-left: 90%;
 }

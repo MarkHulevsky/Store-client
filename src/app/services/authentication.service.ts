@@ -4,25 +4,40 @@ import { StorageHelper } from '../helpers/storage.helper';
 import { Constants } from '../models/constants/constants';
 import { User } from '../models/User';
 import { LoginModel } from '../models/LoginModel';
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RegisterModel } from '../models/RegisterModel';
 import { CookieHelper } from '../helpers/cookie.helper';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
+  public isAuthorized: BehaviorSubject<boolean>;
+  public userRole: BehaviorSubject<string>;
   constructor(
     private _http: HttpClient,
     private _storageHelper: StorageHelper,
     private _constants: Constants,
     private _cookieHelper: CookieHelper
-  ) { 
+  ) {
+    this.userRole = new BehaviorSubject<string>(_constants.userRoles[1]);
+    this.isAuthorized = new BehaviorSubject<boolean>(false);
+  }
+
+  userStatusCheck() {
+    let isAuthorized = JSON.parse(this._storageHelper.getItem(this._constants.storageIsAutorized));
+    let role = this._storageHelper.getItem(this._constants.storageRole);
+    this.userRole.next(role);
+    this.isAuthorized.next(isAuthorized);
   }
 
   setUserToStorage(user: User) {
+    this.isAuthorized.next(true);
+    this.userRole.next(user.roles[0]);
+    this._storageHelper.setItem(this._constants.storageIsAutorized, JSON.stringify(true));
     this._storageHelper.setItem(this._constants.storageFirstName, user.firstName);
     this._storageHelper.setItem(this._constants.storageLastName, user.lastName);
     this._storageHelper.setItem(this._constants.storageEmail, user.email);
@@ -43,6 +58,7 @@ export class AuthenticationService {
   }
 
   signOut(): Observable<any> {
+    this.isAuthorized.next(false);
     this._cookieHelper.deleteAllCookie();
     this._storageHelper.clear();
     return this._http.post(`${environment.apiUrl}/api/Account/SignOut`, {});

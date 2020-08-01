@@ -26,6 +26,7 @@ import { PrintingEditionModule } from './modules/printing-edition/printing-editi
 import { PipeModule } from './modules/pipe/pipe.module';
 import { CartIconComponent } from 'src/app/components/shared/cart-icon/cart-icon.component';
 import { CartModule } from './modules/cart/cart.module';
+import { OrderModule } from './modules/order/order.module';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { CartModule } from './modules/cart/cart.module';
     BrowserAnimationsModule,
     PipeModule,
     MatTableModule,
-    MatSidenavModule
+    MatSidenavModule,
+    OrderModule
   ],
   providers: [
     AuthGuard,

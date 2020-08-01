@@ -23,6 +23,7 @@ import { DeleteAuthorDialogComponent } from 'src/app/components/admin/dialogs/au
 import { DeleteProductDialogComponent } from 'src/app/components/admin/dialogs/product-dialogs/delete-product-dialog/delete-product-dialog.component';
 import { EditProductDialogComponent } from 'src/app/components/admin/dialogs/product-dialogs/edit-product-dialog/edit-product-dialog.component';
 import { PipeModule } from '../pipe/pipe.module';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { PipeModule } from '../pipe/pipe.module';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    PipeModule
+    PipeModule,
+    MatSelectModule
   ],
   providers: [RoleGuard]
 })

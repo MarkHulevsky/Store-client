@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class HeaderComponent implements OnInit {
 
   public isAdmin: boolean = false;
-
+  public isAuthorized: boolean = false;
   constructor(
     private _storageHelper: StorageHelper,
     private _constants: Constants,
@@ -20,9 +20,20 @@ export class HeaderComponent implements OnInit {
     private _authService: AuthenticationService
     ) {
     this.isAdmin = _storageHelper.getItem(_constants.storageRole) === _constants.adminRoleName;
+    _authService.userStatusCheck();
    }
 
   ngOnInit(): void {
+    this._authService.isAuthorized.subscribe((data: boolean) => {
+      this.isAuthorized = data;
+    });
+    this._authService.userRole.subscribe((data: string) => {
+      if (data === "admin") {
+        this.isAdmin = true;
+        return;
+      }
+      this.isAdmin = false;
+    });
   }
 
   orderManagment(): void {
@@ -43,6 +54,10 @@ export class HeaderComponent implements OnInit {
 
   myProfile(): void {
     this._router.navigate(["user/profile"]);
+  }
+
+  myOrders(): void {
+    this._router.navigate(["orders/myorders"]);
   }
 
   logOut(): void {

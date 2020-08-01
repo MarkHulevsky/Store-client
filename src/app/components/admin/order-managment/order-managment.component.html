@@ -1,1 +1,75 @@
-<p>order-managment works!</p>
+<table mat-table [dataSource]="orders">
+    <ng-container matColumnDef="Date">
+        <th mat-header-cell *matHeaderCellDef>
+            Date
+            <i class="material-icons" (click)="orderBy('CreationDate')">swap_vert</i>
+        </th>
+        <td mat-cell *matCellDef="let order">
+            {{order.creationDate | date: "MMM d y"}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="UserName">
+        <th mat-header-cell *matHeaderCellDef> User name </th>
+        <td mat-cell *matCellDef="let order">{{order.user.firstName}} {{order.user.lastName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="UserEmail">
+        <th mat-header-cell *matHeaderCellDef>User email</th>
+        <td mat-cell *matCellDef="let order">{{order.user.email}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Product">
+        <th mat-header-cell *matHeaderCellDef> Product </th>
+        <td mat-cell *matCellDef="let order">
+            <div *ngFor="let orderItem of order.orderItems">
+                {{orderItem.printingEdition.type | peTypeToString}}
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let order">
+            <div *ngFor="let orderItem of order.orderItems">
+                {{orderItem.printingEdition.title}}
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Qty">
+        <th mat-header-cell *matHeaderCellDef> Qty </th>
+        <td mat-cell *matCellDef="let order">
+            <div *ngFor="let orderItem of order.orderItems">
+                {{orderItem.count}}
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Amount">
+        <th mat-header-cell *matHeaderCellDef>
+            Amount
+        </th>
+        <td mat-cell *matCellDef="let order">{{order.amount}} {{order.currency | currencyToString}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="fill">
+                <mat-label>Status</mat-label>
+                <mat-select [formControl]="statuses" multiple (selectionChange)="statusFilterChanged()">
+                    <mat-option *ngFor="let status of constants.orderStatusStrings"
+                        [value]="status | orderStatusStringToEnum" selected>
+                        {{status}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </th>
+        <td mat-cell *matCellDef="let order">{{order.status | orderStatusToString}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="resultsLength" [pageSize]="orderFilter.paging.itemsCount" showFirstLastButtons>
+</mat-paginator>

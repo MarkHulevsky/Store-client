@@ -4,6 +4,8 @@ import { CurrencyToStringPipe } from 'src/app/helpers/pipes/currencyToStringPipe
 import { PrintingEditionTypeToStringPipe } from 'src/app/helpers/pipes/printingEditionTypeToStringPipe';
 import { PrintingEditionTypeStringToEnumPipe } from 'src/app/helpers/pipes/printingEditionTypeStringToEnum';
 import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringToEnumPipe';
+import { OrderStatusToStringPipe } from 'src/app/helpers/pipes/orderStatusToStringPipe';
+import { OrderStatusStringToEnumPipe } from 'src/app/helpers/pipes/orderStatusStringToEnumPipe';
 
 
 
@@ -13,6 +15,8 @@ import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringTo
     PrintingEditionTypeToStringPipe,
     PrintingEditionTypeStringToEnumPipe,
     CurrencyStringToEnumPipe,
+    OrderStatusToStringPipe,
+    OrderStatusStringToEnumPipe
   ],
   imports: [
     CommonModule
@@ -22,6 +26,8 @@ import { CurrencyStringToEnumPipe } from 'src/app/helpers/pipes/currencyStringTo
     PrintingEditionTypeToStringPipe,
     PrintingEditionTypeStringToEnumPipe,
     CurrencyStringToEnumPipe,
+    OrderStatusToStringPipe,
+    OrderStatusStringToEnumPipe
   ]
 })
 export class PipeModule { }

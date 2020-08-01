@@ -104,7 +104,9 @@ export class CartDialogComponent implements OnInit {
           userEmail: result.card.name,
           tokenId: result.id
         } as Payment
-        this._orderService.payOrder(payment).subscribe();
+        this._orderService.payOrder(payment).subscribe(() => {
+          this._cartService.clear();
+        });
       });
     });
   }
