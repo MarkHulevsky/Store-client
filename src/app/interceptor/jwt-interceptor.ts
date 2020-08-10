@@ -18,15 +18,20 @@ export class JwtInterceptor implements HttpInterceptor {
         private _storageHelper: StorageHelper
     ) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let currentUser = this._cookieHelper.getItem(this._constants.accessToken);
-        if (currentUser) {
+    private setBearer(token: string, request: HttpRequest<any>) {
+        if (token) {
             request = request.clone({
                 setHeaders: {
-                    'Authorization': `Bearer ${currentUser}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
         }
+    }
+
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let token = this._cookieHelper.getItem(this._constants.accessToken);
+
+        this.setBearer(token, request);
 
         request = request.clone({
             headers: request.headers.set('Content-Type', 'application/json')
@@ -41,7 +46,8 @@ export class JwtInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 if (error.status == this._constants.accessError && this._cookieHelper
                     .getItem(this._constants.refreshToken)) {
-                    this.refreshToken(currentUser);
+                    let result = this.refreshToken(token);
+                    this.setBearer(token, request);
                     return;
                 }
                 if (error.status == this._constants.accessError) {
@@ -53,12 +59,15 @@ export class JwtInterceptor implements HttpInterceptor {
         );
     }
 
-    private refreshToken(currentUser: string) {
+    private refreshToken(token: string): string {
+        let refreshedToken: string;
         this._authenticationService
-            .refreshToken(currentUser, this._cookieHelper.getItem(this._constants.refreshToken))
+            .refreshToken(token, this._cookieHelper.getItem(this._constants.refreshToken))
             .subscribe((data: string) => {
-                    this._storageHelper.setItem(this._constants.accessToken, data);
-                    this._router.navigate(['']);
-                });
+                refreshedToken = data;
+                this._storageHelper.setItem(this._constants.accessToken, data);
+                this._router.navigate(['']);
+            });
+        return refreshedToken;
     }
 }
