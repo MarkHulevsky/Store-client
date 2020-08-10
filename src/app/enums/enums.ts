@@ -6,10 +6,10 @@ export enum SortType {
 export enum Currency {
     USD = 0,
     EUR = 1,
-    GBR = 2,
+    GBP = 2,
     CHF = 3,
-    JPU = 4,
-    UAH = 5
+    RUB = 4,
+    PLN = 5
 }
 
 export enum PrintingEditionType {

@@ -27,8 +27,9 @@
                 <input type="text" class="form-control searchInput" placeholder="Search by book title" (keyup)="search($event)" />
             </div>
             <div class="select">
-                <label>Currency: </label>
-                <select (change)="currencyChanged($event.target.value)">
+                <label>Convert currency: </label>
+                <select style="margin-right: 20px" (change)="currencyChanged($event.target.value)">
+                    <option value="">All</option>
                     <option *ngFor="let currency of constants.currencyStrings">
                         {{currency}}
                     </option>

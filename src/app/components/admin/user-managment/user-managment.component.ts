@@ -33,7 +33,6 @@ export class UserManagmentComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-
   constructor(
     private _userService: UserService,
     private _dialog: MatDialog,
@@ -78,9 +77,12 @@ export class UserManagmentComponent implements OnInit {
   }
 
   delete(user: User): void {
-    this._dialog.open(DeleteUserDialogComponent, {
+    let dialogRef = this._dialog.open(DeleteUserDialogComponent, {
       width: "300px",
       data: user
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.getUsers();
     });
   }
 
@@ -109,6 +111,15 @@ export class UserManagmentComponent implements OnInit {
         email: user.email
       }
     });
+
+    dialogRef.afterClosed().subscribe((editedUser: User) => {
+      let index = this.indexOf(editedUser);
+      if (index > -1) {
+        this.data[index].email = editedUser.email;
+        this.data[index].firstName = editedUser.firstName;
+        this.data[index].lastName = editedUser.lastName;
+      }
+    });
   }
 
   private changeSortType(): void {
@@ -117,5 +128,14 @@ export class UserManagmentComponent implements OnInit {
       return;
     }
     this.userFilter.sortType = SortType.ascending;
+  }
+
+  private indexOf(user: User) {
+    for (var i = 0; i < this.data.length; i++) {
+      if (this.data[i].id == user.id ) {
+          return i;
+      }
+  }
+  return -1;
   }
 }

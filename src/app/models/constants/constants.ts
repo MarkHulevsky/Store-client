@@ -35,7 +35,6 @@ export class Constants {
     }
 
     public readonly printingEditionFilter: PrintingEditionFilter = {
-        currencies: [Currency.UAH, Currency.CHF, Currency.EUR, Currency.GBR, Currency.JPU, Currency.USD],
         minPrice: 0,
         maxPrice: 1000,
         paging: {
@@ -68,6 +67,6 @@ export class Constants {
     public readonly adminRoleName = "admin"
     public readonly isNotRememberMeDateExpire = new Date(0, 0, 0, 12, 0, 0, 0);
     public readonly printingEditionTypeStrings = ['Book', 'Newspapers', 'Magazines'];
-    public readonly currencyStrings = ['USD', 'EUR', 'GBR', 'CHF', 'JPU', 'UAH'];
+    public readonly currencyStrings = ['USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
     public readonly orderStatusStrings = ["Unpaid", "Paid"];
 } 

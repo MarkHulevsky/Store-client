@@ -10,6 +10,7 @@ import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
 import { PrintingEditionType, Currency, SortType } from 'src/app/enums/enums';
+import { constants } from 'buffer';
 
 @Component({
   selector: 'app-home',
@@ -26,18 +27,19 @@ export class HomeComponent implements OnInit {
   public isLoadingResults = true;
   public isRateLimitReached = false;
   public resultsLength = 0;
+  public currentCurrency: string;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
     private _peService: PrintingEditionService,
-    public constants: Constants
+    public constants: Constants,
   ) {
     this.sort = new MatSort;
     this.peFilter = constants.printingEditionFilter;
-    this.peFilter.paging.itemsCount = 12;
-    this.peFilter.currencies = [Currency.USD];
+    this.peFilter.paging.itemsCount = 8;
+    this.currentCurrency = constants.currencyStrings[0];
   }
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class HomeComponent implements OnInit {
   
   ngAfterViewInit(): void {
     this.getPrintingEditions();
+    this.currencyChanged(this.constants.currencyStrings[0]);
   }
 
   getPrintingEditions(): void {
@@ -117,9 +120,22 @@ export class HomeComponent implements OnInit {
   }
 
   currencyChanged(currencyString: string) {
-    let currency: Currency = Currency[currencyString];
-    this.peFilter.currencies = [currency];
-    this.getPrintingEditions();
+    if (currencyString === this.constants.emptyString) {
+      this.getPrintingEditions();
+      return;
+    }
+    this.data.forEach(pe => {
+      let currentCurrency = this.constants.currencyStrings[pe.currency];
+      if (currencyString == currentCurrency)
+      {
+        return;
+      }
+      this._peService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
+        pe.currency = Currency[currencyString];
+        pe.price = Math.round(pe.price * rate);
+        currentCurrency = currencyString;
+      });
+    });
   }
 
   sortByPrice(value: string) {

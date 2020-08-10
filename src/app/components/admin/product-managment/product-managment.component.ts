@@ -42,15 +42,16 @@ export class ProductManagmentComponent implements OnInit {
   ) { 
     this.sort = new MatSort;
     this.peFilter = _constants.printingEditionFilter;
+    this.peFilter.paging.itemsCount = 6;
   }
-
+  
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort; 
   }
-
+  
   ngAfterViewInit(): void {
-    this.getPrintingEditions();  
+    this.getPrintingEditions();
   }
 
   getPrintingEditions(): void {

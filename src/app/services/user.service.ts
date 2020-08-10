@@ -19,7 +19,7 @@ export class UserService {
   }
 
   editProfile(editProfileModel: EditProfileModel): Observable<User> {
-    return this.http.post<User>(`${environment.apiUrl}/api/User/EditProfile`, editProfileModel);
+    return this.http.put<User>(`${environment.apiUrl}/api/User/EditProfile`, editProfileModel);
   }
 
   getFiltred(userFilter: UserFilter): Observable<UserResponseFilter> {
@@ -31,6 +31,6 @@ export class UserService {
   }
 
   delete(user: User) {
-    return this.http.delete(`${environment}/api/User/Delete?userId=${user.id}`);
+    return this.http.delete(`${environment.apiUrl}/api/User/Delete?userId=${user.id}`);
   }
 }

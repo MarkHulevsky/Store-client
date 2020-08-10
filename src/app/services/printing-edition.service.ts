@@ -36,4 +36,9 @@ export class PrintingEditionService {
   getById(id: string): Observable<PrintingEdition> {
     return this._http.get<PrintingEdition>(`${environment.apiUrl}/api/PrintingEdition/GetById?id=${id}`);
   }
+
+  convertCurrency(currentCurrency: string, newCurrency: string): Observable<number> {
+    return this._http.get<number>(`${environment.apiUrl}/api/PrintingEdition/ConvertCurrency`+
+    `/${currentCurrency}/${newCurrency}`);
+  }
 }

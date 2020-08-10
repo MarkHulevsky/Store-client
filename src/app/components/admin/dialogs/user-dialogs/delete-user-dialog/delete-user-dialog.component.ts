@@ -22,10 +22,8 @@ export class DeleteUserDialogComponent implements OnInit {
   }
 
   delete() {
-    this._userService.delete(this.user).subscribe((data: User) => {
-      if (data.errors.length < 1) {
+    this._userService.delete(this.user).subscribe(() => {
         this.dialogRef.close();
-      }
     });
   }
 

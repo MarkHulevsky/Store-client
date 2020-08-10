@@ -14,6 +14,7 @@ import { Currency } from 'src/app/enums/enums';
 import { Token } from '@stripe/stripe-js';
 import { Payment } from 'src/app/models/Payment';
 import { Constants } from 'src/app/models/constants/constants';
+import { constants } from 'buffer';
 
 @Component({
   selector: 'app-cart-dialog',
@@ -36,19 +37,23 @@ export class CartDialogComponent implements OnInit {
     private _constants: Constants
   ) {
   }
-  
+
   ngOnInit(): void {
     this.getPrintingEditions();
   }
 
-  getPrintingEditions(): void {
-    this.orderItems.forEach(orderItem => {
-      this._peService.getById(orderItem.printingEditionId).subscribe((data: PrintingEdition) => {
-        orderItem.printingEdition = data;
-        this.totalPrice += data.price * orderItem.count;
-        this.currency = data.currency;
-      })
-    });
+  ngAfterViewInit(): void {
+
+  }
+
+  async getPrintingEditions(): Promise<void> {
+
+    for (let i = 0; i < this.orderItems.length; i++) {
+      let pe = await this._peService.getById(this.orderItems[i].printingEditionId).toPromise();
+      this.orderItems[i].printingEdition = pe;
+      await this.convertCurrency(this.orderItems[i], this.currency);
+      this.totalPrice += this.orderItems[i].printingEdition.price * this.orderItems[i].count;
+    }
   }
 
   qtyChanged(orderItem: OrderItem): void {
@@ -88,8 +93,8 @@ export class CartDialogComponent implements OnInit {
       let dialogRef = this._dialog.open(CardDialogComponent, {
         width: "400px",
         data: {
-         totalPrice: this.totalPrice,
-         currency: this.currency
+          totalPrice: this.totalPrice,
+          currency: this.currency
         }
       });
 
@@ -115,5 +120,22 @@ export class CartDialogComponent implements OnInit {
     this._dialogRef.close();
   }
 
+  async convertCurrency(orderItem: OrderItem, currency: Currency): Promise<void> {
+    if (orderItem.printingEdition.currency === currency) {
+      return;
+    }
+    let currencyString = this._constants.currencyStrings[currency];
+    let currentCurrency = this._constants.currencyStrings[orderItem.printingEdition.currency];
+    let rate = await this._peService.convertCurrency(currentCurrency, currencyString).toPromise();
+    orderItem.printingEdition.price = Math.round(orderItem.printingEdition.price * rate);
+    orderItem.printingEdition.currency = currency;
+    orderItem.amount = orderItem.printingEdition.price * orderItem.count;
+
+    // this._peService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
+    //   orderItem.printingEdition.price = Math.round(orderItem.printingEdition.price * rate);
+    //   orderItem.printingEdition.currency = currency;
+    //   orderItem.amount = orderItem.printingEdition.price * orderItem.count;
+    // });
+  }
 }
 

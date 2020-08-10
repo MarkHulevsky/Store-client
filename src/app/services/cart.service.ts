@@ -52,17 +52,16 @@ export class CartService {
   }
 
   public get count(): Subject<number> {
-    return this._count; 
+    return this._count;
   }
 
   private indexOf(orderItem: OrderItem) {
     for (var i = 0; i < this._orderItems.length; i++) {
-      if (this._orderItems[i].printingEditionId == orderItem.printingEditionId 
-          && this.orderItems[i].amount == orderItem.amount 
-          && this._orderItems[i].count == orderItem.count) {
-          return i;
+      if (this._orderItems[i].printingEditionId == orderItem.printingEditionId
+        && this._orderItems[i].count == orderItem.count) {
+        return i;
       }
-  }
-  return -1;
+    }
+    return -1;
   }
 }
