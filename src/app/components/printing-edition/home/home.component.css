@@ -67,3 +67,8 @@ select.form-control {
     width: 20%;
     margin-left: 80%;
 }
+
+mat-drawer-content {
+    position: fixed;
+    margin-right: 15%;
+}

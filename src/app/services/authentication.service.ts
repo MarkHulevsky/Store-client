@@ -8,7 +8,6 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RegisterModel } from '../models/RegisterModel';
 import { CookieHelper } from '../helpers/cookie.helper';
-import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +52,7 @@ export class AuthenticationService {
   }
 
   refreshToken(token: string, refreshToken: string): Observable<any> {
-    return this._http.post(`${environment.apiUrl}/api/Account/RefreshToken`,
+    return this._http.post<string>(`${environment.apiUrl}/api/Account/RefreshToken`,
      { accessToken: token, refreshToken: refreshToken }, { withCredentials: true });
   }
 
