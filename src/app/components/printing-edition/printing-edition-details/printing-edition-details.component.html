@@ -15,9 +15,9 @@
                 <button class="btn btn-primary btn-sm" (click)="addToCart()">Add to cart</button>
             </div>
         </div>
-        <div class="description">
+        <div class="description-elem">
             <legend>Description</legend>
-            <p>{{product.description}}</p>
+            <textarea readonly rows="15" class="description">{{product.description}}</textarea >
         </div>
     </mat-drawer-content>
 </mat-drawer-container>

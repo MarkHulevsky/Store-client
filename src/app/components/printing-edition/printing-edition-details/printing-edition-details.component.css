@@ -25,7 +25,7 @@ i {
     margin-left: 2%;
 }
 
-.description {
+.description-elem {
     font-size: larger;
     margin-top: 5%;
 }
@@ -56,4 +56,12 @@ label {
 button {
     margin-top: 3%;
     width: 40%;
+}
+
+.description {
+    border: 0;
+    cursor: default;
+    resize: none;
+    outline: none;
+    width: 100%;
 }
