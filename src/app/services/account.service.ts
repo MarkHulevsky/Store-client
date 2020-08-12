@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable} from 'rxjs'
-import { LoginModel } from '../models/LoginModel';
-import { RegisterModel } from '../models/RegisterModel';
 import { environment } from 'src/environments/environment.prod';
+import { IAccountService } from '../interfaces/services/IAccountService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class AccountService implements IAccountService {
 
   constructor(private _http: HttpClient) {}
 

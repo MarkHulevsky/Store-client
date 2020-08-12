@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { User } from 'src/app/models/User';
-import { AccountService } from 'src/app/services/account.service';
 import { FormBuilder, FormControl, Validators, ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterModel } from 'src/app/models/RegisterModel';
@@ -8,6 +7,7 @@ import { LoginModel } from 'src/app/models/LoginModel';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CookieHelper } from 'src/app/helpers/cookie.helper';
 import { Constants } from 'src/app/models/constants/constants';
+import { IAuthenticationService } from 'src/app/interfaces/services/IAuthenticationService';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,7 +30,7 @@ export class SignUpComponent implements OnInit {
 
 
   constructor(
-    private _authenticationService: AuthenticationService,
+    @Inject(AuthenticationService) private _authenticationService: IAuthenticationService,
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _cookieHelper: CookieHelper,

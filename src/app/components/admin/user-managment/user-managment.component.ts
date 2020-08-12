@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 import { UserFilter } from 'src/app/models/RequestFilters/UserFIlter';
@@ -13,6 +13,7 @@ import { Constants } from 'src/app/models/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileDialogComponent } from '../dialogs/user-dialogs/edit-profile-dialog/edit-profile-dialog.component';
 import { DeleteUserDialogComponent } from '../dialogs/user-dialogs/delete-user-dialog/delete-user-dialog.component';
+import { IUserService } from 'src/app/interfaces/services/IUserService';
 
 @Component({
   selector: 'app-user-managment',
@@ -34,7 +35,7 @@ export class UserManagmentComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
-    private _userService: UserService,
+    @Inject(UserService) private _userService: IUserService,
     private _dialog: MatDialog,
     private _constants: Constants
   ) {

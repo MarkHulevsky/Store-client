@@ -5,11 +5,12 @@ import { AuthorResponseFilter } from '../models/ResponseFilters/AuthorResponseFi
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Author } from '../models/Author';
+import { IAuthorService } from '../interfaces/services/IAuthorService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthorService {
+export class AuthorService implements IAuthorService {
 
   constructor(private http: HttpClient) { }
 

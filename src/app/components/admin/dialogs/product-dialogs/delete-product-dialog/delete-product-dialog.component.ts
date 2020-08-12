@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductManagmentComponent } from '../../../product-managment/product-managment.component';
 import { PrintingEdition } from 'src/app/models/PrintingEdition';
 import { PrintingEditionService } from 'src/app/services/printing-edition.service';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
 
 @Component({
   selector: 'app-delete-product-dialog',
@@ -14,7 +15,7 @@ export class DeleteProductDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
     @Inject(MAT_DIALOG_DATA) public product: PrintingEdition,
-    private _printingEditionService: PrintingEditionService
+    @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService
   ) { }
 
   ngOnInit(): void {

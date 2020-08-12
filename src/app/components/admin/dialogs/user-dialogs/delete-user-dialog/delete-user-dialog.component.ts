@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/models/User';
 import { UserManagmentComponent } from '../../../user-managment/user-managment.component';
 import { UserService } from 'src/app/services/user.service';
+import { IUserService } from 'src/app/interfaces/services/IUserService';
 
 @Component({
   selector: 'app-delete-user-dialog',
@@ -15,7 +16,7 @@ export class DeleteUserDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<UserManagmentComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User,
-    private _userService: UserService
+    @Inject(UserService) private _userService: IUserService
   ) { }
 
   ngOnInit(): void {

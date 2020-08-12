@@ -7,6 +7,8 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Author } from 'src/app/models/Author';
 import { AuthorService } from 'src/app/services/author.service';
 import { Constants } from 'src/app/models/constants/constants';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
+import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 
 @Component({
   selector: 'app-edit-product-dialog',
@@ -22,10 +24,10 @@ export class EditProductDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
     @Inject(MAT_DIALOG_DATA) public product: PrintingEdition,
-    private _peService: PrintingEditionService,
+    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
     private _formBuilder: FormBuilder,
     public _constants: Constants,
-    private _authorService: AuthorService
+    @Inject(AuthorService) private _authorService: IAuthorService
   ) { 
     this.peForm = _formBuilder.group({
       'id': new FormControl(product.id),

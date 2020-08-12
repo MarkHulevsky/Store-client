@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { PrintingEditionService } from 'src/app/services/printing-edition.service';
 import { PrintingEditionResponseFilter } from 'src/app/models/ResponseFilters/PrintingEditionResponseFilter';
 import { PrintingEditionFilter } from 'src/app/models/RequestFilters/PrintingEditionFilter';
@@ -10,7 +10,7 @@ import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
 import { PrintingEditionType, Currency, SortType } from 'src/app/enums/enums';
-import { constants } from 'buffer';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
-    private _peService: PrintingEditionService,
+    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
     public constants: Constants,
   ) {
     this.sort = new MatSort;

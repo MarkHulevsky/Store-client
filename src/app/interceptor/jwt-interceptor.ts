@@ -5,9 +5,8 @@ import { Constants } from '../models/constants/constants';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { StorageHelper } from '../helpers/storage.helper';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

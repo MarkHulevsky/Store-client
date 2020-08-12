@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { AuthorService } from 'src/app/services/author.service';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AuthorResponseFilter } from 'src/app/models/ResponseFilters/AuthorResponseFilter';
 import { AuthorFilter } from 'src/app/models/RequestFilters/AuthorFilter';
@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddAuthorDialogComponent } from '../dialogs/author-dialogs/add-author-dialog/add-author-dialog.component';
 import { DeleteAuthorDialogComponent } from '../dialogs/author-dialogs/delete-author-dialog/delete-author-dialog.component';
 import { EditAuthorDialogComponent } from '../dialogs/author-dialogs/edit-author-dialog/edit-author-dialog.component';
+import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 
 @Component({
   selector: 'app-authors-page',
@@ -34,7 +35,7 @@ export class AuthorsPageComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
-    private _authorService: AuthorService,
+    @Inject(AuthorService) private _authorService: IAuthorService,
     private _dialog: MatDialog,
     private _constants: Constants
   ) {

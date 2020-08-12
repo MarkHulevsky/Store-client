@@ -6,11 +6,12 @@ import { EditProfileModel } from '../models/EditProfileModel';
 import { UserFilter } from '../models/RequestFilters/UserFIlter';
 import { UserResponseFilter } from '../models/ResponseFilters/UserResponseFilter';
 import { environment } from 'src/environments/environment.prod';
+import { IUserService } from '../interfaces/services/IUserService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements IUserService{
 
   constructor(private http: HttpClient) { }
 

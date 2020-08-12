@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Author } from 'src/app/models/Author';
 import { AuthorsPageComponent } from '../../../authors-page/authors-page.component';
 import { AuthorService } from 'src/app/services/author.service';
+import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 
 @Component({
   selector: 'app-delete-author-dialog',
@@ -14,7 +15,7 @@ export class DeleteAuthorDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<AuthorsPageComponent>,
     @Inject(MAT_DIALOG_DATA) public author: Author,
-    private _authorService: AuthorService
+    @Inject(AuthorService) private _authorService: IAuthorService
   ) { }
 
   ngOnInit(): void {

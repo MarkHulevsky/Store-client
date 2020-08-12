@@ -4,6 +4,7 @@ import { AuthorsPageComponent } from '../../../authors-page/authors-page.compone
 import { Author } from 'src/app/models/Author';
 import { AuthorService } from 'src/app/services/author.service';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 
 @Component({
   selector: 'app-edit-author-dialog',
@@ -17,7 +18,7 @@ export class EditAuthorDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<AuthorsPageComponent>,
     @Inject(MAT_DIALOG_DATA) public author: Author,
-    private _authorService: AuthorService,
+    @Inject(AuthorService) private _authorService: IAuthorService,
     private _formBuilder: FormBuilder
   ) {
     this.editAuthorForm = _formBuilder.group({

@@ -5,6 +5,7 @@ import { EditProfileModel } from 'src/app/models/EditProfileModel';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/User';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { IUserService } from 'src/app/interfaces/services/IUserService';
 
 @Component({
   selector: 'app-edit-profile-dialog',
@@ -16,7 +17,7 @@ export class EditProfileDialogComponent implements OnInit {
   public editProfileForm;
   constructor(
     public dialogRef: MatDialogRef<UserManagmentComponent>,
-    private _userService: UserService,
+    @Inject(UserService) private _userService: IUserService,
     @Inject(MAT_DIALOG_DATA) public editProfile: EditProfileModel,
     private _formBuilder: FormBuilder
   ) {

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrintingEdition } from 'src/app/models/PrintingEdition';
 import { PrintingEditionService } from 'src/app/services/printing-edition.service';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderItem } from 'src/app/models/OrderItem';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
+import { ICartService } from 'src/app/interfaces/services/ICartService';
+import { IAuthenticationService } from 'src/app/interfaces/services/IAuthenticationService';
 
 @Component({
   selector: 'app-printing-edition-details',
@@ -20,9 +23,9 @@ export class PrintingEditionDetailsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _peService: PrintingEditionService,
-    private _cartService: CartService,
-    private _authService: AuthenticationService
+    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(CartService) private _cartService: ICartService,
+    @Inject(AuthenticationService) private _authService: IAuthenticationService
   ) {
     this.product = new PrintingEdition;
     _authService.userStatusCheck();
@@ -54,6 +57,11 @@ export class PrintingEditionDetailsComponent implements OnInit {
       amount: this.product.price * this.orderItem.count,
       printingEditionId: this.product.id
     } as OrderItem;
+    if (orderItem.count < 1)
+    {
+      this.orderItem.count = 1;
+      return;
+    }
     this._cartService.addToCart(orderItem);
   }
 }

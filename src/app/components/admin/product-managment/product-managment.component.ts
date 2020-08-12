@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { PrintingEditionResponseFilter } from 'src/app/models/ResponseFilters/PrintingEditionResponseFilter';
 import { PrintingEditionFilter } from 'src/app/models/RequestFilters/PrintingEditionFilter';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,7 @@ import { AddProductDialogComponent } from '../dialogs/product-dialogs/add-produc
 import { DeleteProductDialogComponent } from '../dialogs/product-dialogs/delete-product-dialog/delete-product-dialog.component';
 import { EditProductDialogComponent } from '../dialogs/product-dialogs/edit-product-dialog/edit-product-dialog.component';
 import { SortType } from 'src/app/enums/enums';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
 
 @Component({
   selector: 'app-product-managment',
@@ -36,7 +37,7 @@ export class ProductManagmentComponent implements OnInit {
 
 
   constructor(
-    private _peService: PrintingEditionService,
+    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
     private _constants: Constants,
     private _dialog: MatDialog
   ) { 

@@ -4,15 +4,16 @@ import { StorageHelper } from '../helpers/storage.helper';
 import { Constants } from '../models/constants/constants';
 import { User } from '../models/User';
 import { LoginModel } from '../models/LoginModel';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RegisterModel } from '../models/RegisterModel';
 import { CookieHelper } from '../helpers/cookie.helper';
+import { IAuthenticationService } from '../interfaces/services/IAuthenticationService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements IAuthenticationService {
 
   public isAuthorized: BehaviorSubject<boolean>;
   public userRole: BehaviorSubject<string>;

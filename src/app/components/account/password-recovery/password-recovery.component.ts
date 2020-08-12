@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
+import { IAccountService } from 'src/app/interfaces/services/IAccountService';
 
 @Component({
   selector: 'app-password-recovery',
@@ -16,7 +16,7 @@ export class PasswordRecoveryComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _accountService: AccountService
+    @Inject(AccountService) private _accountService: IAccountService
   ) { }
 
   ngOnInit(): void {

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/User';
 import { StorageHelper } from 'src/app/helpers/storage.helper';
 import { Constants } from 'src/app/models/constants/constants';

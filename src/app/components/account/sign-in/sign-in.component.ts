@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/account.service';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms'
 import { User } from 'src/app/models/User';
 import { LoginModel } from 'src/app/models/LoginModel';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StorageHelper } from 'src/app/helpers/storage.helper';
 import { CookieHelper } from 'src/app/helpers/cookie.helper';
 import { Constants } from 'src/app/models/constants/constants';
-import { constants } from 'buffer';
+import { IAuthenticationService } from 'src/app/interfaces/services/IAuthenticationService';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +22,7 @@ export class SignInComponent implements OnInit {
   public rememberMe: boolean = false;
 
   constructor(
-    private _authenticationService: AuthenticationService,
+    @Inject(AuthenticationService) private _authenticationService: IAuthenticationService,
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _storageHelper: StorageHelper,

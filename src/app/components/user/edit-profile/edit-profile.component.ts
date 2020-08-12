@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 import { FormBuilder, ValidatorFn, FormGroup, ValidationErrors, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EditProfileModel } from 'src/app/models/EditProfileModel';
+import { IUserService } from 'src/app/interfaces/services/IUserService';
 
 @Component({
   selector: 'app-edit-profile',
@@ -25,7 +26,7 @@ export class EditProfileComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _userService: UserService,
+    @Inject(UserService) private _userService: IUserService,
     private _router: Router
   ) {
     this.getProfile();

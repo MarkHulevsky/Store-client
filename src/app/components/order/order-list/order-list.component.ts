@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/Order';
 import { Currency, Status } from 'src/app/enums/enums';
@@ -7,6 +7,7 @@ import { CardDialogComponent } from '../../cart/dialogs/card-dialog/card-dialog.
 import { Token } from '@stripe/stripe-js';
 import { Payment } from 'src/app/models/Payment';
 import { Constants } from 'src/app/models/constants/constants';
+import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 
 @Component({
   selector: 'app-order-list',
@@ -18,7 +19,7 @@ export class OrderListComponent implements OnInit {
   public orders: Order[] = [];
   public displayedColumns: string[] = ["Order time", "Product", "Title", "Qty", "Order amount", "Order status"];
   constructor(
-    private _orderService: OrderService,
+    @Inject(OrderService) private _orderService: IOrderService,
     private _dialog: MatDialog,
     private _constants: Constants
   ) { }

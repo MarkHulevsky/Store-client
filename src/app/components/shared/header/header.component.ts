@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { StorageHelper } from 'src/app/helpers/storage.helper';
 import { Constants } from 'src/app/models/constants/constants';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { IAuthenticationService } from 'src/app/interfaces/services/IAuthenticationService';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,7 @@ export class HeaderComponent implements OnInit {
     private _storageHelper: StorageHelper,
     private _constants: Constants,
     private _router: Router,
-    private _authService: AuthenticationService
+    @Inject(AuthenticationService) private _authService: IAuthenticationService
     ) {
     this.isAdmin = _storageHelper.getItem(_constants.storageRole) === _constants.adminRoleName;
     _authService.userStatusCheck();

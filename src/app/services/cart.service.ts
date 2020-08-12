@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { OrderItem } from '../models/OrderItem';
 import { Subject } from 'rxjs';
 import { StorageHelper } from '../helpers/storage.helper';
+import { ICartService } from '../interfaces/services/ICartService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class CartService implements ICartService {
 
   private _orderItems: OrderItem[] = [];
   private _count: Subject<number> = new Subject<number>();
@@ -37,7 +38,7 @@ export class CartService {
     return false;
   }
 
-  clear() {
+  clear(): void {
     this._orderItems = [];
     this._storageHelper.setItem('cart', JSON.stringify(this._orderItems));
     this.count.next(this.orderItems.length);

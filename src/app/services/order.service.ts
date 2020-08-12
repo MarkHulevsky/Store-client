@@ -7,10 +7,11 @@ import { Payment } from '../models/Payment';
 import { Order } from '../models/Order';
 import { OrderResponseFilter } from '../models/ResponseFilters/OrderResponseFulter';
 import { OrderFilter } from '../models/RequestFilters/OrderFilter';
+import { IOrderService } from '../interfaces/services/IOrderService';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class OrderService implements IOrderService {
 
   constructor(private _http: HttpClient) { }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/Order';
 import { OrderFilter } from 'src/app/models/RequestFilters/OrderFilter';
@@ -11,6 +11,7 @@ import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
 import { Currency, SortType } from 'src/app/enums/enums';
 import { FormControl } from '@angular/forms';
+import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 
 @Component({
   selector: 'app-order-managment',
@@ -42,7 +43,7 @@ export class OrderManagmentComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
-    private _orderService: OrderService,
+    @Inject(OrderService) private _orderService: IOrderService,
     public constants: Constants
   ) {
     this.sort = new MatSort();

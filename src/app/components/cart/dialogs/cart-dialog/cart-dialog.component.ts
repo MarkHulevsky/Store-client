@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { CartIconComponent } from 'src/app/components/shared/cart-icon/cart-icon.component';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { OrderItem } from 'src/app/models/OrderItem';
-import { PrintingEdition } from 'src/app/models/PrintingEdition';
 import { PrintingEditionService } from 'src/app/services/printing-edition.service';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -14,7 +13,9 @@ import { Currency } from 'src/app/enums/enums';
 import { Token } from '@stripe/stripe-js';
 import { Payment } from 'src/app/models/Payment';
 import { Constants } from 'src/app/models/constants/constants';
-import { constants } from 'buffer';
+import { IOrderService } from 'src/app/interfaces/services/IOrderService';
+import { ICartService } from 'src/app/interfaces/services/ICartService';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
 
 @Component({
   selector: 'app-cart-dialog',
@@ -29,9 +30,9 @@ export class CartDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<CartIconComponent>,
     @Inject(MAT_DIALOG_DATA) public orderItems: OrderItem[],
-    private _peService: PrintingEditionService,
-    private _cartService: CartService,
-    private _orderService: OrderService,
+    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(CartService) private _cartService: ICartService,
+    @Inject(OrderService) private _orderService: IOrderService,
     private _router: Router,
     private _dialog: MatDialog,
     private _constants: Constants
@@ -40,10 +41,6 @@ export class CartDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPrintingEditions();
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   async getPrintingEditions(): Promise<void> {
@@ -57,6 +54,9 @@ export class CartDialogComponent implements OnInit {
   }
 
   qtyChanged(orderItem: OrderItem): void {
+    if (orderItem.count < 1) {
+        orderItem.count = 1;
+    }
     let index = this.orderItems.indexOf(orderItem);
     this.orderItems[index].amount = this.orderItems[index].printingEdition.price * this.orderItems[index].count;
     this.totalPrice = 0;
@@ -130,12 +130,6 @@ export class CartDialogComponent implements OnInit {
     orderItem.printingEdition.price = Math.round(orderItem.printingEdition.price * rate);
     orderItem.printingEdition.currency = currency;
     orderItem.amount = orderItem.printingEdition.price * orderItem.count;
-
-    // this._peService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
-    //   orderItem.printingEdition.price = Math.round(orderItem.printingEdition.price * rate);
-    //   orderItem.printingEdition.currency = currency;
-    //   orderItem.amount = orderItem.printingEdition.price * orderItem.count;
-    // });
   }
 }
 

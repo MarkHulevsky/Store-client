@@ -7,6 +7,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { ProductManagmentComponent } from '../../../product-managment/product-managment.component';
 import { AuthorService } from 'src/app/services/author.service';
 import { Author } from 'src/app/models/Author';
+import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
+import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -20,11 +22,11 @@ export class AddProductDialogComponent implements OnInit {
   public authors: Author[] = [];
   
   constructor(
-    private _peService: PrintingEditionService,
+    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
     private _formBuilder: FormBuilder,
     public _constants: Constants,
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
-    private _authorService: AuthorService
+    @Inject(AuthorService) private _authorService: IAuthorService
   ) {
     this.peForm = _formBuilder.group({
       'title': new FormControl(_constants.emptyString, Validators.required),

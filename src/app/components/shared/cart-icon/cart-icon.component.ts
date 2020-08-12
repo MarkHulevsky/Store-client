@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderItem } from 'src/app/models/OrderItem';
 import { MatDialog } from '@angular/material/dialog';
 import { CartDialogComponent } from '../../cart/dialogs/cart-dialog/cart-dialog.component';
+import { ICartService } from 'src/app/interfaces/services/ICartService';
 
 @Component({
   selector: 'app-cart-icon',
@@ -14,7 +15,7 @@ export class CartIconComponent implements OnInit {
   public count: number;
   private _orderItems: OrderItem[] = [];
   constructor(
-    private _cartService: CartService,
+    @Inject(CartService) private _cartService: ICartService,
     private _dialog: MatDialog
     ) { 
     _cartService.count.subscribe((data: number) => {

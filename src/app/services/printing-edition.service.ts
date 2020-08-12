@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 import { PrintingEdition } from '../models/PrintingEdition';
 import { PrintingEditionFilter } from '../models/RequestFilters/PrintingEditionFilter';
 import { PrintingEditionResponseFilter } from '../models/ResponseFilters/PrintingEditionResponseFilter';
+import { IPrintingEditionService } from '../interfaces/services/IPrintingEditionService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrintingEditionService {
+export class PrintingEditionService implements IPrintingEditionService {
 
   constructor(
     private _http: HttpClient
