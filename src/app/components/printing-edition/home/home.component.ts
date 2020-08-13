@@ -24,8 +24,6 @@ export class HomeComponent implements OnInit {
   public displayedColumns = [];
   public dataSource = new MatTableDataSource<PrintingEdition>();
   public data: PrintingEdition[] = [];
-  public isLoadingResults = true;
-  public isRateLimitReached = false;
   public resultsLength = 0;
   public currentCurrency: string;
 
@@ -59,19 +57,14 @@ export class HomeComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoadingResults = true;
           this.printingEditionFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
           return this._peService.getFiltred(this.printingEditionFilter);
         }),
         map((data: PrintingEditionResponseFilter) => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.totalCount;
           return data.printingEditions;
         }),
         catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
           return of([]);
         })
       ).subscribe((data: PrintingEdition[]) => {

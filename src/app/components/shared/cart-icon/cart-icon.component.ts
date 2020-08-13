@@ -17,7 +17,7 @@ export class CartIconComponent implements OnInit {
   constructor(
     @Inject(CartService) private _cartService: ICartService,
     private _dialog: MatDialog
-    ) { 
+  ) {
     _cartService.count.subscribe((data: number) => {
       this.count = data;
     });

@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit {
     this._authService.isAuthorized.subscribe((data: boolean) => {
       this.isAuthorized = data;
     });
-    this._authService.userRole.subscribe((data: string) => {
-      if (data === "admin") {
+    this._authService.userRole.subscribe((role: string) => {
+      if (role === this._constants.adminRoleName) {
         this.isAdmin = true;
         return;
       }

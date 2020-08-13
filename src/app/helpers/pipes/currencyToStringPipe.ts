@@ -8,6 +8,6 @@ export class CurrencyToStringPipe implements PipeTransform {
     constructor(private _constants: Constants) {}
     
     transform(value: number) {
-        return this._constants.currencyStrings[value];
+        return this._constants.currencyStrings[value - 1];
     }
 }

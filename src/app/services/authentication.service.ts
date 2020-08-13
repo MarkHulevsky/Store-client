@@ -23,7 +23,7 @@ export class AuthenticationService implements IAuthenticationService {
     private _constants: Constants,
     private _cookieHelper: CookieHelper
   ) {
-    this.userRole = new BehaviorSubject<string>(_constants.userRoles[1]);
+    this.userRole = new BehaviorSubject<string>(_constants.userRoleName);
     this.isAuthorized = new BehaviorSubject<boolean>(false);
   }
 

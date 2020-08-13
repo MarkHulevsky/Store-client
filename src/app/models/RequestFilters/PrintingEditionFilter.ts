@@ -1,5 +1,5 @@
 import { BaseFilter } from './BaseFilter';
-import { PrintingEditionType, Currency } from 'src/app/enums/enums';
+import { PrintingEditionType } from 'src/app/enums/enums';
 
 export class PrintingEditionFilter extends BaseFilter{
     types: PrintingEditionType[];

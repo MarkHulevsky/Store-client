@@ -34,8 +34,8 @@ export class PrintingEditionDetailsComponent implements OnInit {
   ngOnInit(): void {
     this._route.paramMap.subscribe(params => {
       let productId = params.get("id");
-      this._peService.getById(productId).subscribe((data: PrintingEdition) => {
-        this.product = data;
+      this._peService.getById(productId).subscribe((printingEdition: PrintingEdition) => {
+        this.product = printingEdition;
         this.orderItem = {
           count: 1
         } as OrderItem;

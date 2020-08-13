@@ -9,6 +9,6 @@ export class OrderStatusToStringPipe implements PipeTransform {
 
     }
     transform(value: number) {
-        return this._constants.orderStatusStrings[value];
+        return this._constants.orderStatusStrings[value - 1];
     }
 }

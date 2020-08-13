@@ -7,6 +7,7 @@ import { OrderFilter } from '../RequestFilters/OrderFilter';
 
 @Injectable()
 export class Constants {
+
     public readonly emptyString = "";
 
     public readonly userFilter: UserFilter = {
@@ -18,11 +19,6 @@ export class Constants {
         },
         sortType: SortType.Ascending,
         statuses: [true, false]
-    }
-
-    public readonly userRoles = {
-        admin: "admin",
-        user: "user"
     }
 
     public readonly authorFilter: AuthorFilter = {
@@ -47,7 +43,7 @@ export class Constants {
     }
 
     public readonly orderFilter: OrderFilter = {
-        orderStatuses: [Status.None, Status.Paid, Status.Unpaid],
+        orderStatuses: [Status.Paid, Status.Unpaid],
         propName: this.emptyString,
         sortType: SortType.Ascending,
         paging: {
@@ -66,8 +62,8 @@ export class Constants {
     public readonly storageIsAutorized = "isAutorized";
     public readonly accessError = 401;
     public readonly adminRoleName = "admin"
-    public readonly isNotRememberMeDateExpire = new Date(0, 0, 0, 12, 0, 0, 0);
-    public readonly printingEditionTypeStrings = ['None', 'Book', 'Newspapers', 'Magazines'];
-    public readonly currencyStrings = ['None', 'USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
-    public readonly orderStatusStrings = ['None', 'Unpaid', 'Paid'];
+    public readonly userRoleName = "user";
+    public readonly printingEditionTypeStrings = ['Book', 'Newspapers', 'Magazines'];
+    public readonly currencyStrings = ['USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
+    public readonly orderStatusStrings = ['Unpaid', 'Paid'];
 } 

@@ -8,6 +8,6 @@ export class PrintingEditionTypeToStringPipe implements PipeTransform {
     constructor(private _constants: Constants) {}
     
     transform(value: number) {
-        return this._constants.printingEditionTypeStrings[value];
+        return this._constants.printingEditionTypeStrings[value - 1];
     }
 }
