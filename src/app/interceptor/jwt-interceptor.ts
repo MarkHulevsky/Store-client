@@ -7,6 +7,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { StorageHelper } from '../helpers/storage.helper';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -16,16 +17,8 @@ export class JwtInterceptor implements HttpInterceptor {
         private _router: Router,
         private _authenticationService: AuthenticationService,
         private _storageHelper: StorageHelper,
+        private _jwtHelperService: JwtHelperService
     ) { }
-
-    private setBearer(token: string, request: HttpRequest<any>): HttpRequest<any> {
-        return request.clone({
-            setHeaders: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-    }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let token = this._cookieHelper.getItem(this._constants.accessToken);
@@ -37,11 +30,14 @@ export class JwtInterceptor implements HttpInterceptor {
 
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status == this._constants.accessError &&
-                    this._cookieHelper.getItem(this._constants.refreshToken)) {
+                let isExpired: boolean = this._jwtHelperService
+                    .isTokenExpired(this._cookieHelper.getItem(this._constants.accessToken)); 
+                let refreshToken = this._cookieHelper.getItem(this._constants.refreshToken);
+                let isRememberMe: boolean = JSON.parse(this._storageHelper.getItem(this._constants.storageIsRememberMe));
+                if (error.status == this._constants.accessError && isExpired && refreshToken && isRememberMe) {
                     return this.refreshToken(token, request, next);
                 }
-                if (error.status == this._constants.accessError) {
+                if (error.status == this._constants.accessError && !isRememberMe) {
                     this._router.navigate(['/account/sign-in']);
                 }
                 return throwError(error);
@@ -58,5 +54,14 @@ export class JwtInterceptor implements HttpInterceptor {
                     return next.handle(this.setBearer(data.accessToken, request));
                 })
             );
+    }
+
+    private setBearer(token: string, request: HttpRequest<any>): HttpRequest<any> {
+        return request.clone({
+            setHeaders: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
     }
 }

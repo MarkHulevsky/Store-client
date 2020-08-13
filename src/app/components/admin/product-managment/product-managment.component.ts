@@ -127,10 +127,10 @@ export class ProductManagmentComponent implements OnInit {
   }
 
   private changeSortType() {
-    if (this.peFilter.sortType == SortType.ascending) {
-      this.peFilter.sortType = SortType.descending;
+    if (this.peFilter.sortType == SortType.Ascending) {
+      this.peFilter.sortType = SortType.Descending;
       return;
     }
-    this.peFilter.sortType = SortType.ascending;
+    this.peFilter.sortType = SortType.Ascending;
   }
 }

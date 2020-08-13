@@ -50,20 +50,10 @@ export class SignInComponent implements OnInit {
       this._router.navigate(["home"]);
     });
 
-    if (!this.rememberMe) {
-      let cookies = this._cookieHelper.getAllCookie();
-      this._cookieHelper.setCookieForExpire(
-        [
-          this._constants.accessToken,
-          this._constants.refreshToken
-        ],
-        [
-          cookies[this._constants.accessToken],
-          cookies[this._constants.refreshToken]
-        ],
-        this._constants.isNotRememberMeDateExpire
-      );
+    if (this.rememberMe) {
+      this._storageHelper.setItem(this._constants.storageIsRememberMe, JSON.stringify(true));
     }
+    this._storageHelper.setItem(this._constants.storageIsRememberMe, JSON.stringify(false));
   }
 
   signUpRedirect() {

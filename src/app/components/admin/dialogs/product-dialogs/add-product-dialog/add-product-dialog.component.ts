@@ -17,18 +17,18 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 })
 export class AddProductDialogComponent implements OnInit {
 
-  public peForm: FormGroup;
+  public printingEditionForm: FormGroup;
   public clicked: boolean = false;
   public authors: Author[] = [];
   
   constructor(
-    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService,
     private _formBuilder: FormBuilder,
     public _constants: Constants,
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
     @Inject(AuthorService) private _authorService: IAuthorService
   ) {
-    this.peForm = _formBuilder.group({
+    this.printingEditionForm = _formBuilder.group({
       'title': new FormControl(_constants.emptyString, Validators.required),
       'description': new FormControl(_constants.emptyString, Validators.required),
       'price': new FormControl(0, Validators.required),
@@ -49,14 +49,14 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   add(): void {
-    if (this.peForm.invalid) {
+    if (this.printingEditionForm.invalid) {
       return;
     }
-    let pe = this.peForm.value as PrintingEdition;
-    pe.authors = [];
-    let author = this.peForm.get('author').value as Author;
-    pe.authors.push(author);
-    this._peService.add(pe).subscribe(() => {
+    let printingEdition = this.printingEditionForm.value as PrintingEdition;
+    printingEdition.authors = [];
+    let author = this.printingEditionForm.get('author').value as Author;
+    printingEdition.authors.push(author);
+    this._printingEditionService.add(printingEdition).subscribe(() => {
       this.clicked = true;
       this._dialogRef.close();
     });

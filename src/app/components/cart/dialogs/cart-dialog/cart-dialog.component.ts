@@ -9,7 +9,7 @@ import { Cart } from 'src/app/models/Cart';
 import { Order } from 'src/app/models/Order';
 import { Router } from '@angular/router';
 import { CardDialogComponent } from '../card-dialog/card-dialog.component';
-import { Currency } from 'src/app/enums/enums';
+import { Currency, Status } from 'src/app/enums/enums';
 import { Token } from '@stripe/stripe-js';
 import { Payment } from 'src/app/models/Payment';
 import { Constants } from 'src/app/models/constants/constants';
@@ -83,7 +83,8 @@ export class CartDialogComponent implements OnInit {
     }
     let cart: Cart = {
       order: {
-        orderItems: this.orderItems
+        orderItems: this.orderItems,
+        status: Status.Unpaid
       } as Order,
     } as Cart;
     let orderId: string;

@@ -27,8 +27,6 @@ export class AuthorsPageComponent implements OnInit {
   public displayedColumns = ['name', 'products', 'customColumn'];
   public dataSource = new MatTableDataSource<Author>();
   public data: Author[] = [];
-  public isLoadingResults = true;
-  public isRateLimitReached = false;
   public resultsLength = 0;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -59,23 +57,18 @@ export class AuthorsPageComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoadingResults = true;
           this.authorFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
           return this._authorService.getFiltred(this.authorFilter);
         }),
         map(data => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.totalCount;
           return data.authors;
         }),
         catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
           return of([]);
         })
-        ).subscribe((data: Author[]) => {
-          this.data = data
+        ).subscribe((author: Author[]) => {
+          this.data = author
         });
   }
 

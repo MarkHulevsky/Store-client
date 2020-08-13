@@ -1,6 +1,6 @@
 <div>
     <p>Edit product</p>
-    <form [formGroup]="peForm" (ngSubmit)="edit()">
+    <form [formGroup]="printingEditionForm" (ngSubmit)="edit()">
 
         <div class="inline">
             <div class="form-group">
@@ -12,9 +12,9 @@
                 <label for="category">Category</label>
                 <br>
                 <select id="category" class="form-control" formControlName="type">
-                    <option *ngFor="let peType of _constants.printingEditionTypeStrings"
-                        [ngValue]="peType | peStringToEnum">
-                        {{peType}}
+                    <option *ngFor="let printingEditionType of _constants.printingEditionTypeStrings"
+                        [ngValue]="printingEditionType | peStringToEnum">
+                        {{printingEditionType}}
                     </option>
                 </select>
                 <br>

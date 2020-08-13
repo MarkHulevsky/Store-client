@@ -35,8 +35,6 @@ export class OrderManagmentComponent implements OnInit {
   ];
   public orderResponseFilter = new OrderResponseFilter;
   public dataSource = new MatTableDataSource<Order>();
-  public isLoadingResults = true;
-  public isRateLimitReached = false;
   public resultsLength = 0;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -67,23 +65,18 @@ export class OrderManagmentComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoadingResults = true;
           this.orderFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
           return this._orderService.getFiltred(this.orderFilter);
         }),
         map(data => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.totalCount;
           return data.orders;
         }),
         catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
           return of([]);
         })
-      ).subscribe((data: Order[]) => {
-        this.orders = data;
+      ).subscribe((orders: Order[]) => {
+        this.orders = orders;
         this.orders.forEach(order => {
           let amount = 0;
           let currency: Currency;
@@ -97,7 +90,6 @@ export class OrderManagmentComponent implements OnInit {
       });
   }
   orderBy(propName: string) {
-    debugger
     this.orderFilter.propName = propName;
     this.changeSortType();
     this.getOrders();
@@ -110,10 +102,10 @@ export class OrderManagmentComponent implements OnInit {
   }
 
   private changeSortType(): void {
-    if (this.orderFilter.sortType == SortType.ascending) {
-      this.orderFilter.sortType = SortType.descending;
+    if (this.orderFilter.sortType == SortType.Ascending) {
+      this.orderFilter.sortType = SortType.Descending;
       return;
     }
-    this.orderFilter.sortType = SortType.ascending;
+    this.orderFilter.sortType = SortType.Ascending;
   }
 }

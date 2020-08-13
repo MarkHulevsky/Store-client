@@ -28,7 +28,8 @@ export class AddAuthorDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addAuthor() {
+  addAuthor(): void {
+    debugger
     if (this.authorForm.invalid)
     {
       return;

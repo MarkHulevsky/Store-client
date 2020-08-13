@@ -124,11 +124,11 @@ export class UserManagmentComponent implements OnInit {
   }
 
   private changeSortType(): void {
-    if (this.userFilter.sortType == SortType.ascending) {
-      this.userFilter.sortType = SortType.descending;
+    if (this.userFilter.sortType == SortType.Ascending) {
+      this.userFilter.sortType = SortType.Descending;
       return;
     }
-    this.userFilter.sortType = SortType.ascending;
+    this.userFilter.sortType = SortType.Ascending;
   }
 
   private indexOf(user: User) {

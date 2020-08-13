@@ -12,12 +12,12 @@
             <div>
                 <label>Min price</label>
                 <input type="number" placeholder="Minimum price" 
-                    [(ngModel)]="peFilter.minPrice" (keyup)="minPriceFilter($event)">
+                    [(ngModel)]="printingEditionFilter.minPrice" (keyup)="minPriceFilter($event)">
             </div>
             <div>
                 <label>Max price</label>
                 <input type="number" placeholder="Maximum price" 
-                    [(ngModel)]="peFilter.maxPrice" (keyup)="maxPriceFilter($event)">
+                    [(ngModel)]="printingEditionFilter.maxPrice" (keyup)="maxPriceFilter($event)">
             </div>
         </div>
     </mat-drawer>
@@ -36,10 +36,10 @@
                 </select>
                 <label>Sort by</label>
                 <select (change)="sortByPrice($event.target.value)">
-                    <option value="ascending">
+                    <option value="Ascending">
                         Price: Ascending
                     </option>
-                    <option value="descending">
+                    <option value="Descending">
                         Price: Descending
                     </option>
                 </select>
@@ -52,7 +52,7 @@
                     <p class="price">{{pe.price}} {{pe.currency | currencyToString}}</p>
                 </a>
             </div>
-            <mat-paginator [length]="resultsLength" [pageSize]="peFilter.paging.itemsCount"
+            <mat-paginator [length]="resultsLength" [pageSize]="printingEditionFilter.paging.itemsCount"
                 showFirstLastButtons>
             </mat-paginator>
         </div>

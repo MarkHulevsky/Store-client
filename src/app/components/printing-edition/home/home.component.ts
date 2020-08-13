@@ -19,8 +19,8 @@ import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEd
 })
 export class HomeComponent implements OnInit {
 
-  public peResponseFilter = new PrintingEditionResponseFilter;
-  public peFilter = new PrintingEditionFilter;
+  public printingEditionResponseFilter = new PrintingEditionResponseFilter;
+  public printingEditionFilter = new PrintingEditionFilter;
   public displayedColumns = [];
   public dataSource = new MatTableDataSource<PrintingEdition>();
   public data: PrintingEdition[] = [];
@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit {
     public constants: Constants,
   ) {
     this.sort = new MatSort;
-    this.peFilter = constants.printingEditionFilter;
-    this.peFilter.paging.itemsCount = 8;
+    this.printingEditionFilter = constants.printingEditionFilter;
+    this.printingEditionFilter.paging.itemsCount = 8;
     this.currentCurrency = constants.currencyStrings[0];
   }
 
@@ -60,8 +60,8 @@ export class HomeComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          this.peFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._peService.getFiltred(this.peFilter);
+          this.printingEditionFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._peService.getFiltred(this.printingEditionFilter);
         }),
         map((data: PrintingEditionResponseFilter) => {
           this.isLoadingResults = false;
@@ -80,26 +80,26 @@ export class HomeComponent implements OnInit {
   }
 
   search(event): void {
-    this.peFilter.searchString = event.target.value;
+    this.printingEditionFilter.searchString = event.target.value;
     this.getPrintingEditions();
   }
 
   maxPriceFilter(event): void {
     if (event.target.value !== this.constants.emptyString) {
-      if (this.peFilter.minPrice === null) {
-        this.peFilter.minPrice = 0;
+      if (this.printingEditionFilter.minPrice === null) {
+        this.printingEditionFilter.minPrice = 0;
       }
-      this.peFilter.maxPrice = parseInt(event.target.value);
+      this.printingEditionFilter.maxPrice = parseInt(event.target.value);
       this.getPrintingEditions();
     }
   }
 
   minPriceFilter(event): void {
     if (event.target.value !== this.constants.emptyString) {
-      if (this.peFilter.maxPrice === null) {
-        this.peFilter.maxPrice = 0;
+      if (this.printingEditionFilter.maxPrice === null) {
+        this.printingEditionFilter.maxPrice = 0;
       }
-      this.peFilter.minPrice = parseInt(event.target.value);
+      this.printingEditionFilter.minPrice = parseInt(event.target.value);
       this.getPrintingEditions();
     }
   }
@@ -108,12 +108,12 @@ export class HomeComponent implements OnInit {
     let isChecked: boolean = event.target.checked;
     let type: PrintingEditionType = PrintingEditionType[typeString];
     if (isChecked) {
-      this.peFilter.types.push(type);
+      this.printingEditionFilter.types.push(type);
     }
     if (!isChecked) {
-      let index = this.peFilter.types.indexOf(type, 0);
+      let index = this.printingEditionFilter.types.indexOf(type, 0);
       if (index > -1) {
-        this.peFilter.types.splice(index, 1);
+        this.printingEditionFilter.types.splice(index, 1);
       }
     }
     this.getPrintingEditions();
@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit {
   }
 
   sortByPrice(value: string) {
-    this.peFilter.sortType = SortType[value];
+    this.printingEditionFilter.sortType = SortType[value];
     this.getPrintingEditions();
   }
 }

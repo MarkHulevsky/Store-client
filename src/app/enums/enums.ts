@@ -1,24 +1,28 @@
 export enum SortType {
-    ascending = 0,
-    descending = 1
+    None = 0,
+    Ascending = 1,
+    Descending = 2
 }
 
 export enum Currency {
-    USD = 0,
-    EUR = 1,
-    GBP = 2,
-    CHF = 3,
-    RUB = 4,
-    PLN = 5
+    None = 0,
+    USD = 1,
+    EUR = 2,
+    GBP = 3,
+    CHF = 4,
+    RUB = 5,
+    PLN = 6
 }
 
 export enum PrintingEditionType {
-    Book = 0,
-    Newspapers = 1,
-    Magazines = 2
+    None = 0,
+    Book = 1,
+    Newspapers = 2,
+    Magazines = 3
 }
 
 export enum Status {
-    Unpaid = 0,
-    Paid = 1
+    None = 0,
+    Unpaid = 1,
+    Paid = 2
 }

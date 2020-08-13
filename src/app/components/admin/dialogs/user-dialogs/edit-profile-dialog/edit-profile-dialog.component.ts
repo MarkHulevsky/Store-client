@@ -35,8 +35,8 @@ export class EditProfileDialogComponent implements OnInit {
   save(editedUserFrom: FormGroup) {
     if (!editedUserFrom.invalid){
       let editedUser = editedUserFrom.value;
-      this._userService.editProfile(editedUser as EditProfileModel).subscribe((data: User) => {
-        if (data.errors.length < 1) {
+      this._userService.editProfile(editedUser as EditProfileModel).subscribe((user: User) => {
+        if (user.errors.length < 1) {
           this.dialogRef.close(editedUser);
         }
       });

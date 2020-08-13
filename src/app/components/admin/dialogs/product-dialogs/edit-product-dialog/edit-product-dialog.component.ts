@@ -17,19 +17,19 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 })
 export class EditProductDialogComponent implements OnInit {
 
-  public peForm: FormGroup;
+  public printingEditionForm: FormGroup;
   public clicked: boolean = false;
   public authors: Author[] = [];
 
   constructor(
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
     @Inject(MAT_DIALOG_DATA) public product: PrintingEdition,
-    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService,
     private _formBuilder: FormBuilder,
     public _constants: Constants,
     @Inject(AuthorService) private _authorService: IAuthorService
   ) { 
-    this.peForm = _formBuilder.group({
+    this.printingEditionForm = _formBuilder.group({
       'id': new FormControl(product.id),
       'title': new FormControl(product.title, Validators.required),
       'description': new FormControl(product.description, Validators.required),
@@ -45,20 +45,20 @@ export class EditProductDialogComponent implements OnInit {
   }
 
   getAuthors(): void {
-    this._authorService.getAll().subscribe((data: Author[]) => {
-      this.authors = data;
+    this._authorService.getAll().subscribe((author: Author[]) => {
+      this.authors = author;
     });
   }
 
   edit(): void {
-    if (this.peForm.invalid) {
+    if (this.printingEditionForm.invalid) {
       return;
     }
-    let pe = this.peForm.value as PrintingEdition;
-    pe.authors = [];
-    let author = this.peForm.get('author').value as Author;
-    pe.authors = [author];
-    this._peService.edit(pe).subscribe(() => {
+    let printingEdition = this.printingEditionForm.value as PrintingEdition;
+    printingEdition.authors = [];
+    let author = this.printingEditionForm.get('author').value as Author;
+    printingEdition.authors = [author];
+    this._printingEditionService.edit(printingEdition).subscribe(() => {
       this.clicked = true;
       this._dialogRef.close();
     });

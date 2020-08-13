@@ -16,7 +16,7 @@ export class Constants {
             currentPage: 0,
             itemsCount: 10
         },
-        sortType: SortType.ascending,
+        sortType: SortType.Ascending,
         statuses: [true, false]
     }
 
@@ -27,7 +27,7 @@ export class Constants {
 
     public readonly authorFilter: AuthorFilter = {
         propName: this.emptyString,
-        sortType: SortType.ascending,
+        sortType: SortType.Ascending,
         paging: {
             currentPage: 0,
             itemsCount: 5
@@ -42,20 +42,21 @@ export class Constants {
             itemsCount: 6
         },
         searchString: this.emptyString,
-        sortType: SortType.ascending,
+        sortType: SortType.Ascending,
         types: [PrintingEditionType.Book, PrintingEditionType.Magazines, PrintingEditionType.Newspapers]
     }
 
     public readonly orderFilter: OrderFilter = {
-        orderStatuses: [Status.Paid, Status.Unpaid],
+        orderStatuses: [Status.None, Status.Paid, Status.Unpaid],
         propName: this.emptyString,
-        sortType: SortType.ascending,
+        sortType: SortType.Ascending,
         paging: {
             currentPage: 0,
             itemsCount: 10
         }
     }
-
+    
+    public readonly storageIsRememberMe = "isRememberMe";
     public readonly storageFirstName = "firstName";
     public readonly storageLastName = "lastName";
     public readonly storageEmail = "email";
@@ -66,7 +67,7 @@ export class Constants {
     public readonly accessError = 401;
     public readonly adminRoleName = "admin"
     public readonly isNotRememberMeDateExpire = new Date(0, 0, 0, 12, 0, 0, 0);
-    public readonly printingEditionTypeStrings = ['Book', 'Newspapers', 'Magazines'];
-    public readonly currencyStrings = ['USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
-    public readonly orderStatusStrings = ["Unpaid", "Paid"];
+    public readonly printingEditionTypeStrings = ['None', 'Book', 'Newspapers', 'Magazines'];
+    public readonly currencyStrings = ['None', 'USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
+    public readonly orderStatusStrings = ['None', 'Unpaid', 'Paid'];
 } 
