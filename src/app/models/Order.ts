@@ -1,11 +1,11 @@
 import { BaseModel } from './BaseModel';
 import { OrderItem } from './OrderItem';
-import { Status, Currency } from '../enums/enums';
+import { OrderStatus, CurrencyType } from '../enums/enums';
 
 export class Order extends BaseModel {
     public creationDate: Date;
-    public status: Status;
+    public status: OrderStatus;
     public orderItems: OrderItem[];
     public amount: number;
-    public currency: Currency;
+    public currency: CurrencyType;
 }

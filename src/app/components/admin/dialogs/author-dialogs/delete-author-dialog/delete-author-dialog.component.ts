@@ -21,13 +21,13 @@ export class DeleteAuthorDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete() {
+  delete(): void {
     this._authorService.deleteAuthor(this.author.id).subscribe(() => {
       this._dialogRef.close();
     });
   }
 
-  cancel() {
+  cancel(): void {
     this._dialogRef.close();
   }
 }

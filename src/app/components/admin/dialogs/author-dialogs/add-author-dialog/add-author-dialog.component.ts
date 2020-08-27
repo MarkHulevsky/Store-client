@@ -41,7 +41,7 @@ export class AddAuthorDialogComponent implements OnInit {
     })
   }
 
-  cancel() {
+  cancel(): void {
     this.dialogRef.close();
   }
 

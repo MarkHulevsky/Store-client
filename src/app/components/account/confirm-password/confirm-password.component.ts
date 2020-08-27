@@ -24,18 +24,18 @@ export class ConfirmPasswordComponent implements OnInit {
     this.emailConfirmedCheck();
   }
 
-  continueBtn(){
+  continueBtn(): void{
     this._router.navigate(['home']);
   }
 
-  async emailConfirmedCheck(){
+  async emailConfirmedCheck(): Promise<void>{
     while (!this.user.emailConfirmed){
       this.getCurrentUser();
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
-  getCurrentUser() {
+  getCurrentUser(): void {
     this._userService.getCurrentUser().subscribe((data: User) => {
       this.user = data;
     })

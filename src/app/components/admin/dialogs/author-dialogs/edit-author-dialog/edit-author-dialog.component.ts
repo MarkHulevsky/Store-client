@@ -30,7 +30,7 @@ export class EditAuthorDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  edit(editedAuthorForm: FormGroup) {
+  edit(editedAuthorForm: FormGroup): void {
     if (editedAuthorForm.invalid) {
       return;
     }
@@ -39,7 +39,7 @@ export class EditAuthorDialogComponent implements OnInit {
     });
   }
 
-  cancel() {
+  cancel(): void {
     this._dialogRef.close();
   }
 

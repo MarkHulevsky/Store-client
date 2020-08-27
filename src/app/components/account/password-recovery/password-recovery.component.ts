@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { IAccountService } from 'src/app/interfaces/services/IAccountService';
+import { BaseModel } from 'src/app/models/BaseModel';
 
 @Component({
   selector: 'app-password-recovery',
@@ -10,7 +11,7 @@ import { IAccountService } from 'src/app/interfaces/services/IAccountService';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  emailIsCorrect: boolean = false;
+  isEmailCorrect: boolean = false;
   errors: string[] = [];
   email: string;
 
@@ -22,17 +23,17 @@ export class PasswordRecoveryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  continue() {
+  continue(): void {
     this._router.navigate(["account/sign-in"]);
   }
 
-  passwordRecovery() {
-    this._accountService.forgotPassword(this.email).subscribe((data: any) => {
-      this.errors = data?.errors;
+  passwordRecovery(): void {
+    this._accountService.forgotPassword(this.email).subscribe((baseModel: BaseModel) => {
+      this.errors = baseModel?.errors;
       if (this.errors?.length > 0){
         return;
       }
-      this.emailIsCorrect = true;
+      this.isEmailCorrect = true;
     });
   }
 }

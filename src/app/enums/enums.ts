@@ -3,7 +3,7 @@ export enum SortType {
     Descending = 2
 }
 
-export enum Currency {
+export enum CurrencyType {
     USD = 1,
     EUR = 2,
     GBP = 3,
@@ -18,7 +18,7 @@ export enum PrintingEditionType {
     Magazines = 3
 }
 
-export enum Status {
+export enum OrderStatus {
     Unpaid = 1,
     Paid = 2
 }

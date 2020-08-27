@@ -9,7 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
-import { Currency, SortType } from 'src/app/enums/enums';
+import { CurrencyType, SortType } from 'src/app/enums/enums';
 import { FormControl } from '@angular/forms';
 import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 
@@ -58,7 +58,7 @@ export class OrderManagmentComponent implements OnInit {
     this.getOrders();
   }
 
-  getOrders() {
+  getOrders(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -79,7 +79,7 @@ export class OrderManagmentComponent implements OnInit {
         this.orders = orders;
         this.orders.forEach(order => {
           let amount = 0;
-          let currency: Currency;
+          let currency: CurrencyType;
           order.orderItems.forEach(orderItem => {
             amount += orderItem.amount;
             currency = orderItem.printingEdition.currency;
@@ -89,13 +89,13 @@ export class OrderManagmentComponent implements OnInit {
         });
       });
   }
-  orderBy(propName: string) {
-    this.orderFilter.propName = propName;
+  orderBy(propName: string): void {
+    this.orderFilter.sortPropertyName = propName;
     this.changeSortType();
     this.getOrders();
   }
 
-  statusFilterChanged() {
+  statusFilterChanged(): void {
     let statuses = this.statuses.value;
     this.orderFilter.orderStatuses = statuses;
     this.getOrders();

@@ -13,15 +13,14 @@ export class AuthGuard implements CanActivate {
     private _router: Router,
     private _constants: Constants,
     private _cookieHelper: CookieHelper,
-    private _jwtHelper: JwtHelperService
     ) {
       this._adminRole = _constants.adminRoleName;
       this._token = this._cookieHelper.getItem(this._constants.accessToken)
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let isExpired = this._jwtHelper.isTokenExpired(this._token);
-    if (!isExpired) {
+    let token = this._cookieHelper.getItem(this._constants.accessToken);
+    if (token) {
       return true;
     }
     this._router.navigate(["account/sign-in"]);

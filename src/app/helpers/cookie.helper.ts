@@ -6,10 +6,6 @@ export class CookieHelper {
     
     constructor(private _cookieService: CookieService) {}
 
-    checkСookie(nameParam: string, checkedValue: string): boolean {
-        return this._cookieService.get(nameParam) == checkedValue;
-    }
-
     deleteAllCookie(): void {
         this._cookieService.deleteAll();
     }

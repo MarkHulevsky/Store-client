@@ -64,7 +64,7 @@ export class EditProductDialogComponent implements OnInit {
     });
   }
 
-  cancel() {
+  cancel(): void {
     this._dialogRef.close();
   }
 }

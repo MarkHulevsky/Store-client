@@ -51,7 +51,7 @@ export class CardDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  pay() {
+  pay(): void {
     let email = this._storageHelper.getItem(this._constants.storageEmail);
     this._stripeService.createToken(this.card.element, {
       name: email,

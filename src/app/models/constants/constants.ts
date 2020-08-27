@@ -1,5 +1,5 @@
 import { UserFilter } from '../RequestFilters/UserFIlter';
-import { SortType, Currency, PrintingEditionType, Status } from 'src/app/enums/enums';
+import { SortType, CurrencyType, PrintingEditionType, OrderStatus } from 'src/app/enums/enums';
 import { AuthorFilter } from '../RequestFilters/AuthorFilter';
 import { Injectable } from '@angular/core';
 import { PrintingEditionFilter } from '../RequestFilters/PrintingEditionFilter';
@@ -11,7 +11,7 @@ export class Constants {
     public readonly emptyString = "";
 
     public readonly userFilter: UserFilter = {
-        propName: this.emptyString,
+        sortPropertyName: this.emptyString,
         searchString: this.emptyString,
         paging: {
             currentPage: 0,
@@ -22,7 +22,7 @@ export class Constants {
     }
 
     public readonly authorFilter: AuthorFilter = {
-        propName: this.emptyString,
+        sortPropertyName: this.emptyString,
         sortType: SortType.Ascending,
         paging: {
             currentPage: 0,
@@ -43,8 +43,8 @@ export class Constants {
     }
 
     public readonly orderFilter: OrderFilter = {
-        orderStatuses: [Status.Paid, Status.Unpaid],
-        propName: this.emptyString,
+        orderStatuses: [OrderStatus.Paid, OrderStatus.Unpaid],
+        sortPropertyName: this.emptyString,
         sortType: SortType.Ascending,
         paging: {
             currentPage: 0,

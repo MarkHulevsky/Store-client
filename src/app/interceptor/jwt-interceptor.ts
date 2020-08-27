@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { CookieHelper } from '../helpers/cookie.helper';
 import { Constants } from '../models/constants/constants';
@@ -8,6 +8,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { StorageHelper } from '../helpers/storage.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { IAuthenticationService } from '../interfaces/services/IAuthenticationService';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -17,7 +18,8 @@ export class JwtInterceptor implements HttpInterceptor {
         private _router: Router,
         private _authenticationService: AuthenticationService,
         private _storageHelper: StorageHelper,
-        private _jwtHelperService: JwtHelperService
+        private _jwtHelperService: JwtHelperService,
+        @Inject(AuthenticationService) private _authService: IAuthenticationService 
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -27,7 +29,6 @@ export class JwtInterceptor implements HttpInterceptor {
         request = request.clone({
             headers: request.headers.set('Content-Type', 'application/json')
         });
-
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
                 let isExpired: boolean = this._jwtHelperService
@@ -38,6 +39,7 @@ export class JwtInterceptor implements HttpInterceptor {
                     return this.refreshToken(token, request, next);
                 }
                 if (error.status == this._constants.accessError && !isRememberMe) {
+                    this._authService.signOut();
                     this._router.navigate(['/account/sign-in']);
                 }
                 return throwError(error);

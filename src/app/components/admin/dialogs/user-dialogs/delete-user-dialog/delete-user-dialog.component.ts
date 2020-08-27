@@ -22,13 +22,13 @@ export class DeleteUserDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete() {
+  delete(): void {
     this._userService.delete(this.user).subscribe(() => {
         this.dialogRef.close();
     });
   }
 
-  cancel() {
+  cancel(): void {
     this.dialogRef.close();
   }
 }

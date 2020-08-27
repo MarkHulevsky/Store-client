@@ -9,7 +9,7 @@ import { MatSort } from '@angular/material/sort';
 import { merge, of } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 import { Constants } from 'src/app/models/constants/constants';
-import { PrintingEditionType, Currency, SortType } from 'src/app/enums/enums';
+import { PrintingEditionType, CurrencyType, SortType } from 'src/app/enums/enums';
 import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
 
 @Component({
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  checkBoxChanged(event, typeString: string) {
+  checkBoxChanged(event, typeString: string): void {
     let isChecked: boolean = event.target.checked;
     let type: PrintingEditionType = PrintingEditionType[typeString];
     if (isChecked) {
@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
     this.getPrintingEditions();
   }
 
-  currencyChanged(currencyString: string) {
+  currencyChanged(currencyString: string): void {
     if (currencyString === this.constants.emptyString) {
       this.getPrintingEditions();
       return;
@@ -124,14 +124,14 @@ export class HomeComponent implements OnInit {
         return;
       }
       this._peService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
-        pe.currency = Currency[currencyString];
+        pe.currency = CurrencyType[currencyString];
         pe.price = Math.round(pe.price * rate);
         currentCurrency = currencyString;
       });
     });
   }
 
-  sortByPrice(value: string) {
+  sortByPrice(value: string): void {
     this.printingEditionFilter.sortType = SortType[value];
     this.getPrintingEditions();
   }

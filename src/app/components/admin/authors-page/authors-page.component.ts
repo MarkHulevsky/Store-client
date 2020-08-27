@@ -46,11 +46,11 @@ export class AuthorsPageComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.getAuthors();
   }
 
-  getAuthors() {
+  getAuthors(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -72,7 +72,7 @@ export class AuthorsPageComponent implements OnInit {
         });
   }
 
-  add() {
+  add(): void {
     this._dialog.open(AddAuthorDialogComponent, {
       width: "400px"
     });
@@ -81,7 +81,7 @@ export class AuthorsPageComponent implements OnInit {
     });
   }
 
-  delete(author: Author){
+  delete(author: Author): void{
     this._dialog.open(DeleteAuthorDialogComponent, {
       width: "300px",
       data: {
@@ -94,7 +94,7 @@ export class AuthorsPageComponent implements OnInit {
     });
   }
 
-  edit(author: Author) {
+  edit(author: Author): void {
     this._dialog.open(EditAuthorDialogComponent, {
       width: "400px",
       data: {

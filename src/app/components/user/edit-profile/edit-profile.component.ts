@@ -5,6 +5,7 @@ import { FormBuilder, ValidatorFn, FormGroup, ValidationErrors, FormControl, Val
 import { Router } from '@angular/router';
 import { EditProfileModel } from 'src/app/models/EditProfileModel';
 import { IUserService } from 'src/app/interfaces/services/IUserService';
+import { StorageHelper } from 'src/app/helpers/storage.helper';
 
 @Component({
   selector: 'app-edit-profile',
@@ -27,7 +28,8 @@ export class EditProfileComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     @Inject(UserService) private _userService: IUserService,
-    private _router: Router
+    private _router: Router,
+    private _storageHelper: StorageHelper
   ) {
     this.getProfile();
     this.editProfileForm = this._formBuilder.group({
@@ -42,14 +44,14 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getProfile() {
-    this.user.id = localStorage.getItem("id");
-    this.user.firstName = localStorage.getItem("firstName");
-    this.user.lastName = localStorage.getItem("lastName");
-    this.user.email = localStorage.getItem("email");
+  getProfile(): void {
+    this.user.id = this._storageHelper.getItem("id");
+    this.user.firstName = this._storageHelper.getItem("firstName");
+    this.user.lastName = this._storageHelper.getItem("lastName");
+    this.user.email = this._storageHelper.getItem("email");
   }
 
-  save(editedUser: EditProfileModel) {
+  save(editedUser: EditProfileModel): void {
     editedUser.id = this.user.id;
     this._userService.editProfile(editedUser as EditProfileModel).subscribe((data: User) => {
       this.errors = data?.errors;
@@ -60,7 +62,7 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  cancel() {
+  cancel(): void {
     this._router.navigate(["user/profile"]);
   }
 

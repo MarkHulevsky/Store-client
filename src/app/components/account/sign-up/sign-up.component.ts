@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signUp(registerModel) {
+  signUp(registerModel): void {
     if (this.registerForm.invalid) {
       return;
     }

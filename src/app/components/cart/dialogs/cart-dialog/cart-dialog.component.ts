@@ -9,7 +9,7 @@ import { Cart } from 'src/app/models/Cart';
 import { Order } from 'src/app/models/Order';
 import { Router } from '@angular/router';
 import { CardDialogComponent } from '../card-dialog/card-dialog.component';
-import { Currency, Status } from 'src/app/enums/enums';
+import { CurrencyType, OrderStatus } from 'src/app/enums/enums';
 import { Token } from '@stripe/stripe-js';
 import { Payment } from 'src/app/models/Payment';
 import { Constants } from 'src/app/models/constants/constants';
@@ -26,7 +26,7 @@ export class CartDialogComponent implements OnInit {
 
   public displayedColumns = ['product'];
   public totalPrice: number = 0;
-  public currency: Currency = Currency.USD;
+  public currency: CurrencyType = CurrencyType.USD;
   constructor(
     private _dialogRef: MatDialogRef<CartIconComponent>,
     @Inject(MAT_DIALOG_DATA) public orderItems: OrderItem[],
@@ -84,7 +84,7 @@ export class CartDialogComponent implements OnInit {
     let cart: Cart = {
       order: {
         orderItems: this.orderItems,
-        status: Status.Unpaid
+        status: OrderStatus.Unpaid
       } as Order,
     } as Cart;
     let orderId: string;
@@ -121,7 +121,7 @@ export class CartDialogComponent implements OnInit {
     this._dialogRef.close();
   }
 
-  async convertCurrency(orderItem: OrderItem, currency: Currency): Promise<void> {
+  async convertCurrency(orderItem: OrderItem, currency: CurrencyType): Promise<void> {
     if (orderItem.printingEdition.currency === currency) {
       return;
     }

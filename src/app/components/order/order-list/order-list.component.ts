@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/Order';
-import { Currency, Status } from 'src/app/enums/enums';
+import { CurrencyType, OrderStatus } from 'src/app/enums/enums';
 import { MatDialog } from '@angular/material/dialog';
 import { CardDialogComponent } from '../../cart/dialogs/card-dialog/card-dialog.component';
 import { Token } from '@stripe/stripe-js';
@@ -28,12 +28,12 @@ export class OrderListComponent implements OnInit {
     this.getOrders();
   }
 
-  getOrders() {
+  getOrders(): void {
     this._orderService.getUserOrder().subscribe((orders: Order[]) => {
       this.orders = orders;
       this.orders.forEach(order => {
         let amount = 0;
-        let currency: Currency;
+        let currency: CurrencyType;
         order.orderItems.forEach(orderItem => {
           amount += orderItem.amount;
           currency = orderItem.printingEdition.currency;
@@ -44,7 +44,7 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  payOrder(order: Order) {
+  payOrder(order: Order): void {
     let dialogRef = this._dialog.open(CardDialogComponent, {
       width: "400px",
       data: {
@@ -64,7 +64,7 @@ export class OrderListComponent implements OnInit {
         tokenId: result.id
       } as Payment
       this._orderService.payOrder(payment).subscribe(() => {
-        order.status = Status.Paid;
+        order.status = OrderStatus.Paid;
       });
     });
   }

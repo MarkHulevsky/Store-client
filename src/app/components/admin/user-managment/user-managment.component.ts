@@ -97,7 +97,7 @@ export class UserManagmentComponent implements OnInit {
   }
 
   sortUsers(propName: string): void {
-    this.userFilter.propName = propName;
+    this.userFilter.sortPropertyName = propName;
     this.changeSortType();
     this.getUsers();
   }

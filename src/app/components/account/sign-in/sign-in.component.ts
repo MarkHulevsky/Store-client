@@ -39,7 +39,7 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signIn(loginModel): void {
+  signIn(loginModel: LoginModel): void {
     this._authenticationService.signIn(loginModel as LoginModel).subscribe((data: User) => {
       if (data.errors?.length > 0) {
         return;
@@ -52,11 +52,12 @@ export class SignInComponent implements OnInit {
 
     if (this.rememberMe) {
       this._storageHelper.setItem(this._constants.storageIsRememberMe, JSON.stringify(true));
+      return;
     }
     this._storageHelper.setItem(this._constants.storageIsRememberMe, JSON.stringify(false));
   }
 
-  signUpRedirect() {
+  signUpRedirect(): void {
     this._router.navigate(["account/sign-up"]);
   }
 }
