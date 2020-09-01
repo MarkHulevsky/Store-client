@@ -1,6 +1,6 @@
 <div>
     <h2> Create Account </h2>
-
+    <p *ngFor="let error of errors" class="error">{{error}}</p>
     <form [formGroup]="registerForm" (ngSubmit)='signUp(registerForm.value)'>
         <div class="form-group">
             <label for="firstName"> First Name </label>

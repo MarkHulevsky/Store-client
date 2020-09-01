@@ -20,6 +20,7 @@ export class UserService implements IUserService{
   }
 
   editProfile(editProfileModel: EditProfileModel): Observable<User> {
+    debugger
     return this.http.put<User>(`${environment.apiUrl}/api/User/EditProfile`, editProfileModel);
   }
 

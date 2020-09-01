@@ -31,30 +31,29 @@ export class EditProfileComponent implements OnInit {
     private _router: Router,
     private _storageHelper: StorageHelper
   ) {
-    this.getProfile();
-    this.editProfileForm = this._formBuilder.group({
-      'firstName': new FormControl(this.user?.firstName, Validators.required),
-      'lastName': new FormControl(this.user?.lastName, Validators.required),
-      'email': new FormControl(this.user?.email, [Validators.required, Validators.email]),
-      'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
-      'confirmPassword': new FormControl('', [Validators.required]),
-    }, { validators: this._confirmPasswordValidator });
+    this.getProfile().then((user: User) => {
+      this.user = user;
+      this.editProfileForm = this._formBuilder.group({
+        'firstName': new FormControl(this.user?.firstName, Validators.required),
+        'lastName': new FormControl(this.user?.lastName, Validators.required),
+        'email': new FormControl(this.user?.email, [Validators.required, Validators.email]),
+        'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
+        'confirmPassword': new FormControl('', [Validators.required]),
+      }, { validators: this._confirmPasswordValidator });
+    });
   }
-
+  
   ngOnInit(): void {
   }
 
-  getProfile(): void {
-    this.user.id = this._storageHelper.getItem("id");
-    this.user.firstName = this._storageHelper.getItem("firstName");
-    this.user.lastName = this._storageHelper.getItem("lastName");
-    this.user.email = this._storageHelper.getItem("email");
+  async getProfile(): Promise<User> {
+    return await this._userService.getCurrentUser().toPromise();
   }
 
   save(editedUser: EditProfileModel): void {
     editedUser.id = this.user.id;
-    this._userService.editProfile(editedUser as EditProfileModel).subscribe((data: User) => {
-      this.errors = data?.errors;
+    this._userService.editProfile(editedUser as EditProfileModel).subscribe((user: User) => {
+      this.errors = user?.errors;
       if (this.errors?.length > 0) {
         return;
       }

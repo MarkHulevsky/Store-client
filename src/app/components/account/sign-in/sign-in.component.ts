@@ -40,11 +40,12 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(loginModel: LoginModel): void {
-    this._authenticationService.signIn(loginModel as LoginModel).subscribe((data: User) => {
-      if (data.errors?.length > 0) {
+    this._authenticationService.signIn(loginModel as LoginModel).subscribe((user: User) => {
+      if (user.errors?.length > 0) {
+        this.errors = user.errors;
         return;
       }
-      this._authenticationService.setUserToStorage(data);
+      this._authenticationService.setUserToStorage(user);
       let cookie = this._cookieHelper.getAllCookie();
       localStorage.setItem(this._constants.accessToken, cookie[this._constants.accessToken]);
       this._router.navigate(["home"]);

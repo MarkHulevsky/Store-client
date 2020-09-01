@@ -36,8 +36,8 @@ export class ConfirmPasswordComponent implements OnInit {
   }
 
   getCurrentUser(): void {
-    this._userService.getCurrentUser().subscribe((data: User) => {
-      this.user = data;
+    this._userService.getCurrentUser().subscribe((user: User) => {
+      this.user = user;
     })
   }
 }

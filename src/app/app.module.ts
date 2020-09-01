@@ -27,7 +27,7 @@ import { PipeModule } from './modules/pipe/pipe.module';
 import { CartIconComponent } from 'src/app/components/shared/cart-icon/cart-icon.component';
 import { CartModule } from './modules/cart/cart.module';
 import { OrderModule } from './modules/order/order.module';
-
+import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import { OrderModule } from './modules/order/order.module';
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ["localhost:5000"],
+        whitelistedDomains: [environment.apiUrl],
         blacklistedRoutes: []
       }
     }),
