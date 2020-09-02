@@ -46,11 +46,11 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async getProfile(): Promise<User> {
+  private async getProfile(): Promise<User> {
     return await this._userService.getCurrentUser().toPromise();
   }
 
-  save(editedUser: EditProfileModel): void {
+  public save(editedUser: EditProfileModel): void {
     editedUser.id = this.user.id;
     this._userService.editProfile(editedUser as EditProfileModel).subscribe((user: User) => {
       this.errors = user?.errors;
@@ -61,27 +61,27 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this._router.navigate(["user/profile"]);
   }
 
-  get firstName() {
+  public get firstName() {
     return this.editProfileForm.get('firstName');
   }
 
-  get lastName() {
+  public get lastName() {
     return this.editProfileForm.get('lastName');
   }
 
-  get email() {
+  public get email() {
     return this.editProfileForm.get('email');
   }
 
-  get password() {
+  public get password() {
     return this.editProfileForm.get('password');
   }
 
-  get confirmPassword() {
+  public get confirmPassword() {
     return this.editProfileForm.get('confirmPassword');
   }
 }

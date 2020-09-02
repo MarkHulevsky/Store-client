@@ -1,7 +1,7 @@
 import { SortType } from '../../enums/enums';
 import { Paging } from './Paging';
 
-export class BaseFilter {
+export class BaseRequestModel {
     public sortType: SortType;
     public paging: Paging;
 }

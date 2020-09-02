@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
-import { UserFilter } from 'src/app/models/RequestFilters/UserFIlter';
+import { UserRequestModel } from 'src/app/models/RequestModels/UserRequestModel';
 import { SortType } from 'src/app/enums/enums';
-import { UserResponseFilter } from 'src/app/models/ResponseFilters/UserResponseFilter';
+import { UserResponseModel } from 'src/app/models/ResponseModels/UserResponseModel';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -22,11 +22,11 @@ import { IUserService } from 'src/app/interfaces/services/IUserService';
 })
 export class UserManagmentComponent implements OnInit {
 
-  public userResponseFilter = new UserResponseFilter;
-  public userFilter = new UserFilter;
-  public displayedColumns = ['name', 'email', 'status', 'customColumn'];
+  public userResponseModel: UserResponseModel;
+  public userRequestModel: UserRequestModel;
+  public displayedColumns: string[];
   public dataSource = new MatTableDataSource<User>();
-  public data: User[] = [];
+  public data: User[];
   public isLoadingResults = true;
   public isRateLimitReached = false;
   public resultsLength = 0;
@@ -39,8 +39,12 @@ export class UserManagmentComponent implements OnInit {
     private _dialog: MatDialog,
     private _constants: Constants
   ) {
+    this.userRequestModel = new UserRequestModel;
+    this.userResponseModel = new UserResponseModel;
+    this.displayedColumns = ['name', 'email', 'status', 'customColumn'];
+    this.data = [];
     this.sort = new MatSort;
-    this.userFilter = this._constants.userFilter;
+    this.userRequestModel = this._constants.DEFAULT_USER_RQUEST_MODEL;
   }
 
   ngOnInit(): void {
@@ -52,7 +56,7 @@ export class UserManagmentComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(): void {
+  private getUsers(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -60,8 +64,8 @@ export class UserManagmentComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          this.userFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._userService.getFiltred(this.userFilter);
+          this.userRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._userService.getFiltred(this.userRequestModel);
         }),
         map(data => {
           this.isLoadingResults = false;
@@ -77,7 +81,7 @@ export class UserManagmentComponent implements OnInit {
         ).subscribe((data: User[]) => this.data = data);
   }
 
-  delete(user: User): void {
+  public delete(user: User): void {
     let dialogRef = this._dialog.open(DeleteUserDialogComponent, {
       width: "300px",
       data: user
@@ -87,22 +91,22 @@ export class UserManagmentComponent implements OnInit {
     });
   }
 
-  changeStatus(user: User): void {
+  public changeStatus(user: User): void {
     this._userService.changeStatus(user).subscribe();
   }
 
-  searchFilter(event): void {
-    this.userFilter.searchString = event;
+  public searchFilter(event): void {
+    this.userRequestModel.searchString = event;
     this.getUsers();
   }
 
-  sortUsers(propName: string): void {
-    this.userFilter.sortPropertyName = propName;
+  public sortUsers(propName: string): void {
+    this.userRequestModel.sortPropertyName = propName;
     this.changeSortType();
     this.getUsers();
   }
 
-  editProfile(user: User): void {
+  public editProfile(user: User): void {
     const dialogRef = this._dialog.open(EditProfileDialogComponent, {
       width: "400px",
       data: { 
@@ -124,11 +128,11 @@ export class UserManagmentComponent implements OnInit {
   }
 
   private changeSortType(): void {
-    if (this.userFilter.sortType == SortType.Ascending) {
-      this.userFilter.sortType = SortType.Descending;
+    if (this.userRequestModel.sortType == SortType.Ascending) {
+      this.userRequestModel.sortType = SortType.Descending;
       return;
     }
-    this.userFilter.sortType = SortType.Ascending;
+    this.userRequestModel.sortType = SortType.Ascending;
   }
 
   private indexOf(user: User) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { PrintingEditionService } from 'src/app/services/printing-edition.service';
-import { PrintingEditionResponseFilter } from 'src/app/models/ResponseFilters/PrintingEditionResponseFilter';
-import { PrintingEditionFilter } from 'src/app/models/RequestFilters/PrintingEditionFilter';
+import { PrintingEditionResponseModel } from 'src/app/models/ResponseModels/PrintingEditionResponseModel';
+import { PrintingEditionRequestModel } from 'src/app/models/RequestModels/PrintingEditionRequestModel';
 import { PrintingEdition } from 'src/app/models/PrintingEdition';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,13 +19,13 @@ import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEd
 })
 export class HomeComponent implements OnInit {
 
-  public printingEditionResponseFilter = new PrintingEditionResponseFilter;
-  public printingEditionFilter = new PrintingEditionFilter;
+  public printingEditionResponseModel: PrintingEditionResponseModel;
+  public printingEditionRequestModel: PrintingEditionRequestModel;
   public displayedColumns = [];
-  public dataSource = new MatTableDataSource<PrintingEdition>();
-  public data: PrintingEdition[] = [];
-  public resultsLength = 0;
+  public dataSource: MatTableDataSource<PrintingEdition>;
+  public data: PrintingEdition[];
   public currentCurrency: string;
+  public resultsLength = 0;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -34,10 +34,14 @@ export class HomeComponent implements OnInit {
     @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
     public constants: Constants,
   ) {
+    this.dataSource = new MatTableDataSource<PrintingEdition>();
+    this.data = [];
+    this.printingEditionRequestModel  = new PrintingEditionRequestModel;
+    this.printingEditionResponseModel = new PrintingEditionResponseModel;
     this.sort = new MatSort;
-    this.printingEditionFilter = constants.printingEditionFilter;
-    this.printingEditionFilter.paging.itemsCount = 8;
-    this.currentCurrency = constants.currencyStrings[0];
+    this.printingEditionRequestModel = constants.DEFAULT_PRINTING_EDITION_REQUEST_MODEL;
+    this.printingEditionRequestModel.paging.itemsCount = 8;
+    this.currentCurrency = constants.CURRENCY_TYPE_STRINGS[0];
   }
 
   ngOnInit(): void {
@@ -47,20 +51,20 @@ export class HomeComponent implements OnInit {
   
   ngAfterViewInit(): void {
     this.getPrintingEditions();
-    this.currencyChanged(this.constants.currencyStrings[0]);
+    this.currencyChanged(this.constants.CURRENCY_TYPE_STRINGS[0]);
   }
 
-  getPrintingEditions(): void {
+  private getPrintingEditions(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.printingEditionFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._peService.getFiltred(this.printingEditionFilter);
+          this.printingEditionRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._peService.getFiltred(this.printingEditionRequestModel);
         }),
-        map((data: PrintingEditionResponseFilter) => {
+        map((data: PrintingEditionResponseModel) => {
           this.resultsLength = data.totalCount;
           return data.printingEditions;
         }),
@@ -72,53 +76,53 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  search(event): void {
-    this.printingEditionFilter.searchString = event.target.value;
+  public search(event): void {
+    this.printingEditionRequestModel.searchString = event.target.value;
     this.getPrintingEditions();
   }
 
-  maxPriceFilter(event): void {
-    if (event.target.value !== this.constants.emptyString) {
-      if (this.printingEditionFilter.minPrice === null) {
-        this.printingEditionFilter.minPrice = 0;
+  public maxPriceFilter(event): void {
+    if (event.target.value !== this.constants.EMPTY_STRING) {
+      if (this.printingEditionRequestModel.minPrice === null) {
+        this.printingEditionRequestModel.minPrice = 0;
       }
-      this.printingEditionFilter.maxPrice = parseInt(event.target.value);
+      this.printingEditionRequestModel.maxPrice = parseInt(event.target.value);
       this.getPrintingEditions();
     }
   }
 
-  minPriceFilter(event): void {
-    if (event.target.value !== this.constants.emptyString) {
-      if (this.printingEditionFilter.maxPrice === null) {
-        this.printingEditionFilter.maxPrice = 0;
+  public minPriceFilter(event): void {
+    if (event.target.value !== this.constants.EMPTY_STRING) {
+      if (this.printingEditionRequestModel.maxPrice === null) {
+        this.printingEditionRequestModel.maxPrice = 0;
       }
-      this.printingEditionFilter.minPrice = parseInt(event.target.value);
+      this.printingEditionRequestModel.minPrice = parseInt(event.target.value);
       this.getPrintingEditions();
     }
   }
 
-  checkBoxChanged(event, typeString: string): void {
+  public checkBoxChanged(event, typeString: string): void {
     let isChecked: boolean = event.target.checked;
     let type: PrintingEditionType = PrintingEditionType[typeString];
     if (isChecked) {
-      this.printingEditionFilter.types.push(type);
+      this.printingEditionRequestModel.types.push(type);
     }
     if (!isChecked) {
-      let index = this.printingEditionFilter.types.indexOf(type, 0);
+      let index = this.printingEditionRequestModel.types.indexOf(type, 0);
       if (index > -1) {
-        this.printingEditionFilter.types.splice(index, 1);
+        this.printingEditionRequestModel.types.splice(index, 1);
       }
     }
     this.getPrintingEditions();
   }
 
-  currencyChanged(currencyString: string): void {
-    if (currencyString === this.constants.emptyString) {
+  public currencyChanged(currencyString: string): void {
+    if (currencyString === this.constants.EMPTY_STRING) {
       this.getPrintingEditions();
       return;
     }
     this.data.forEach(pe => {
-      let currentCurrency = this.constants.currencyStrings[pe.currency];
+      let currentCurrency = this.constants.CURRENCY_TYPE_STRINGS[pe.currency];
       if (currencyString == currentCurrency)
       {
         return;
@@ -131,8 +135,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  sortByPrice(value: string): void {
-    this.printingEditionFilter.sortType = SortType[value];
+  public sortByPrice(value: string): void {
+    this.printingEditionRequestModel.sortType = SortType[value];
     this.getPrintingEditions();
   }
 }

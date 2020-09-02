@@ -14,12 +14,12 @@ export class AuthGuard implements CanActivate {
     private _constants: Constants,
     private _cookieHelper: CookieHelper,
     ) {
-      this._adminRole = _constants.adminRoleName;
-      this._token = this._cookieHelper.getItem(this._constants.accessToken)
+      this._adminRole = _constants.ADMIN_ROLE_NAME;
+      this._token = this._cookieHelper.getItem(this._constants.ACCESS_TOKEN)
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let token = this._cookieHelper.getItem(this._constants.accessToken);
+    let token = this._cookieHelper.getItem(this._constants.ACCESS_TOKEN);
     if (token) {
       return true;
     }

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/models/Order';
-import { OrderFilter } from 'src/app/models/RequestFilters/OrderFilter';
-import { OrderResponseFilter } from 'src/app/models/ResponseFilters/OrderResponseFulter';
+import { OrderRequestModel } from 'src/app/models/RequestModels/OrderRequestModel';
+import { OrderResponseModel } from 'src/app/models/ResponseModels/OrderResponseModel';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,7 +21,7 @@ import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 export class OrderManagmentComponent implements OnInit {
 
   public statuses: FormControl;
-  public orderFilter: OrderFilter;
+  public orderFilter: OrderRequestModel;
   public orders: Order[];
   public displayedColumns: string[] = [
     'Date',
@@ -33,8 +33,8 @@ export class OrderManagmentComponent implements OnInit {
     'Amount',
     'Status'
   ];
-  public orderResponseFilter = new OrderResponseFilter;
-  public dataSource = new MatTableDataSource<Order>();
+  public orderResponseModel: OrderResponseModel;
+  public dataSource: MatTableDataSource<Order>;
   public resultsLength = 0;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -44,9 +44,11 @@ export class OrderManagmentComponent implements OnInit {
     @Inject(OrderService) private _orderService: IOrderService,
     public constants: Constants
   ) {
+    this.orderResponseModel = new OrderResponseModel;
+    this.dataSource = new MatTableDataSource<Order>();
     this.sort = new MatSort();
-    this.orderFilter = constants.orderFilter;
-    this.statuses = new FormControl(this.constants.orderStatusStrings);
+    this.orderFilter = constants.DEFAULT_ORDER_REQUEST_MODEL;
+    this.statuses = new FormControl(this.constants.ORDER_STATUS_STRINGS);
   }
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class OrderManagmentComponent implements OnInit {
     this.getOrders();
   }
 
-  getOrders(): void {
+  private getOrders(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -89,13 +91,13 @@ export class OrderManagmentComponent implements OnInit {
         });
       });
   }
-  orderBy(propName: string): void {
+  public orderBy(propName: string): void {
     this.orderFilter.sortPropertyName = propName;
     this.changeSortType();
     this.getOrders();
   }
 
-  statusFilterChanged(): void {
+  public statusFilterChanged(): void {
     let statuses = this.statuses.value;
     this.orderFilter.orderStatuses = statuses;
     this.getOrders();

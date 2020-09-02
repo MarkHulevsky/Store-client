@@ -14,12 +14,13 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 export class AddAuthorDialogComponent implements OnInit {
 
   public authorForm;
-  public click: boolean = false;
+  public clicked: boolean;
   constructor(
     public dialogRef: MatDialogRef<AuthorsPageComponent>,
     @Inject(AuthorService) private _authorService: IAuthorService,
     private _formBuilder: FormBuilder
   ) { 
+    this.clicked = false;
     this.authorForm = _formBuilder.group({
       name: new FormControl('', Validators.required)
     });
@@ -28,24 +29,23 @@ export class AddAuthorDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addAuthor(): void {
-    debugger
+  public addAuthor(): void {
     if (this.authorForm.invalid)
     {
       return;
     }
-    this.click = true;
+    this.clicked = true;
     let author = this.authorForm.value; 
     this._authorService.addAuthor(author).subscribe(() => {
       this.dialogRef.close();
     })
   }
 
-  cancel(): void {
+  public cancel(): void {
     this.dialogRef.close();
   }
 
-  get name() {
+  public get name() {
     return this.authorForm.get("name");
   }
 }

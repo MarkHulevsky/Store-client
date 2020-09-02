@@ -13,13 +13,14 @@ import { ICartService } from 'src/app/interfaces/services/ICartService';
 export class CartIconComponent implements OnInit {
 
   public count: number;
-  private _orderItems: OrderItem[] = [];
+  private _orderItems: OrderItem[];
   constructor(
     @Inject(CartService) private _cartService: ICartService,
     private _dialog: MatDialog
   ) {
-    _cartService.count.subscribe((data: number) => {
-      this.count = data;
+    this._orderItems = [];
+    _cartService.count.subscribe((count: number) => {
+      this.count = count;
     });
   }
 
@@ -27,7 +28,7 @@ export class CartIconComponent implements OnInit {
     this.count = this._cartService.orderItems.length;
   }
 
-  openCart(): void {
+  public openCart(): void {
     this._orderItems = this._cartService.orderItems;
     this._dialog.open(CartDialogComponent, {
       width: "800px",

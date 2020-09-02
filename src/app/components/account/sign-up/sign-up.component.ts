@@ -16,10 +16,10 @@ import { IAuthenticationService } from 'src/app/interfaces/services/IAuthenticat
 })
 export class SignUpComponent implements OnInit {
 
-  public user: User = {} as User;
-  public registerForm;
+  public user: User;
+  public registerForm: FormGroup;
   public errors: string[];
-  public registerModel: RegisterModel = new RegisterModel();
+  public registerModel: RegisterModel;
 
   private _confirmPasswordValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
     const password = control.get('password');
@@ -36,6 +36,8 @@ export class SignUpComponent implements OnInit {
     private _cookieHelper: CookieHelper,
     private _constants: Constants
   ) {
+    this.user = new User;
+    this.registerModel = new RegisterModel;
     this.registerForm = _formBuilder.group({
       'firstName': new FormControl('', Validators.required),
       'lastName': new FormControl('', Validators.required),
@@ -48,7 +50,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  signUp(registerModel): void {
+  public signUp(registerModel): void {
     if (this.registerForm.invalid) {
       return;
     }
@@ -64,29 +66,29 @@ export class SignUpComponent implements OnInit {
         }
         this._authenticationService.setUserToStorage(user);
         let cookie = this._cookieHelper.getAllCookie();
-        localStorage.setItem(this._constants.accessToken, cookie[this._constants.accessToken]);
+        localStorage.setItem(this._constants.ACCESS_TOKEN, cookie[this._constants.ACCESS_TOKEN]);
         this._router.navigate(["account/confirm-password"]);
       });
     });
   }
 
-  get firstName() {
+  public get firstName() {
     return this.registerForm.get('firstName');
   }
 
-  get lastName() {
+  public get lastName() {
     return this.registerForm.get('lastName');
   }
 
-  get email() {
+  public get email() {
     return this.registerForm.get('email');
   }
 
-  get password() {
+  public get password() {
     return this.registerForm.get('password');
   }
 
-  get confirmPassword() {
+  public get confirmPassword() {
     return this.registerForm.get('confirmPassword');
   }
 }

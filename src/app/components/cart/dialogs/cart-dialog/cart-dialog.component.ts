@@ -30,7 +30,7 @@ export class CartDialogComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<CartIconComponent>,
     @Inject(MAT_DIALOG_DATA) public orderItems: OrderItem[],
-    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService,
     @Inject(CartService) private _cartService: ICartService,
     @Inject(OrderService) private _orderService: IOrderService,
     private _router: Router,
@@ -43,17 +43,17 @@ export class CartDialogComponent implements OnInit {
     this.getPrintingEditions();
   }
 
-  async getPrintingEditions(): Promise<void> {
+  private async getPrintingEditions(): Promise<void> {
 
     for (let i = 0; i < this.orderItems.length; i++) {
-      let pe = await this._peService.getById(this.orderItems[i].printingEditionId).toPromise();
+      let pe = await this._printingEditionService.getById(this.orderItems[i].printingEditionId).toPromise();
       this.orderItems[i].printingEdition = pe;
       await this.convertCurrency(this.orderItems[i], this.currency);
       this.totalPrice += this.orderItems[i].printingEdition.price * this.orderItems[i].count;
     }
   }
 
-  qtyChanged(orderItem: OrderItem): void {
+  public qtyChanged(orderItem: OrderItem): void {
     if (orderItem.count < 1) {
         orderItem.count = 1;
     }
@@ -65,7 +65,7 @@ export class CartDialogComponent implements OnInit {
     });
   }
 
-  removeItem(orderItem: OrderItem): void {
+  public removeItem(orderItem: OrderItem): void {
     if (this._cartService.removeFromCart(orderItem)) {
       let index = this.orderItems.indexOf(orderItem);
       if (index > -1) {
@@ -75,7 +75,7 @@ export class CartDialogComponent implements OnInit {
     }
   }
 
-  buy(): void {
+  public buy(): void {
     if (this.orderItems.length == 0) {
       this._dialogRef.close();
       this._router.navigate(["home"]);
@@ -105,7 +105,7 @@ export class CartDialogComponent implements OnInit {
         }
         let payment: Payment = {
           amount: this.totalPrice * 100,
-          currencyString: this._constants.currencyStrings[this.currency],
+          currencyString: this._constants.CURRENCY_TYPE_STRINGS[this.currency],
           orderId: orderId,
           userEmail: result.card.name,
           tokenId: result.id
@@ -117,17 +117,17 @@ export class CartDialogComponent implements OnInit {
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this._dialogRef.close();
   }
 
-  async convertCurrency(orderItem: OrderItem, currency: CurrencyType): Promise<void> {
+  private async convertCurrency(orderItem: OrderItem, currency: CurrencyType): Promise<void> {
     if (orderItem.printingEdition.currency === currency) {
       return;
     }
-    let currencyString = this._constants.currencyStrings[currency];
-    let currentCurrency = this._constants.currencyStrings[orderItem.printingEdition.currency];
-    let rate = await this._peService.convertCurrency(currentCurrency, currencyString).toPromise();
+    let currencyString = this._constants.CURRENCY_TYPE_STRINGS[currency];
+    let currentCurrency = this._constants.CURRENCY_TYPE_STRINGS[orderItem.printingEdition.currency];
+    let rate = await this._printingEditionService.convertCurrency(currentCurrency, currencyString).toPromise();
     orderItem.printingEdition.price = Math.round(orderItem.printingEdition.price * rate);
     orderItem.printingEdition.currency = currency;
     orderItem.amount = orderItem.printingEdition.price * orderItem.count;

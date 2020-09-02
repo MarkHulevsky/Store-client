@@ -48,7 +48,7 @@ export class PrintingEditionDetailsComponent implements OnInit {
     })
   }
 
-  addToCart(): void {
+  public addToCart(): void {
     if (this.isAuthorized == false) {
       this._router.navigate(['account/sign-in']);
     }

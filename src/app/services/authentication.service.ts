@@ -23,13 +23,13 @@ export class AuthenticationService implements IAuthenticationService {
     private _constants: Constants,
     private _cookieHelper: CookieHelper
   ) {
-    this.userRole = new BehaviorSubject<string>(_constants.userRoleName);
+    this.userRole = new BehaviorSubject<string>(_constants.USER_ROLE_NAME);
     this.isAuthorized = new BehaviorSubject<boolean>(false);
   }
 
   userStatusCheck() {
-    let isAuthorized = JSON.parse(this._storageHelper.getItem(this._constants.storageIsAutorized));
-    let role = this._storageHelper.getItem(this._constants.storageRole);
+    let isAuthorized = JSON.parse(this._storageHelper.getItem(this._constants.STORAGE_IS_AUTHORIZED));
+    let role = this._storageHelper.getItem(this._constants.STORAGE_ROLE);
     this.userRole.next(role);
     this.isAuthorized.next(isAuthorized);
   }
@@ -37,11 +37,11 @@ export class AuthenticationService implements IAuthenticationService {
   setUserToStorage(user: User) {
     this.isAuthorized.next(true);
     this.userRole.next(user.roles[0]);
-    this._storageHelper.setItem(this._constants.storageIsAutorized, JSON.stringify(true));
-    this._storageHelper.setItem(this._constants.storageFirstName, user.firstName);
-    this._storageHelper.setItem(this._constants.storageLastName, user.lastName);
-    this._storageHelper.setItem(this._constants.storageEmail, user.email);
-    this._storageHelper.setItem(this._constants.storageRole, user.roles[0]);
+    this._storageHelper.setItem(this._constants.STORAGE_IS_AUTHORIZED, JSON.stringify(true));
+    this._storageHelper.setItem(this._constants.STORAGE_FIRST_NAME, user.firstName);
+    this._storageHelper.setItem(this._constants.STORAGE_LAST_NAME, user.lastName);
+    this._storageHelper.setItem(this._constants.STORAGE_EMAIL, user.email);
+    this._storageHelper.setItem(this._constants.STORAGE_ROLE, user.roles[0]);
   }
 
   signIn(model: LoginModel): Observable<User> {

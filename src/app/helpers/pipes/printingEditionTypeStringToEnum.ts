@@ -6,7 +6,7 @@ import { PrintingEditionType } from '../../enums/enums';
 })
 export class PrintingEditionTypeStringToEnumPipe implements PipeTransform {
 
-    transform(value: string) {
+    public transform(value: string) {
         return PrintingEditionType[value];
     }
 }

@@ -8,7 +8,7 @@ export class OrderStatusToStringPipe implements PipeTransform {
     constructor(private _constants: Constants) {
 
     }
-    transform(value: number) {
-        return this._constants.orderStatusStrings[value - 1];
+    public transform(value: number) {
+        return this._constants.ORDER_STATUS_STRINGS[value - 1];
     }
 }

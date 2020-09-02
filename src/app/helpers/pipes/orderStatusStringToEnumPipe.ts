@@ -6,7 +6,7 @@ import { OrderStatus } from 'src/app/enums/enums';
 })
 export class OrderStatusStringToEnumPipe implements PipeTransform {
 
-    transform(value: string): OrderStatus {
+    public transform(value: string): OrderStatus {
         return OrderStatus[value];
     }
 } 

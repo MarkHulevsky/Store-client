@@ -27,10 +27,10 @@ export class EditAuthorDialogComponent implements OnInit {
     });
    }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  edit(editedAuthorForm: FormGroup): void {
+  public edit(editedAuthorForm: FormGroup): void {
     if (editedAuthorForm.invalid) {
       return;
     }
@@ -39,11 +39,11 @@ export class EditAuthorDialogComponent implements OnInit {
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this._dialogRef.close();
   }
 
-  get name() {
+  public get name() {
     return this.editAuthorForm.get("name");
   }
 }

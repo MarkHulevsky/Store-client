@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { AuthorService } from 'src/app/services/author.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AuthorResponseFilter } from 'src/app/models/ResponseFilters/AuthorResponseFilter';
-import { AuthorFilter } from 'src/app/models/RequestFilters/AuthorFilter';
+import { AuthorResponseModel } from 'src/app/models/ResponseModels/AuthorResponseModel';
+import { AuthorRequestModel } from 'src/app/models/RequestModels/AuthorRequestModel';
 import { Author } from 'src/app/models/Author';
 import { MatTableDataSource } from '@angular/material/table';
 import { Constants } from 'src/app/models/constants/constants';
@@ -22,14 +22,14 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 })
 export class AuthorsPageComponent implements OnInit {
 
-  public authorResponseFilter = new AuthorResponseFilter;
-  public authorFilter = new AuthorFilter;
-  public displayedColumns = ['name', 'products', 'customColumn'];
-  public dataSource = new MatTableDataSource<Author>();
-  public data: Author[] = [];
+  public authorResponseFilter: AuthorResponseModel;
+  public authorFilter: AuthorRequestModel;
+  public displayedColumns: string[];
+  public dataSource: MatTableDataSource<Author>;
+  public data: Author[];
   public resultsLength = 0;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
@@ -37,9 +37,14 @@ export class AuthorsPageComponent implements OnInit {
     private _dialog: MatDialog,
     private _constants: Constants
   ) {
+    this.authorResponseFilter = new AuthorResponseModel();
+    this.authorFilter = new AuthorRequestModel();
+    this.dataSource = new MatTableDataSource<Author>();
+    this.data = [];
+    this.displayedColumns = ['name', 'products', 'customColumn'];
     this.sort = new MatSort;
-    this.authorFilter = this._constants.authorFilter;
-   }
+    this.authorFilter = this._constants.DEFAULT_AUTHOR_REQUEST_MODEL;
+  }
 
   ngOnInit(): void {
     this.dataSource.sort = this.sort;
@@ -50,7 +55,7 @@ export class AuthorsPageComponent implements OnInit {
     this.getAuthors();
   }
 
-  getAuthors(): void {
+  private getAuthors(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -67,12 +72,12 @@ export class AuthorsPageComponent implements OnInit {
         catchError(() => {
           return of([]);
         })
-        ).subscribe((author: Author[]) => {
-          this.data = author
-        });
+      ).subscribe((author: Author[]) => {
+        this.data = author
+      });
   }
 
-  add(): void {
+  public add(): void {
     this._dialog.open(AddAuthorDialogComponent, {
       width: "400px"
     });
@@ -81,7 +86,7 @@ export class AuthorsPageComponent implements OnInit {
     });
   }
 
-  delete(author: Author): void{
+  public delete(author: Author): void {
     this._dialog.open(DeleteAuthorDialogComponent, {
       width: "300px",
       data: {
@@ -94,7 +99,7 @@ export class AuthorsPageComponent implements OnInit {
     });
   }
 
-  edit(author: Author): void {
+  public edit(author: Author): void {
     this._dialog.open(EditAuthorDialogComponent, {
       width: "400px",
       data: {

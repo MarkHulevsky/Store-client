@@ -1,7 +1,7 @@
-import { BaseFilter } from './BaseFilter';
+import { BaseRequestModel } from './BaseRequestModel';
 import { PrintingEditionType } from 'src/app/enums/enums';
 
-export class PrintingEditionFilter extends BaseFilter{
+export class PrintingEditionRequestModel extends BaseRequestModel{
     types: PrintingEditionType[];
     maxPrice: number;
     minPrice: number;

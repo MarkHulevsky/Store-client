@@ -3,7 +3,7 @@ import { Constants } from './models/constants/constants';
 
 export function tokenGetter(): string {
   let constants = new Constants;
-  return localStorage.getItem(constants.accessToken);
+  return localStorage.getItem(constants.ACCESS_TOKEN);
 }
 
 @Component({

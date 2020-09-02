@@ -13,14 +13,14 @@ export class RoleGuard implements CanActivate {
     private _storageHelper: StorageHelper,
     private _constants: Constants
   ) {
-    this._accessRole = _constants.adminRoleName;
+    this._accessRole = _constants.ADMIN_ROLE_NAME;
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._storageHelper.getItem(this._constants.storageRole) == this._accessRole) {
+    if (this._storageHelper.getItem(this._constants.STORAGE_ROLE) == this._accessRole) {
         return true;
     }
     this._router.navigate(["/account/sign-in"]);    

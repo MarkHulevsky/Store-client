@@ -1,18 +1,18 @@
-import { UserFilter } from '../RequestFilters/UserFIlter';
+import { UserRequestModel } from '../RequestModels/UserRequestModel';
 import { SortType, CurrencyType, PrintingEditionType, OrderStatus } from 'src/app/enums/enums';
-import { AuthorFilter } from '../RequestFilters/AuthorFilter';
+import { AuthorRequestModel } from '../RequestModels/AuthorRequestModel';
 import { Injectable } from '@angular/core';
-import { PrintingEditionFilter } from '../RequestFilters/PrintingEditionFilter';
-import { OrderFilter } from '../RequestFilters/OrderFilter';
+import { PrintingEditionRequestModel } from '../RequestModels/PrintingEditionRequestModel';
+import { OrderRequestModel } from '../RequestModels/OrderRequestModel';
 
 @Injectable()
 export class Constants {
 
-    public readonly emptyString = "";
+    public readonly EMPTY_STRING = "";
 
-    public readonly userFilter: UserFilter = {
-        sortPropertyName: this.emptyString,
-        searchString: this.emptyString,
+    public readonly DEFAULT_USER_RQUEST_MODEL: UserRequestModel = {
+        sortPropertyName: this.EMPTY_STRING,
+        searchString: this.EMPTY_STRING,
         paging: {
             currentPage: 0,
             itemsCount: 10
@@ -21,8 +21,8 @@ export class Constants {
         statuses: [true, false]
     }
 
-    public readonly authorFilter: AuthorFilter = {
-        sortPropertyName: this.emptyString,
+    public readonly DEFAULT_AUTHOR_REQUEST_MODEL: AuthorRequestModel = {
+        sortPropertyName: this.EMPTY_STRING,
         sortType: SortType.Ascending,
         paging: {
             currentPage: 0,
@@ -30,21 +30,21 @@ export class Constants {
         }
     }
 
-    public readonly printingEditionFilter: PrintingEditionFilter = {
+    public readonly DEFAULT_PRINTING_EDITION_REQUEST_MODEL: PrintingEditionRequestModel = {
         minPrice: 0,
         maxPrice: 1000,
         paging: {
             currentPage: 0,
             itemsCount: 6
         },
-        searchString: this.emptyString,
+        searchString: this.EMPTY_STRING,
         sortType: SortType.Ascending,
         types: [PrintingEditionType.Book, PrintingEditionType.Magazines, PrintingEditionType.Newspapers]
     }
 
-    public readonly orderFilter: OrderFilter = {
+    public readonly DEFAULT_ORDER_REQUEST_MODEL: OrderRequestModel = {
         orderStatuses: [OrderStatus.Paid, OrderStatus.Unpaid],
-        sortPropertyName: this.emptyString,
+        sortPropertyName: this.EMPTY_STRING,
         sortType: SortType.Ascending,
         paging: {
             currentPage: 0,
@@ -52,18 +52,18 @@ export class Constants {
         }
     }
     
-    public readonly storageIsRememberMe = "isRememberMe";
-    public readonly storageFirstName = "firstName";
-    public readonly storageLastName = "lastName";
-    public readonly storageEmail = "email";
-    public readonly storageRole = "role";
-    public readonly accessToken = "accessToken";
-    public readonly refreshToken = "refreshToken";
-    public readonly storageIsAutorized = "isAutorized";
-    public readonly accessError = 401;
-    public readonly adminRoleName = "admin"
-    public readonly userRoleName = "user";
-    public readonly printingEditionTypeStrings = ['Book', 'Newspapers', 'Magazines'];
-    public readonly currencyStrings = ['USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
-    public readonly orderStatusStrings = ['Unpaid', 'Paid'];
+    public readonly STORAGE_IS_REMEMBER_ME = "isRememberMe";
+    public readonly STORAGE_FIRST_NAME = "firstName";
+    public readonly STORAGE_LAST_NAME = "lastName";
+    public readonly STORAGE_EMAIL = "email";
+    public readonly STORAGE_ROLE = "role";
+    public readonly ACCESS_TOKEN = "accessToken";
+    public readonly REFRESH_TOKEN = "refreshToken";
+    public readonly STORAGE_IS_AUTHORIZED = "isAutorized";
+    public readonly ACCESS_ERROR = 401;
+    public readonly ADMIN_ROLE_NAME = "admin"
+    public readonly USER_ROLE_NAME = "user";
+    public readonly PRINTING_EDITION_TYPE_STRINGS = ['Book', 'Newspapers', 'Magazines'];
+    public readonly CURRENCY_TYPE_STRINGS = ['USD', 'EUR', 'GBP', 'CHF', 'RUB', 'PLN'];
+    public readonly ORDER_STATUS_STRINGS = ['Unpaid', 'Paid'];
 } 

@@ -11,23 +11,26 @@ import { BaseModel } from 'src/app/models/BaseModel';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  isEmailCorrect: boolean = false;
-  errors: string[] = [];
+  isEmailCorrect: boolean;
+  errors: string[];
   email: string;
 
   constructor(
     private _router: Router,
     @Inject(AccountService) private _accountService: IAccountService
-  ) { }
+  ) { 
+    this.isEmailCorrect = false;
+    this.errors = [];
+  }
 
   ngOnInit(): void {
   }
 
-  continue(): void {
+  public continue(): void {
     this._router.navigate(["account/sign-in"]);
   }
 
-  passwordRecovery(): void {
+  public passwordRecovery(): void {
     this._accountService.forgotPassword(this.email).subscribe((baseModel: BaseModel) => {
       this.errors = baseModel?.errors;
       if (this.errors?.length > 0){

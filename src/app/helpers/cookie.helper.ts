@@ -6,15 +6,15 @@ export class CookieHelper {
     
     constructor(private _cookieService: CookieService) {}
 
-    deleteAllCookie(): void {
+    public deleteAllCookie(): void {
         this._cookieService.deleteAll();
     }
 
-    getAllCookie() {
+    public getAllCookie() {
         return this._cookieService.getAll();
     }
 
-    getItem(item: string): string {
+    public getItem(item: string): string {
         return this._cookieService.get(item);
     }
 }

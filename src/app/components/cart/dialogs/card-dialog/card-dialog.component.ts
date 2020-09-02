@@ -51,11 +51,11 @@ export class CardDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  pay(): void {
-    let email = this._storageHelper.getItem(this._constants.storageEmail);
+  public pay(): void {
+    let email = this._storageHelper.getItem(this._constants.STORAGE_EMAIL);
     this._stripeService.createToken(this.card.element, {
       name: email,
-      currency: this._constants.currencyStrings[this.data.currency],
+      currency: this._constants.CURRENCY_TYPE_STRINGS[this.data.currency],
     } as CreateTokenCardData).subscribe(result => {
       if (result.token) {
         this._dialogRef.close(result.token);

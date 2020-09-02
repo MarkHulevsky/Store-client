@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     private _router: Router,
     @Inject(AuthenticationService) private _authService: IAuthenticationService
     ) {
-    this.isAdmin = _storageHelper.getItem(_constants.storageRole) === _constants.adminRoleName;
+    this.isAdmin = _storageHelper.getItem(_constants.STORAGE_ROLE) === _constants.ADMIN_ROLE_NAME;
     _authService.userStatusCheck();
    }
 
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
       this.isAuthorized = data;
     });
     this._authService.userRole.subscribe((role: string) => {
-      if (role === this._constants.adminRoleName) {
+      if (role === this._constants.ADMIN_ROLE_NAME) {
         this.isAdmin = true;
         return;
       }
@@ -37,31 +37,31 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  orderManagment(): void {
+  public orderManagment(): void {
     this._router.navigate(["administrator/order-managment"]);
   }
 
-  userManagment(): void {
+  public userManagment(): void {
     this._router.navigate(["administrator/user-managment"]);
   }
 
-  productManagment(): void {
+  public productManagment(): void {
     this._router.navigate(["administrator/product-managment"]);
   }
 
-  authorManagment(): void {
+  public authorManagment(): void {
     this._router.navigate(["administrator/authors-page"]);
   }
 
-  myProfile(): void {
+  public myProfile(): void {
     this._router.navigate(["user/profile"]);
   }
 
-  myOrders(): void {
+  public myOrders(): void {
     this._router.navigate(["orders/myorders"]);
   }
 
-  logOut(): void {
+  public logOut(): void {
     this._authService.signOut().subscribe(() => {
       this._router.navigate(["account/sign-in"]);
     });

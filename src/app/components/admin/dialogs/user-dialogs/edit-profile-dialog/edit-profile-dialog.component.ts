@@ -32,7 +32,7 @@ export class EditProfileDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(editedUserFrom: FormGroup) {
+  public save(editedUserFrom: FormGroup) {
     if (!editedUserFrom.invalid){
       let editedUser = editedUserFrom.value;
       this._userService.editProfile(editedUser as EditProfileModel).subscribe((user: User) => {
@@ -43,19 +43,19 @@ export class EditProfileDialogComponent implements OnInit {
     }
   }
 
-  cancel() {
+  public cancel() {
     this.dialogRef.close();
   }
 
-  get firstName() {
+  public get firstName() {
     return this.editProfileForm.get('firstName');
   }
 
-  get lastName() {
+  public get lastName() {
     return this.editProfileForm.get('lastName');
   }
 
-  get email() {
+  public get email() {
     return this.editProfileForm.get('email');
   }
 }

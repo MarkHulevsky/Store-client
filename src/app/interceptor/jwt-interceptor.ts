@@ -22,8 +22,8 @@ export class JwtInterceptor implements HttpInterceptor {
         @Inject(AuthenticationService) private _authService: IAuthenticationService 
     ) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let token = this._cookieHelper.getItem(this._constants.accessToken);
+    public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let token = this._cookieHelper.getItem(this._constants.ACCESS_TOKEN);
 
         request = this.setBearer(token, request);
         request = request.clone({
@@ -32,13 +32,13 @@ export class JwtInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
                 let isExpired: boolean = this._jwtHelperService
-                    .isTokenExpired(this._cookieHelper.getItem(this._constants.accessToken)); 
-                let refreshToken = this._cookieHelper.getItem(this._constants.refreshToken);
-                let isRememberMe: boolean = JSON.parse(this._storageHelper.getItem(this._constants.storageIsRememberMe));
-                if (error.status == this._constants.accessError && isExpired && refreshToken && isRememberMe) {
+                    .isTokenExpired(this._cookieHelper.getItem(this._constants.ACCESS_TOKEN)); 
+                let refreshToken = this._cookieHelper.getItem(this._constants.REFRESH_TOKEN);
+                let isRememberMe: boolean = JSON.parse(this._storageHelper.getItem(this._constants.STORAGE_IS_REMEMBER_ME));
+                if (error.status == this._constants.ACCESS_ERROR && isExpired && refreshToken && isRememberMe) {
                     return this.refreshToken(token, request, next);
                 }
-                if (error.status == this._constants.accessError && !isRememberMe) {
+                if (error.status == this._constants.ACCESS_ERROR && !isRememberMe) {
                     this._authService.signOut();
                     this._router.navigate(['/account/sign-in']);
                 }
@@ -49,10 +49,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
     private refreshToken(token: string, request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this._authenticationService
-            .refreshToken(token, this._cookieHelper.getItem(this._constants.refreshToken))
+            .refreshToken(token, this._cookieHelper.getItem(this._constants.REFRESH_TOKEN))
             .pipe(
                 switchMap((data: any) => {
-                    this._storageHelper.setItem(this._constants.accessToken, data.accessToken);
+                    this._storageHelper.setItem(this._constants.ACCESS_TOKEN, data.accessToken);
                     return next.handle(this.setBearer(data.accessToken, request));
                 })
             );

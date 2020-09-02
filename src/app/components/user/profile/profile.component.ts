@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { User } from 'src/app/models/User';
-import { StorageHelper } from 'src/app/helpers/storage.helper';
-import { Constants } from 'src/app/models/constants/constants';
 import { UserService } from 'src/app/services/user.service';
 import { IUserService } from 'src/app/interfaces/services/IUserService';
 
@@ -23,7 +21,7 @@ export class ProfileComponent implements OnInit {
     this.getUser();
   }
 
-  getUser() {
+  private getUser() {
     this._userService.getCurrentUser().subscribe((user: User) => this.user = user);
   }
 }

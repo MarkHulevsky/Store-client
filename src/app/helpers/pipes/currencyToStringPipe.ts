@@ -7,7 +7,7 @@ import { Constants } from 'src/app/models/constants/constants';
 export class CurrencyToStringPipe implements PipeTransform {
     constructor(private _constants: Constants) {}
     
-    transform(value: number) {
-        return this._constants.currencyStrings[value - 1];
+    public transform(value: number) {
+        return this._constants.CURRENCY_TYPE_STRINGS[value - 1];
     }
 }

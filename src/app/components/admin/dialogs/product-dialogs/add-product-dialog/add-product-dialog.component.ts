@@ -29,11 +29,11 @@ export class AddProductDialogComponent implements OnInit {
     @Inject(AuthorService) private _authorService: IAuthorService
   ) {
     this.printingEditionForm = _formBuilder.group({
-      'title': new FormControl(_constants.emptyString, Validators.required),
-      'description': new FormControl(_constants.emptyString, Validators.required),
+      'title': new FormControl(_constants.EMPTY_STRING, Validators.required),
+      'description': new FormControl(_constants.EMPTY_STRING, Validators.required),
       'price': new FormControl(0, Validators.required),
-      'currency': new FormControl(_constants.currencyStrings[0], Validators.required),
-      'type': new FormControl(_constants.printingEditionTypeStrings[0], Validators.required),
+      'currency': new FormControl(_constants.CURRENCY_TYPE_STRINGS[0], Validators.required),
+      'type': new FormControl(_constants.PRINTING_EDITION_TYPE_STRINGS[0], Validators.required),
       'author': new FormControl(new Author, Validators.required)
     });
   }
@@ -42,13 +42,13 @@ export class AddProductDialogComponent implements OnInit {
     this.getAuthors();
   }
 
-  getAuthors(): void {
+  private getAuthors(): void {
     this._authorService.getAll().subscribe((data: Author[]) => {
       this.authors = data;
     });
   }
 
-  add(): void {
+  public add(): void {
     if (this.printingEditionForm.invalid) {
       return;
     }
@@ -62,7 +62,7 @@ export class AddProductDialogComponent implements OnInit {
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this._dialogRef.close();
   }
 }

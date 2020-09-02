@@ -16,19 +16,22 @@ import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 })
 export class OrderListComponent implements OnInit {
 
-  public orders: Order[] = [];
-  public displayedColumns: string[] = ["Order time", "Product", "Title", "Qty", "Order amount", "Order status"];
+  public orders: Order[];
+  public displayedColumns: string[];
   constructor(
     @Inject(OrderService) private _orderService: IOrderService,
     private _dialog: MatDialog,
     private _constants: Constants
-  ) { }
+  ) { 
+    this.displayedColumns  = ["Order time", "Product", "Title", "Qty", "Order amount", "Order status"];
+    this.orders = [];
+  }
 
   ngOnInit(): void {
     this.getOrders();
   }
 
-  getOrders(): void {
+  private getOrders(): void {
     this._orderService.getUserOrder().subscribe((orders: Order[]) => {
       this.orders = orders;
       this.orders.forEach(order => {
@@ -44,7 +47,7 @@ export class OrderListComponent implements OnInit {
     });
   }
 
-  payOrder(order: Order): void {
+  public payOrder(order: Order): void {
     let dialogRef = this._dialog.open(CardDialogComponent, {
       width: "400px",
       data: {
@@ -58,7 +61,7 @@ export class OrderListComponent implements OnInit {
       }
       let payment: Payment = {
         amount: order.amount * 100,
-        currencyString: this._constants.currencyStrings[order.currency],
+        currencyString: this._constants.CURRENCY_TYPE_STRINGS[order.currency],
         orderId: order.id,
         userEmail: result.card.name,
         tokenId: result.id

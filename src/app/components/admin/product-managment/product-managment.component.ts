@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { PrintingEditionResponseFilter } from 'src/app/models/ResponseFilters/PrintingEditionResponseFilter';
-import { PrintingEditionFilter } from 'src/app/models/RequestFilters/PrintingEditionFilter';
+import { PrintingEditionResponseModel } from 'src/app/models/ResponseModels/PrintingEditionResponseModel';
+import { PrintingEditionRequestModel } from 'src/app/models/RequestModels/PrintingEditionRequestModel';
 import { MatTableDataSource } from '@angular/material/table';
 import { PrintingEdition } from 'src/app/models/PrintingEdition';
 import { MatPaginator } from '@angular/material/paginator';
@@ -23,11 +23,11 @@ import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEd
 })
 export class ProductManagmentComponent implements OnInit {
 
-  public peResponseFilter = new PrintingEditionResponseFilter;
-  public peFilter = new PrintingEditionFilter;
-  public displayedColumns = ['name', 'description', 'category', 'author', 'price', 'customColumn'];
-  public dataSource = new MatTableDataSource<PrintingEdition>();
-  public data: PrintingEdition[] = [];
+  public printingEditionResponseModel: PrintingEditionResponseModel;
+  public printingEditionRequestModel:PrintingEditionRequestModel;
+  public displayedColumns: string[];
+  public dataSource: MatTableDataSource<PrintingEdition>;
+  public data: PrintingEdition[]
   public isLoadingResults = true;
   public isRateLimitReached = false;
   public resultsLength = 0;
@@ -41,9 +41,14 @@ export class ProductManagmentComponent implements OnInit {
     private _constants: Constants,
     private _dialog: MatDialog
   ) { 
+    this.data = [];
+    this.displayedColumns = ['name', 'description', 'category', 'author', 'price', 'customColumn'];
+    this.dataSource = new MatTableDataSource<PrintingEdition>();
+    this.printingEditionResponseModel = new PrintingEditionResponseModel;
+    this.printingEditionRequestModel = new PrintingEditionRequestModel;
     this.sort = new MatSort;
-    this.peFilter = _constants.printingEditionFilter;
-    this.peFilter.paging.itemsCount = 6;
+    this.printingEditionRequestModel = _constants.DEFAULT_PRINTING_EDITION_REQUEST_MODEL;
+    this.printingEditionRequestModel.paging.itemsCount = 6;
   }
   
   ngOnInit(): void {
@@ -55,7 +60,7 @@ export class ProductManagmentComponent implements OnInit {
     this.getPrintingEditions();
   }
 
-  getPrintingEditions(): void {
+  private getPrintingEditions(): void {
     this.dataSource.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.dataSource.sort.sortChange, this.paginator.page)
@@ -63,10 +68,10 @@ export class ProductManagmentComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          this.peFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._peService.getFiltred(this.peFilter);
+          this.printingEditionRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._peService.getFiltred(this.printingEditionRequestModel);
         }),
-        map((data: PrintingEditionResponseFilter) => {
+        map((data: PrintingEditionResponseModel) => {
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.totalCount;
@@ -80,7 +85,7 @@ export class ProductManagmentComponent implements OnInit {
         ).subscribe((data: PrintingEdition[]) => this.data = data);
   }
 
-  add(): void {
+  public add(): void {
     this._dialog.open(AddProductDialogComponent, {
       width: "1000px"
     });
@@ -89,7 +94,7 @@ export class ProductManagmentComponent implements OnInit {
     });
   }
 
-  delete(product: PrintingEdition): void {
+  public delete(product: PrintingEdition): void {
     this._dialog.open(DeleteProductDialogComponent, {
       width: '400px',
       data: {
@@ -102,7 +107,7 @@ export class ProductManagmentComponent implements OnInit {
     });
   }
 
-  edit(product: PrintingEdition): void {
+  public edit(product: PrintingEdition): void {
     this._dialog.open(EditProductDialogComponent, {
       width: '1000px',
       data: {
@@ -120,17 +125,17 @@ export class ProductManagmentComponent implements OnInit {
     });
   }
 
-  sortProducts(): void {
+  public sortProducts(): void {
     this.changeSortType();
     this.dataSource.paginator.firstPage();
     this.getPrintingEditions();
   }
 
   private changeSortType() {
-    if (this.peFilter.sortType == SortType.Ascending) {
-      this.peFilter.sortType = SortType.Descending;
+    if (this.printingEditionRequestModel.sortType == SortType.Ascending) {
+      this.printingEditionRequestModel.sortType = SortType.Descending;
       return;
     }
-    this.peFilter.sortType = SortType.Ascending;
+    this.printingEditionRequestModel.sortType = SortType.Ascending;
   }
 }

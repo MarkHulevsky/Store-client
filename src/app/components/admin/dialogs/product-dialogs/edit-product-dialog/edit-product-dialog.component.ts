@@ -19,7 +19,7 @@ export class EditProductDialogComponent implements OnInit {
 
   public printingEditionForm: FormGroup;
   public clicked: boolean = false;
-  public authors: Author[] = [];
+  public authors: Author[];
 
   constructor(
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
@@ -29,6 +29,7 @@ export class EditProductDialogComponent implements OnInit {
     public _constants: Constants,
     @Inject(AuthorService) private _authorService: IAuthorService
   ) { 
+    this.authors = [];
     this.printingEditionForm = _formBuilder.group({
       'id': new FormControl(product.id),
       'title': new FormControl(product.title, Validators.required),
@@ -44,13 +45,13 @@ export class EditProductDialogComponent implements OnInit {
     this.getAuthors();
   }
 
-  getAuthors(): void {
+  private getAuthors(): void {
     this._authorService.getAll().subscribe((author: Author[]) => {
       this.authors = author;
     });
   }
 
-  edit(): void {
+  public edit(): void {
     if (this.printingEditionForm.invalid) {
       return;
     }
@@ -64,7 +65,7 @@ export class EditProductDialogComponent implements OnInit {
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this._dialogRef.close();
   }
 }

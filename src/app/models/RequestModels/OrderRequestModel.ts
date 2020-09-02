@@ -1,7 +1,7 @@
-import { BaseFilter } from './BaseFilter';
+import { BaseRequestModel } from './BaseRequestModel';
 import { OrderStatus } from 'src/app/enums/enums';
 
-export class OrderFilter extends BaseFilter {
+export class OrderRequestModel extends BaseRequestModel {
     public sortPropertyName: string;
     public orderStatuses: OrderStatus[];
 }

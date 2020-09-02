@@ -12,7 +12,6 @@ import { IUserService } from 'src/app/interfaces/services/IUserService';
 })
 export class DeleteUserDialogComponent implements OnInit {
 
-
   constructor(
     public dialogRef: MatDialogRef<UserManagmentComponent>,
     @Inject(MAT_DIALOG_DATA) public user: User,
@@ -22,13 +21,13 @@ export class DeleteUserDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete(): void {
+  public delete(): void {
     this._userService.delete(this.user).subscribe(() => {
         this.dialogRef.close();
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this.dialogRef.close();
   }
 }

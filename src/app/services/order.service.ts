@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Payment } from '../models/Payment';
 import { Order } from '../models/Order';
 import { OrderResponseFilter } from '../models/ResponseFilters/OrderResponseFulter';
-import { OrderFilter } from '../models/RequestFilters/OrderFilter';
+import { OrderRequestModel } from '../models/RequestFilters/OrderRequestModel';
 import { IOrderService } from '../interfaces/services/IOrderService';
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class OrderService implements IOrderService {
     return this._http.get<Order[]>(`${environment.apiUrl}/api/Order/GetUserOrders`);
   }
 
-  getFiltred(filter: OrderFilter): Observable<OrderResponseFilter> {
+  getFiltred(filter: OrderRequestModel): Observable<OrderResponseFilter> {
     return this._http.post<OrderResponseFilter>(`${environment.apiUrl}/api/Order/GetFiltred`, filter);
   } 
 }

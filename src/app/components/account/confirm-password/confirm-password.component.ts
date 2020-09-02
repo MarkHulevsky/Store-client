@@ -11,31 +11,31 @@ import { IUserService } from 'src/app/interfaces/services/IUserService';
 })
 export class ConfirmPasswordComponent implements OnInit {
 
-  user: User = new User();
+  public user: User;
 
   constructor(
     @Inject(UserService) private _userService: IUserService,
     private _router: Router
     ) { 
-
+      this.user = new User;
   }
 
   ngOnInit(): void {
     this.emailConfirmedCheck();
   }
 
-  continueBtn(): void{
+  public continueBtn(): void{
     this._router.navigate(['home']);
   }
 
-  async emailConfirmedCheck(): Promise<void>{
+  private async emailConfirmedCheck(): Promise<void>{
     while (!this.user.emailConfirmed){
       this.getCurrentUser();
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 
-  getCurrentUser(): void {
+  private getCurrentUser(): void {
     this._userService.getCurrentUser().subscribe((user: User) => {
       this.user = user;
     })

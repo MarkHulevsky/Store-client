@@ -5,7 +5,7 @@ import { CurrencyType } from 'src/app/enums/enums';
     name: "currencyStringToEnum"
 })
 export class CurrencyStringToEnumPipe implements PipeTransform {
-    transform(value: string) {
+    public transform(value: string) {
         return CurrencyType[value];
     }
 } 

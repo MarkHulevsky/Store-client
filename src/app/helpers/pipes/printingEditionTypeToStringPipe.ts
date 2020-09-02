@@ -7,7 +7,7 @@ import { Constants } from 'src/app/models/constants/constants';
 export class PrintingEditionTypeToStringPipe implements PipeTransform {
     constructor(private _constants: Constants) {}
     
-    transform(value: number) {
-        return this._constants.printingEditionTypeStrings[value - 1];
+    public transform(value: number) {
+        return this._constants.PRINTING_EDITION_TYPE_STRINGS[value - 1];
     }
 }

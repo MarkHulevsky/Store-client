@@ -21,13 +21,13 @@ export class DeleteProductDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  delete(): void {
+  public delete(): void {
     this._printingEditionService.delete(this.product.id).subscribe(() => {
       this._dialogRef.close();
     });
   }
 
-  cancel(): void {
+  public cancel(): void {
     this._dialogRef.close();
   }
 
