@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { Observable} from 'rxjs'
 import { User } from '../models/User';
 import { EditProfileModel } from '../models/EditProfileModel';
-import { UserRequestModel } from '../models/RequestFilters/UserRequestModel';
-import { UserResponseFilter } from '../models/ResponseFilters/UserResponseFilter';
+import { UserRequestModel } from '../models/RequestModels/UserRequestModel';
+import { UserResponseModel } from '../models/ResponseModels/UserResponseModel';
 import { environment } from 'src/environments/environment.prod';
 import { IUserService } from '../interfaces/services/IUserService';
 
@@ -24,8 +24,8 @@ export class UserService implements IUserService{
     return this.http.put<User>(`${environment.apiUrl}/api/User/EditProfile`, editProfileModel);
   }
 
-  getFiltred(userFilter: UserRequestModel): Observable<UserResponseFilter> {
-    return this.http.post<UserResponseFilter>(`${environment.apiUrl}/api/User/GetFiltred`, userFilter);
+  getFiltred(userFilter: UserRequestModel): Observable<UserResponseModel> {
+    return this.http.post<UserResponseModel>(`${environment.apiUrl}/api/User/GetFiltred`, userFilter);
   }
 
   changeStatus(user: User): Observable<User> {

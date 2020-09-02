@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Observable } from 'rxjs';
 import { PrintingEdition } from '../models/PrintingEdition';
-import { PrintingEditionRequestModel } from '../models/RequestFilters/PrintingEditionRequestModel';
-import { PrintingEditionResponseFilter } from '../models/ResponseFilters/PrintingEditionResponseFilter';
+import { PrintingEditionRequestModel } from '../models/RequestModels/PrintingEditionRequestModel';
+import { PrintingEditionResponseModel } from '../models/ResponseModels/PrintingEditionResponseModel';
 import { IPrintingEditionService } from '../interfaces/services/IPrintingEditionService';
 
 @Injectable({
@@ -16,8 +16,8 @@ export class PrintingEditionService implements IPrintingEditionService {
     private _http: HttpClient
   ) { }
 
-  getFiltred(peFilter: PrintingEditionRequestModel): Observable<PrintingEditionResponseFilter> {
-    return this._http.post<PrintingEditionResponseFilter>(
+  getFiltred(peFilter: PrintingEditionRequestModel): Observable<PrintingEditionResponseModel> {
+    return this._http.post<PrintingEditionResponseModel>(
       `${environment.apiUrl}/api/PrintingEdition/GetFiltred`,
       peFilter);
   }
