@@ -21,7 +21,7 @@ import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 export class OrderManagmentComponent implements OnInit {
 
   public statuses: FormControl;
-  public orderFilter: OrderRequestModel;
+  public orderRequestModel: OrderRequestModel;
   public orders: Order[];
   public displayedColumns: string[] = [
     'Date',
@@ -47,7 +47,7 @@ export class OrderManagmentComponent implements OnInit {
     this.orderResponseModel = new OrderResponseModel;
     this.dataSource = new MatTableDataSource<Order>();
     this.sort = new MatSort();
-    this.orderFilter = constants.DEFAULT_ORDER_REQUEST_MODEL;
+    this.orderRequestModel = constants.DEFAULT_ORDER_REQUEST_MODEL;
     this.statuses = new FormControl(this.constants.ORDER_STATUS_STRINGS);
   }
 
@@ -67,8 +67,8 @@ export class OrderManagmentComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.orderFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._orderService.getFiltred(this.orderFilter);
+          this.orderRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._orderService.getFiltred(this.orderRequestModel);
         }),
         map(data => {
           this.resultsLength = data.totalCount;
@@ -92,22 +92,22 @@ export class OrderManagmentComponent implements OnInit {
       });
   }
   public orderBy(propName: string): void {
-    this.orderFilter.sortPropertyName = propName;
+    this.orderRequestModel.sortPropertyName = propName;
     this.changeSortType();
     this.getOrders();
   }
 
   public statusFilterChanged(): void {
     let statuses = this.statuses.value;
-    this.orderFilter.orderStatuses = statuses;
+    this.orderRequestModel.orderStatuses = statuses;
     this.getOrders();
   }
 
   private changeSortType(): void {
-    if (this.orderFilter.sortType == SortType.Ascending) {
-      this.orderFilter.sortType = SortType.Descending;
+    if (this.orderRequestModel.sortType == SortType.Ascending) {
+      this.orderRequestModel.sortType = SortType.Descending;
       return;
     }
-    this.orderFilter.sortType = SortType.Ascending;
+    this.orderRequestModel.sortType = SortType.Ascending;
   }
 }

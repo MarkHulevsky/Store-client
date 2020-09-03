@@ -37,7 +37,7 @@ export class ProductManagmentComponent implements OnInit {
 
 
   constructor(
-    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(PrintingEditionService) private _printigEditionService: IPrintingEditionService,
     private _constants: Constants,
     private _dialog: MatDialog
   ) { 
@@ -69,7 +69,7 @@ export class ProductManagmentComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           this.printingEditionRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._peService.getFiltred(this.printingEditionRequestModel);
+          return this._printigEditionService.getFiltred(this.printingEditionRequestModel);
         }),
         map((data: PrintingEditionResponseModel) => {
           this.isLoadingResults = false;

@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
 import { Author } from 'src/app/models/Author';
-import { AuthorResponseFilter } from 'src/app/models/ResponseFilters/AuthorResponseFilter';
-import { AuthorRequestModel } from 'src/app/models/RequestFilters/AuthorRequestModel';
+import { AuthorResponseModel } from 'src/app/models/ResponseModels/AuthorResponseModel';
+import { AuthorRequestModel } from 'src/app/models/RequestModels/AuthorRequestModel';
 
 export interface IAuthorService {
     getAll(): Observable<Author[]>;
-    getFiltred(filter: AuthorRequestModel): Observable<AuthorResponseFilter>;
+    getFiltred(filter: AuthorRequestModel): Observable<AuthorResponseModel>;
     addAuthor(author: Author): Observable<any>;
     deleteAuthor(id: string): Observable<any>;
     editAuthor(author: Author): Observable<any>;

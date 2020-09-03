@@ -26,7 +26,7 @@ export class EditProductDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public product: PrintingEdition,
     @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService,
     private _formBuilder: FormBuilder,
-    public _constants: Constants,
+    public constants: Constants,
     @Inject(AuthorService) private _authorService: IAuthorService
   ) { 
     this.authors = [];

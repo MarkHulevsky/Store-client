@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AuthorRequestModel } from '../models/RequestFilters/AuthorRequestModel';
+import { AuthorRequestModel } from '../models/RequestModels/AuthorRequestModel';
 import { Observable } from 'rxjs';
-import { AuthorResponseFilter } from '../models/ResponseFilters/AuthorResponseFilter';
+import { AuthorResponseModel } from '../models/ResponseModels/AuthorResponseModel';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
 import { Author } from '../models/Author';
@@ -18,8 +18,8 @@ export class AuthorService implements IAuthorService {
     return this.http.get<Author[]>(`${environment.apiUrl}/api/Author/GetAll`)
   }
 
-  getFiltred(filter: AuthorRequestModel): Observable<AuthorResponseFilter> {
-    return this.http.post<AuthorResponseFilter>(`${environment.apiUrl}/api/Author/GetFiltred`, filter);
+  getFiltred(filter: AuthorRequestModel): Observable<AuthorResponseModel> {
+    return this.http.post<AuthorResponseModel>(`${environment.apiUrl}/api/Author/GetFiltred`, filter);
   }
 
   addAuthor(author: Author): Observable<any> {

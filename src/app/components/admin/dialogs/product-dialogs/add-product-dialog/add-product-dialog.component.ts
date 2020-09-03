@@ -24,16 +24,16 @@ export class AddProductDialogComponent implements OnInit {
   constructor(
     @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService,
     private _formBuilder: FormBuilder,
-    public _constants: Constants,
+    public constants: Constants,
     private _dialogRef: MatDialogRef<ProductManagmentComponent>,
     @Inject(AuthorService) private _authorService: IAuthorService
   ) {
     this.printingEditionForm = _formBuilder.group({
-      'title': new FormControl(_constants.EMPTY_STRING, Validators.required),
-      'description': new FormControl(_constants.EMPTY_STRING, Validators.required),
+      'title': new FormControl(constants.EMPTY_STRING, Validators.required),
+      'description': new FormControl(constants.EMPTY_STRING, Validators.required),
       'price': new FormControl(0, Validators.required),
-      'currency': new FormControl(_constants.CURRENCY_TYPE_STRINGS[0], Validators.required),
-      'type': new FormControl(_constants.PRINTING_EDITION_TYPE_STRINGS[0], Validators.required),
+      'currency': new FormControl(constants.CURRENCY_TYPE_STRINGS[0], Validators.required),
+      'type': new FormControl(constants.PRINTING_EDITION_TYPE_STRINGS[0], Validators.required),
       'author': new FormControl(new Author, Validators.required)
     });
   }

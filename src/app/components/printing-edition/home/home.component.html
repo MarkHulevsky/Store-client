@@ -2,7 +2,7 @@
     <mat-drawer mode="side" opened>
         <div>
             <legend>Categories</legend>
-            <div *ngFor="let type of constants.printingEditionTypeStrings">
+            <div *ngFor="let type of constants.PRINTING_EDITION_TYPE_STRINGS">
                 <input type="checkbox" (change)="checkBoxChanged($event, type)" checked>
                 <label>{{type}}</label>
             </div>
@@ -12,12 +12,12 @@
             <div>
                 <label>Min price</label>
                 <input type="number" placeholder="Minimum price" 
-                    [(ngModel)]="printingEditionFilter.minPrice" (keyup)="minPriceFilter($event)">
+                    [(ngModel)]="printingEditionRequestModel.minPrice" (keyup)="minPriceFilter($event)">
             </div>
             <div>
                 <label>Max price</label>
                 <input type="number" placeholder="Maximum price" 
-                    [(ngModel)]="printingEditionFilter.maxPrice" (keyup)="maxPriceFilter($event)">
+                    [(ngModel)]="printingEditionRequestModel.maxPrice" (keyup)="maxPriceFilter($event)">
             </div>
         </div>
     </mat-drawer>
@@ -30,7 +30,7 @@
                 <label>Convert currency: </label>
                 <select style="margin-right: 20px" (change)="currencyChanged($event.target.value)">
                     <option value="">All</option>
-                    <option *ngFor="let currency of constants.currencyStrings">
+                    <option *ngFor="let currency of constants.CURRENCY_TYPE_STRINGS">
                         {{currency}}
                     </option>
                 </select>
@@ -52,7 +52,7 @@
                     <p class="price">{{pe.price}} {{pe.currency | currencyToString}}</p>
                 </a>
             </div>
-            <mat-paginator [length]="resultsLength" [pageSize]="printingEditionFilter.paging.itemsCount"
+            <mat-paginator [length]="resultsLength" [pageSize]="printingEditionRequestModel.paging.itemsCount"
                 showFirstLastButtons>
             </mat-paginator>
         </div>

@@ -1,10 +1,10 @@
-import { PrintingEditionRequestModel } from 'src/app/models/RequestFilters/PrintingEditionRequestModel';
+import { PrintingEditionRequestModel } from 'src/app/models/RequestModels/PrintingEditionRequestModel';
 import { Observable } from 'rxjs';
-import { PrintingEditionResponseFilter } from 'src/app/models/ResponseFilters/PrintingEditionResponseFilter';
+import { PrintingEditionResponseModel } from 'src/app/models/ResponseModels/PrintingEditionResponseModel';
 import { PrintingEdition } from 'src/app/models/PrintingEdition';
 
 export interface IPrintingEditionService {
-    getFiltred(peFilter: PrintingEditionRequestModel): Observable<PrintingEditionResponseFilter>;
+    getFiltred(peFilter: PrintingEditionRequestModel): Observable<PrintingEditionResponseModel>;
     add(printingEdition: PrintingEdition): Observable<any>;
     delete(peId: string): Observable<any>;
     edit(pe: PrintingEdition): Observable<any>;

@@ -22,8 +22,8 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 })
 export class AuthorsPageComponent implements OnInit {
 
-  public authorResponseFilter: AuthorResponseModel;
-  public authorFilter: AuthorRequestModel;
+  private authorResponseModel: AuthorResponseModel;
+  public authorRequestModel: AuthorRequestModel;
   public displayedColumns: string[];
   public dataSource: MatTableDataSource<Author>;
   public data: Author[];
@@ -37,13 +37,13 @@ export class AuthorsPageComponent implements OnInit {
     private _dialog: MatDialog,
     private _constants: Constants
   ) {
-    this.authorResponseFilter = new AuthorResponseModel();
-    this.authorFilter = new AuthorRequestModel();
+    this.authorResponseModel = new AuthorResponseModel();
+    this.authorRequestModel = new AuthorRequestModel();
     this.dataSource = new MatTableDataSource<Author>();
     this.data = [];
     this.displayedColumns = ['name', 'products', 'customColumn'];
     this.sort = new MatSort;
-    this.authorFilter = this._constants.DEFAULT_AUTHOR_REQUEST_MODEL;
+    this.authorRequestModel = this._constants.DEFAULT_AUTHOR_REQUEST_MODEL;
   }
 
   ngOnInit(): void {
@@ -62,8 +62,8 @@ export class AuthorsPageComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.authorFilter.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._authorService.getFiltred(this.authorFilter);
+          this.authorRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
+          return this._authorService.getFiltred(this.authorRequestModel);
         }),
         map(data => {
           this.resultsLength = data.totalCount;

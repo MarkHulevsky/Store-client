@@ -38,7 +38,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <mat-paginator [length]="resultsLength" [pageSize]="authorFilter.paging.itemsCount" showFirstLastButtons>
+            <mat-paginator [length]="resultsLength" [pageSize]="authorRequestModel.paging.itemsCount" showFirstLastButtons>
             </mat-paginator>
         </div>
     </mat-drawer-content>

@@ -51,7 +51,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <mat-paginator [length]="resultsLength" [pageSize]="userFilter.paging.itemsCount" showFirstLastButtons>
+            <mat-paginator [length]="resultsLength" [pageSize]="userRequestModel.paging.itemsCount" showFirstLastButtons>
             </mat-paginator>
         </div>
     </mat-drawer-content>

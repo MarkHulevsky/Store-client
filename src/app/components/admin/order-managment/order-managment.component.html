@@ -58,7 +58,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Status</mat-label>
                 <mat-select [formControl]="statuses" multiple (selectionChange)="statusFilterChanged()">
-                    <mat-option *ngFor="let status of constants.orderStatusStrings"
+                    <mat-option *ngFor="let status of constants.ORDER_STATUS_STRINGS"
                         [value]="status | orderStatusStringToEnum" selected>
                         {{status}}
                     </mat-option>
@@ -71,5 +71,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [length]="resultsLength" [pageSize]="orderFilter.paging.itemsCount" showFirstLastButtons>
+<mat-paginator [length]="resultsLength" [pageSize]="orderRequestModel.paging.itemsCount" showFirstLastButtons>
 </mat-paginator>

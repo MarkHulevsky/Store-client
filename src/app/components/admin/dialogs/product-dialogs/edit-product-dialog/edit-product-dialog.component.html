@@ -12,7 +12,7 @@
                 <label for="category">Category</label>
                 <br>
                 <select id="category" class="form-control" formControlName="type">
-                    <option *ngFor="let printingEditionType of _constants.printingEditionTypeStrings"
+                    <option *ngFor="let printingEditionType of constants.PRINTING_EDITION_TYPE_STRINGS"
                         [ngValue]="printingEditionType | peStringToEnum">
                         {{printingEditionType}}
                     </option>
@@ -22,7 +22,7 @@
                 <label for="currency">Currency</label>
                 <br>
                 <select id="currency" class="form-control" formControlName="currency">
-                    <option *ngFor="let currency of _constants.currencyStrings"
+                    <option *ngFor="let currency of constants.CURRENCY_TYPE_STRINGS"
                         [ngValue]="currency | currencyStringToEnum">
                         {{currency}}
                     </option>
