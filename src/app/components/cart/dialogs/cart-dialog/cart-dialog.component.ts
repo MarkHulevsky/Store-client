@@ -16,6 +16,7 @@ import { Constants } from 'src/app/models/constants/constants';
 import { IOrderService } from 'src/app/interfaces/services/IOrderService';
 import { ICartService } from 'src/app/interfaces/services/ICartService';
 import { IPrintingEditionService } from 'src/app/interfaces/services/IPrintingEditionService';
+import { TransactionSucceededDialogComponent } from '../transaction-succeeded-dialog/transaction-succeeded-dialog.component';
 
 @Component({
   selector: 'app-cart-dialog',
@@ -111,6 +112,7 @@ export class CartDialogComponent implements OnInit {
           tokenId: result.id
         } as Payment
         this._orderService.payOrder(payment).subscribe(() => {
+          this._dialog.open(TransactionSucceededDialogComponent);
           this._cartService.clear();
         });
       });

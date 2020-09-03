@@ -6,10 +6,13 @@ import { CartDialogComponent } from 'src/app/components/cart/dialogs/cart-dialog
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxStripeModule } from 'ngx-stripe';
 import { environment } from 'src/environments/environment.prod';
+import { TransactionSucceededDialogComponent } from 'src/app/components/cart/dialogs/transaction-succeeded-dialog/transaction-succeeded-dialog.component';
+
 @NgModule({
   declarations: [
     CardDialogComponent,
-    CartDialogComponent
+    CartDialogComponent,
+    TransactionSucceededDialogComponent
   ],
   imports: [
     CommonModule,

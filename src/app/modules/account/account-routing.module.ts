@@ -5,12 +5,14 @@ import { SignUpComponent } from 'src/app/components/account/sign-up/sign-up.comp
 import { AuthGuard } from 'src/app/services/guards/auth-guard.service';
 import { PasswordRecoveryComponent } from 'src/app/components/account/password-recovery/password-recovery.component';
 import { ConfirmPasswordComponent } from 'src/app/components/account/confirm-password/confirm-password.component';
+import { EmailConfirmedComponent } from 'src/app/components/account/email-confirmed/email-confirmed.component';
 
 const routes: Routes = [
   { path: 'account/sign-in', component: SignInComponent },
   { path: 'account/sign-up', component: SignUpComponent },
   { path: 'account/password-recovery', component: PasswordRecoveryComponent },
-  { path: 'account/confirm-password', component: ConfirmPasswordComponent, canActivate: [AuthGuard] }
+  { path: 'account/confirm-password', component: ConfirmPasswordComponent, canActivate: [AuthGuard] },
+  { path: 'account/email-confirmed', component: EmailConfirmedComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
