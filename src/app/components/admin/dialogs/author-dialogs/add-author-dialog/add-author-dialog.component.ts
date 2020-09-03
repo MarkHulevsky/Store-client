@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthorsPageComponent } from '../../../authors-page/authors-page.component';
 import { AuthorService } from 'src/app/services/author.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 
 
@@ -13,7 +13,7 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 })
 export class AddAuthorDialogComponent implements OnInit {
 
-  public authorForm;
+  public authorForm: FormGroup;
   public clicked: boolean;
   constructor(
     public dialogRef: MatDialogRef<AuthorsPageComponent>,

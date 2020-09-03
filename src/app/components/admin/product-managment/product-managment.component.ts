@@ -28,8 +28,6 @@ export class ProductManagmentComponent implements OnInit {
   public displayedColumns: string[];
   public dataSource: MatTableDataSource<PrintingEdition>;
   public data: PrintingEdition[]
-  public isLoadingResults = true;
-  public isRateLimitReached = false;
   public resultsLength = 0;
     
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -67,22 +65,17 @@ export class ProductManagmentComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoadingResults = true;
           this.printingEditionRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
           return this._printigEditionService.getFiltred(this.printingEditionRequestModel);
         }),
         map((data: PrintingEditionResponseModel) => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.totalCount;
           return data.printingEditions;
         }),
         catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
           return of([]);
         })
-        ).subscribe((data: PrintingEdition[]) => this.data = data);
+        ).subscribe((printingEditions: PrintingEdition[]) => this.data = printingEditions);
   }
 
   public add(): void {

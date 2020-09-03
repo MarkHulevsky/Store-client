@@ -22,7 +22,6 @@ import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
 })
 export class AuthorsPageComponent implements OnInit {
 
-  private authorResponseModel: AuthorResponseModel;
   public authorRequestModel: AuthorRequestModel;
   public displayedColumns: string[];
   public dataSource: MatTableDataSource<Author>;
@@ -37,7 +36,6 @@ export class AuthorsPageComponent implements OnInit {
     private _dialog: MatDialog,
     private _constants: Constants
   ) {
-    this.authorResponseModel = new AuthorResponseModel();
     this.authorRequestModel = new AuthorRequestModel();
     this.dataSource = new MatTableDataSource<Author>();
     this.data = [];

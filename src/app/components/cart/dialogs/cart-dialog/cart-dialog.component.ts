@@ -25,9 +25,9 @@ import { TransactionSucceededDialogComponent } from '../transaction-succeeded-di
 })
 export class CartDialogComponent implements OnInit {
 
-  public displayedColumns = ['product'];
-  public totalPrice: number = 0;
-  public currency: CurrencyType = CurrencyType.USD;
+  public displayedColumns: string[];
+  public totalPrice: number;
+  public currency: CurrencyType;
   constructor(
     private _dialogRef: MatDialogRef<CartIconComponent>,
     @Inject(MAT_DIALOG_DATA) public orderItems: OrderItem[],
@@ -38,6 +38,9 @@ export class CartDialogComponent implements OnInit {
     private _dialog: MatDialog,
     private _constants: Constants
   ) {
+    this.displayedColumns = ['product'];
+    this.currency = CurrencyType.USD;
+    this.totalPrice = 0;
   }
 
   ngOnInit(): void {
@@ -45,7 +48,6 @@ export class CartDialogComponent implements OnInit {
   }
 
   private async getPrintingEditions(): Promise<void> {
-
     for (let i = 0; i < this.orderItems.length; i++) {
       let pe = await this._printingEditionService.getById(this.orderItems[i].printingEditionId).toPromise();
       this.orderItems[i].printingEdition = pe;

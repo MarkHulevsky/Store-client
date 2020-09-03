@@ -71,8 +71,8 @@ export class HomeComponent implements OnInit {
         catchError(() => {
           return of([]);
         })
-      ).subscribe((data: PrintingEdition[]) => {
-        this.data = data;
+      ).subscribe((printingEditions: PrintingEdition[]) => {
+        this.data = printingEditions;
       });
   }
 
@@ -121,15 +121,15 @@ export class HomeComponent implements OnInit {
       this.getPrintingEditions();
       return;
     }
-    this.data.forEach(pe => {
-      let currentCurrency = this.constants.CURRENCY_TYPE_STRINGS[pe.currency];
+    this.data.forEach(printingEdition => {
+      let currentCurrency = this.constants.CURRENCY_TYPE_STRINGS[printingEdition.currency];
       if (currencyString == currentCurrency)
       {
         return;
       }
       this._peService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
-        pe.currency = CurrencyType[currencyString];
-        pe.price = Math.round(pe.price * rate);
+        printingEdition.currency = CurrencyType[currencyString];
+        printingEdition.price = Math.round(printingEdition.price * rate);
         currentCurrency = currencyString;
       });
     });

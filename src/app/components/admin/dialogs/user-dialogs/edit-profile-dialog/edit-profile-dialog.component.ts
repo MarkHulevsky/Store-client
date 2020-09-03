@@ -14,7 +14,7 @@ import { IUserService } from 'src/app/interfaces/services/IUserService';
 })
 export class EditProfileDialogComponent implements OnInit {
 
-  public editProfileForm;
+  public editProfileForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<UserManagmentComponent>,
     @Inject(UserService) private _userService: IUserService,

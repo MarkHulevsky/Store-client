@@ -27,8 +27,6 @@ export class UserManagmentComponent implements OnInit {
   public displayedColumns: string[];
   public dataSource = new MatTableDataSource<User>();
   public data: User[];
-  public isLoadingResults = true;
-  public isRateLimitReached = false;
   public resultsLength = 0;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -63,19 +61,14 @@ export class UserManagmentComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoadingResults = true;
           this.userRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
           return this._userService.getFiltred(this.userRequestModel);
         }),
         map(data => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.totalCount;
           return data.users;
         }),
         catchError(() => {
-          this.isLoadingResults = false;
-          this.isRateLimitReached = true;
           return of([]);
         })
         ).subscribe((data: User[]) => this.data = data);

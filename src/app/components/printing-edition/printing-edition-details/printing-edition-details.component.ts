@@ -49,7 +49,7 @@ export class PrintingEditionDetailsComponent implements OnInit {
   }
 
   public addToCart(): void {
-    if (this.isAuthorized == false) {
+    if (!this.isAuthorized) {
       this._router.navigate(['account/sign-in']);
     }
     let orderItem: OrderItem = {

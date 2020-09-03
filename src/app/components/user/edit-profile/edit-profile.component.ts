@@ -29,7 +29,6 @@ export class EditProfileComponent implements OnInit {
     private _formBuilder: FormBuilder,
     @Inject(UserService) private _userService: IUserService,
     private _router: Router,
-    private _storageHelper: StorageHelper
   ) {
     this.getProfile().then((user: User) => {
       this.user = user;

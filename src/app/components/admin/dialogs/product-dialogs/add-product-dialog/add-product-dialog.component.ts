@@ -43,8 +43,8 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   private getAuthors(): void {
-    this._authorService.getAll().subscribe((data: Author[]) => {
-      this.authors = data;
+    this._authorService.getAll().subscribe((authors: Author[]) => {
+      this.authors = authors;
     });
   }
 
