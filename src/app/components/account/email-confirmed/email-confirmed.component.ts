@@ -3,6 +3,9 @@ import { UserService } from 'src/app/services/user.service';
 import { IUserService } from 'src/app/interfaces/services/IUserService';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
+import { IAuthorService } from 'src/app/interfaces/services/IAuthorService';
+import { IAuthenticationService } from 'src/app/interfaces/services/IAuthenticationService';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-email-confirmed',
@@ -13,22 +16,16 @@ export class EmailConfirmedComponent implements OnInit {
 
   public user: User;
   constructor(
-    @Inject(UserService) private _userService: IUserService,
+    @Inject(AuthenticationService) private _authService: IAuthenticationService,
     private _router: Router
   ) {
     this.user = new User;
   }
 
   ngOnInit(): void {
-    this.getUser();
   }
 
-  private getUser(): void {
-    this._userService.getCurrentUser().subscribe((user: User) => {
-      this.user = user;
-      if (!this.user.emailConfirmed){
-        this._router.navigate(['account/confirm-password']);
-      }
-    })
+  public continue(): void {
+    this._router.navigate(["account/sign-in"]);
   }
 }

@@ -59,16 +59,7 @@ export class SignUpComponent implements OnInit {
         this.errors = user.errors;
         return;
       }
-      this._authenticationService.signIn(registerModel as LoginModel).subscribe((user: User) => {
-        if (user.errors?.length > 0) {
-          this.errors = user.errors;
-          return;
-        }
-        this._authenticationService.setUserToStorage(user);
-        let cookie = this._cookieHelper.getAllCookie();
-        localStorage.setItem(this._constants.ACCESS_TOKEN, cookie[this._constants.ACCESS_TOKEN]);
-        this._router.navigate(["account/confirm-password"]);
-      });
+      this._router.navigate(["account/confirm-password"]);
     });
   }
 
