@@ -5,7 +5,6 @@ export class User extends BaseModel {
     public firstName: string;
     public lastName: string;
     public emailConfirmed: boolean;
-    public role: string;
     public isActive: boolean;
     public roles: string[];
 }
