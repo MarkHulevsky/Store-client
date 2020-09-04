@@ -1,7 +1,6 @@
 <div>
     Admin password: 12345_Admin
     <h2>Sign-in</h2>
-    <p *ngFor="let error of errors">{{error}}</p>
     <div *ngIf="errors?.length > 0">
         <p id="errors" *ngFor="let error of errors"> {{error}} </p>
     </div>

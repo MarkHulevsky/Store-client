@@ -44,6 +44,7 @@ export class SignInComponent implements OnInit {
 
   public signIn(loginModel: LoginModel): void {
     this._authenticationService.signIn(loginModel as LoginModel).subscribe((user: User) => {
+      debugger
       if (user.errors?.length > 0) {
         this.errors = user.errors;
         return;
