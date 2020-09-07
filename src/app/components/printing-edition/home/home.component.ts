@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(
-    @Inject(PrintingEditionService) private _peService: IPrintingEditionService,
+    @Inject(PrintingEditionService) private _printingEditionService: IPrintingEditionService,
     public constants: Constants,
   ) {
     this.dataSource = new MatTableDataSource<PrintingEdition>();
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.printingEditionRequestModel.paging.currentPage = this.dataSource.paginator.pageIndex;
-          return this._peService.getFiltred(this.printingEditionRequestModel);
+          return this._printingEditionService.getFiltred(this.printingEditionRequestModel);
         }),
         map((data: PrintingEditionResponseModel) => {
           this.resultsLength = data.totalCount;
@@ -122,12 +122,12 @@ export class HomeComponent implements OnInit {
       return;
     }
     this.data.forEach(printingEdition => {
-      let currentCurrency = this.constants.CURRENCY_TYPE_STRINGS[printingEdition.currency];
+      let currentCurrency = this.constants.CURRENCY_TYPE_STRINGS[printingEdition.currency - 1];
       if (currencyString == currentCurrency)
       {
         return;
       }
-      this._peService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
+      this._printingEditionService.convertCurrency(currentCurrency, currencyString).subscribe((rate: number) => {
         printingEdition.currency = CurrencyType[currencyString];
         printingEdition.price = Math.round(printingEdition.price * rate);
         currentCurrency = currencyString;

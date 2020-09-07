@@ -13,7 +13,6 @@ import { AuthenticationService } from '../authentication.service';
 @Injectable()
 export class RoleGuard implements CanActivate {
 
-  private _accessRole: string;
   constructor(
     private _router: Router,
     private _storageHelper: StorageHelper,
@@ -21,7 +20,6 @@ export class RoleGuard implements CanActivate {
     @Inject(UserService) private _userService: IUserService,
     @Inject(AuthenticationService) private _authService: IAuthenticationService
   ) {
-    this._accessRole = _constants.ADMIN_ROLE_NAME;
   }
 
   canActivate(
@@ -31,7 +29,7 @@ export class RoleGuard implements CanActivate {
     return this._userService.getCurrentUser()
       .pipe(
         map((user: User) => {
-          if (user.roles[0] == this._accessRole) {
+          if (user.roles[0] == this._constants.ADMIN_ROLE_NAME) {
             return true;
         }
         this._storageHelper.setItem(this._constants.STORAGE_ROLE, this._constants.USER_ROLE_NAME);

@@ -71,4 +71,5 @@ select.form-control {
 mat-drawer-content {
     position: fixed;
     margin-right: 15%;
+    min-width: 56%;
 }

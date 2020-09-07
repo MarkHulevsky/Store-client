@@ -12,12 +12,12 @@
             <div>
                 <label>Min price</label>
                 <input type="number" placeholder="Minimum price" 
-                    [(ngModel)]="printingEditionRequestModel.minPrice" (keyup)="minPriceFilter($event)">
+                    [(ngModel)]="printingEditionRequestModel.minPrice" (change)="minPriceFilter($event)">
             </div>
             <div>
                 <label>Max price</label>
                 <input type="number" placeholder="Maximum price" 
-                    [(ngModel)]="printingEditionRequestModel.maxPrice" (keyup)="maxPriceFilter($event)">
+                    [(ngModel)]="printingEditionRequestModel.maxPrice" (change)="maxPriceFilter($event)">
             </div>
         </div>
     </mat-drawer>

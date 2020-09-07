@@ -108,7 +108,7 @@ export class CartDialogComponent implements OnInit {
         }
         let payment: Payment = {
           amount: this.totalPrice * 100,
-          currencyString: this._constants.CURRENCY_TYPE_STRINGS[this.currency],
+          currencyString: this._constants.CURRENCY_TYPE_STRINGS[this.currency - 1],
           orderId: orderId,
           userEmail: result.card.name,
           tokenId: result.id
