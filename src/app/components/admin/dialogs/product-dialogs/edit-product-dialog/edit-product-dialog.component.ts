@@ -37,7 +37,7 @@ export class EditProductDialogComponent implements OnInit {
       'price': new FormControl(product.price, Validators.required),
       'currency': new FormControl(product.currency, Validators.required),
       'type': new FormControl(product.type, Validators.required),
-      'author': new FormControl(product?.authors[0])
+      'author': new FormControl()
     });
   }
 
@@ -58,7 +58,9 @@ export class EditProductDialogComponent implements OnInit {
     let printingEdition = this.printingEditionForm.value as PrintingEdition;
     printingEdition.authors = [];
     let author = this.printingEditionForm.get('author').value as Author;
-    printingEdition.authors = [author];
+    if (author != null){
+      printingEdition.authors = [author];
+    }
     this._printingEditionService.edit(printingEdition).subscribe(() => {
       this.clicked = true;
       this._dialogRef.close();

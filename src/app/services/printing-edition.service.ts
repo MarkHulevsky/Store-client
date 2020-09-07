@@ -26,8 +26,8 @@ export class PrintingEditionService implements IPrintingEditionService {
     return this._http.post(`${environment.apiUrl}/api/PrintingEdition/Add`, printingEdition);
   }
 
-  delete(peId: string): Observable<any> {
-    return this._http.delete(`${environment.apiUrl}/api/PrintingEdition/Delete?id=${peId}`);
+  delete(printingEditionId: string): Observable<any> {
+    return this._http.delete(`${environment.apiUrl}/api/PrintingEdition/Delete?printingEditionId=${printingEditionId}`);
   }
 
   edit(pe: PrintingEdition): Observable<any> {

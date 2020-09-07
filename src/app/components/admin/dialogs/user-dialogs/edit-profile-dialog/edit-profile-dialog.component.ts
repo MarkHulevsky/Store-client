@@ -33,14 +33,15 @@ export class EditProfileDialogComponent implements OnInit {
   }
 
   public save(editedUserFrom: FormGroup) {
-    if (!editedUserFrom.invalid){
-      let editedUser = editedUserFrom.value;
-      this._userService.editProfile(editedUser as EditProfileModel).subscribe((user: User) => {
-        if (user.errors.length < 1) {
+    if (editedUserFrom.invalid){
+      return;
+    }
+    let editedUser = editedUserFrom.value as EditProfileModel;
+      this._userService.editProfile(editedUser).subscribe((user: User) => {
+        if (user.errors?.length < 1) {
           this.dialogRef.close(editedUser);
         }
       });
-    }
   }
 
   public cancel() {
